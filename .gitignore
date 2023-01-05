@@ -6,7 +6,3 @@ coverage
 node_modules
 yarn.lock
 /dist
-
-# ignore vitepress build
-docs/.vitepress/dist
-docs/.vitepress/cache
