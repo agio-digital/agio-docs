@@ -1,0 +1,12 @@
+.yarn
+.env
+.parcel-cache
+coverage
+/lib
+node_modules
+yarn.lock
+/dist
+
+# ignore vitepress build
+docs/.vitepress/dist
+docs/.vitepress/cache

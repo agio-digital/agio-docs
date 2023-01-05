@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "module": "ESNext",
+    "allowJs": true,
+    "checkJs": false,
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "types": ["node", "jest"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "jsx": "react-jsx"
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["./docs/**/*.ts", "./docs/**/*.tsx", "./docs/**/*.vue", "./docs/**/*.md"],
+  "exclude": ["./tests", "./node_modules"]
+}

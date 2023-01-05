@@ -1,0 +1,38 @@
+:root {
+  --vt-c-brand: var(--color-brand-light);
+  --vt-c-brand-highlight: var(--color-brand-lighter);
+  --vt-c-brand-dark: var(--color-brand-light);
+  --vt-c-brand-light: var(--color-brand-lighter);
+}
+
+.outline-marker {
+  background-color: var(--vt-c-brand) !important;
+}
+
+.custom-block {
+  margin: 28px 0;
+  padding: 20px 24px 4px 42px;
+  border-radius: 8px;
+  overflow-x: auto;
+  transition: color 0.5s, background-color 0.5s;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+  background-color: var(--vt-c-bg-soft);
+  min-height: 3.75rem;
+}
+
+.custom-block:before {
+  content: "ⓘ";
+  position: absolute;
+  font-weight: 600;
+  font-size: 15px;
+  top: 20px;
+  left: 17px;
+}
+
+.dark .custom-block {
+  color: var(--vt-c-text-2);
+}
