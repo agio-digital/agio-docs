@@ -2,7 +2,7 @@
   "name": "agio-docs",
   "version": "1.0.0",
   "scripts": {
-    "prepush": "yarn && yarn build",
+    "prepush": "yarn && yarn build && git add docs/.vitepress/dist/ && git add docs/.vitepress/cache/",
     "build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -15,7 +15,7 @@
     "@types/node": "^16.9.1",
     "@vue/theme": "^1.3.0",
     "highlight.js": "^11.7.0",
-    "husky": "^8.0.3",
+    "husky": "^4.3.0",
     "lint-staged": "^13.1.0",
     "markdown-it": "^13.0.1",
     "prettier": "^2.8.1",
