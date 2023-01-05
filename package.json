@@ -2,6 +2,7 @@
   "name": "agio-docs",
   "version": "1.0.0",
   "scripts": {
+    "prepush": "yarn && yarn build",
     "build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
