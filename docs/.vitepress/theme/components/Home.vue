@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-
-onMounted(async () => {});
+import SdkVersion from "./SdkVersion.vue";
 </script>
 
 <template>
@@ -15,7 +13,11 @@ onMounted(async () => {});
       to help you build your own applications on top of the Agio platform.
     </p>
 
-    <div class="info custom-block"><p class="custom-block-title">Latest Agio SDK version 1.1.5</p></div>
+    <div class="info custom-block">
+      <p class="custom-block-title">
+        Latest Agio SDK version <ClientOnly><SdkVersion /></ClientOnly>
+      </p>
+    </div>
 
     <p class="actions">
       <a class="get-started" href="/guide/introduction.html">
