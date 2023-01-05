@@ -1,4 +1,28 @@
-# VitePress (alpha) 📝💨
+# Agio Docs
+
+This project is built with **[VitePress](https://vitepress.vuejs.org/)**
+
+---
+
+## Links
+
+**[Heroku project](https://dashboard.heroku.com/apps/agio-docs)** (agio-docs)
+
+**[GitHub repository](https://github.com/agio-digital/agio-docs)** (agio-docs)
+
+---
+
+## Deploy
+1. install: `yarn`
+2. build: yarn build`
+3. push: `git checkout main && git push origin main`
+
+
+_heroku will build and deploy automatically to:_
+
+**[docs.agiodigital.com](https://docs.agiodigital.com)**
+
+---
 
 ## scripts
 - `yarn docs:dev` - start dev server
@@ -6,11 +30,9 @@
 - `yarn build` - alias for `yarn docs:build`
 - `yarn docs:preview` - serve built site
 
-[![Test](https://github.com/vuejs/vitepress/workflows/Test/badge.svg)](https://github.com/vuejs/vitepress/actions)
-[![npm](https://img.shields.io/npm/v/vitepress)](https://www.npmjs.com/package/vitepress)
-[![chat](https://img.shields.io/badge/chat-discord-blue?logo=discord)](https://chat.vuejs.org)
-
 ---
+
+## VitePress
 
 VitePress is [VuePress](https://vuepress.vuejs.org)' spiritual successor, built on top of [vite](https://github.com/vitejs/vite).
 
