@@ -28,7 +28,6 @@ onMounted(async () => {});
     </p>
   </section>
 
-
   <!-- <section id="special-sponsor">
     <span class="lead">Special Sponsor</span>
     <template v-if="data && data.special">

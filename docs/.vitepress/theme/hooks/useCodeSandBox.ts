@@ -19,7 +19,7 @@ export const useCodeSandBox = (id: string | Ref<string>, title: string | Ref<str
   // codesanbox iframe url, only page no buttons
   // get theme from css
 
-  const theme = computed(() => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const theme = computed(() => (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
   const iframeUrl = computed(() => `https://codesandbox.io/embed/${id}?autoresize=1&fontsize=14&hidenavigation=1&theme=${theme.value}`);
 
   const getFile = async () => {

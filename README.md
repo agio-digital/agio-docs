@@ -13,10 +13,10 @@ This project is built with **[VitePress](https://vitepress.vuejs.org/)**
 ---
 
 ## Deploy
+
 1. install: `yarn`
 2. build: yarn build`
 3. push: `git checkout main && git push origin main`
-
 
 _heroku will build and deploy automatically to:_
 
@@ -25,6 +25,7 @@ _heroku will build and deploy automatically to:_
 ---
 
 ## scripts
+
 - `yarn docs:dev` - start dev server
 - `yarn docs:build` - build static site
 - `yarn build` - alias for `yarn docs:build`

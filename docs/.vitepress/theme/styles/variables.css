@@ -1,11 +1,11 @@
 :root {
-    --color-brand: #193f66;
-    --color-brand-light: #337ECB;
-    --color-brand-lighter: #4DA8F5;
-    --color-white: #fff;
-    --color-logo: var(--color-brand);
+  --color-brand: #193f66;
+  --color-brand-light: #337ecb;
+  --color-brand-lighter: #4da8f5;
+  --color-white: #fff;
+  --color-logo: var(--color-brand);
 }
 
 :root.dark {
-    --color-logo: var(--color-white);
+  --color-logo: var(--color-white);
 }

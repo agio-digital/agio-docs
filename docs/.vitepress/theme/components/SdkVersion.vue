@@ -20,5 +20,5 @@ onMounted(async () => {
 </script>
 
 <template>
-    <span>{{ version || 'loading...' }}</span>
+  <span>{{ version || "loading..." }}</span>
 </template>

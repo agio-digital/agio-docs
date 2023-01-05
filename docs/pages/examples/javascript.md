@@ -1,8 +1,6 @@
 ---
 title: JavaScript
 outline: deep
-
-
 ---
 
 <script setup>

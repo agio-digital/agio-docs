@@ -2,7 +2,7 @@
   "name": "agio-docs",
   "version": "1.0.0",
   "scripts": {
-    "prepush": "yarn && yarn build",
+    "prepush": "yarn && yarn build && git add docs/.vitepress/dist/. && git add docs/.vitepress/cache/",
     "build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -28,10 +28,10 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && yarn prepush"
     }
   },
   "lint-staged": {
-    "*": "yarn format"
+    "*": "prettier --write"
   }
 }

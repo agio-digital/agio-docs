@@ -1,4 +1,3 @@
-
 # SDK Configuration
 
 The **`SdkConfig`** interface represents the configuration options for the Agio SDK. It contains a number of properties that can be passed when initializing the SDK, including the following:
@@ -21,10 +20,10 @@ The **`SdkConfig`** interface represents the configuration options for the Agio 
 Some of these properties are optional, and have default values specified in the interface definition.
 
 ## Full Configuration
+
 For more information, see the TypeScript definitions in the [TypeScript Support section](/typescript/types.html#sdk-configuration)
 
 ## Example Configuration
-
 
 ```ts
 import { createAgioSdk } from "agio-sdk";

@@ -101,7 +101,6 @@ interface SdkConfig {
 
 The **`SdkState`** interface represents the state of the Agio SDK. It includes a number of properties that can be accessed after the SDK has been initialized, including:
 
-
 ```ts
 /** @example `import { SdkState } from "agio-sdk"` */
 

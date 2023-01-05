@@ -48,7 +48,7 @@ const defaultSidebarItems: SidebarGroup[] = [
       {
         text: "Configuration",
         link: "/guide/configuration"
-      },
+      }
     ]
   },
   // examples
@@ -150,7 +150,7 @@ export default defineConfigWithTheme<ThemeConfig>({
 
     socialLinks: [
       { icon: "github", link: "https://github.com/agio-digital/" },
-      { icon: "twitter", link: "https://twitter.com/agiodigital" },
+      { icon: "twitter", link: "https://twitter.com/agiodigital" }
     ],
 
     // editLink: {

@@ -9,13 +9,11 @@ export const useNpmVersion = (packageName = "agio-sdk") => {
     const response = await fetch(`https://registry.npmjs.org/${packageName}`);
     const json = await response.json();
     version.value = json["dist-tags"].latest;
-
   };
-
 
   return {
     version,
-    load,
+    load
   };
 };
 

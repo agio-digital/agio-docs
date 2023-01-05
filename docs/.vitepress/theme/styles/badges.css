@@ -1,12 +1,12 @@
 .vt-badge.wip:before {
-  content: 'WIP';
+  content: "WIP";
 }
 
 .vt-badge.ts {
   background-color: #3178c6;
 }
 .vt-badge.ts:before {
-  content: 'TS';
+  content: "TS";
 }
 
 .vt-badge.dev-only,
@@ -16,11 +16,11 @@
 }
 
 .vt-badge.dev-only:before {
-  content: 'Dev only';
+  content: "Dev only";
 }
 
 .vt-badge.experimental:before {
-  content: 'Experimental';
+  content: "Experimental";
 }
 
 .vt-badge[data-text]:before {

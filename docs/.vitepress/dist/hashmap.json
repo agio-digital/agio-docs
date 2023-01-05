@@ -1,11 +1,1 @@
-{
-  "guide_introduction.md": "90086dd3",
-  "index.md": "50c49e3b",
-  "typescript_types.md": "b16e4433",
-  "guide_quick-start.md": "bfc4a41c",
-  "examples_javascript.md": "79563471",
-  "changelog_index.md": "507f2572",
-  "guide_configuration.md": "2514ee16",
-  "examples_typescript.md": "7fbe683b",
-  "examples_react-component.md": "b3429b2a"
-}
+{"changelog_index.md":"507f2572","examples_typescript.md":"7fbe683b","guide_configuration.md":"2514ee16","examples_javascript.md":"79563471","typescript_types.md":"b16e4433","examples_react-component.md":"b3429b2a","index.md":"06c43182","guide_quick-start.md":"bfc4a41c","guide_introduction.md":"90086dd3"}

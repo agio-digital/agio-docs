@@ -4,7 +4,8 @@
 
 # React Component
 
-The `AgioSdkComponent`  is a React component that allows you to easily incorporate Agio's SDK into your React application. It takes in a number of props, that correspond to the [Configuration object](/guide/configuration), and renders an iframe that contains the Agio widget.
+The `AgioSdkComponent` is a React component that allows you to easily incorporate Agio's SDK into your React application. It takes in a number of props, that correspond to the [Configuration object](/guide/configuration), and renders an iframe that contains the Agio widget.
+
 ## Code Example
 
 <ClientOnly>
