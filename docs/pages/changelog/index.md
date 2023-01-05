@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.1.6
+
+_(no breaking changes)_
+
+1. Moved docs to [docs.agiodigital.com](https://docs.agiodigital.com)
+
 ## Version 1.1.5
 
 _(no breaking changes)_

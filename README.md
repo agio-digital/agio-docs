@@ -14,11 +14,10 @@ This project is built with **[VitePress](https://vitepress.vuejs.org/)**
 
 ## Deploy
 
-1. install: `yarn`
-2. build: yarn build`
-3. push: `git checkout main && git push origin main`
+1. commit changes: `git add . && git commit -m "commit message"`
+2. push to `main`: `git push`
 
-_heroku will build and deploy automatically to:_
+Heroku will automatically deploy the main branch to:
 
 **[docs.agiodigital.com](https://docs.agiodigital.com)**
 
