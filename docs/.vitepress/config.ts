@@ -20,7 +20,7 @@ const nav: ThemeConfig["nav"] = [
         text: "Configuration",
         link: "/guide/configuration"
       },
-      { text: "Examples", link: "/examples/javascript" }
+      { text: "Examples", link: "/examples/javascript" },
     ]
   },
   {
@@ -66,6 +66,23 @@ const defaultSidebarItems: SidebarGroup[] = [
       {
         text: "React Component",
         link: "/examples/react-component"
+      }
+    ]
+  },
+  {
+    text: "Data & Administration",
+    items: [
+      {
+        text: "KYC Data",
+        link: "/data/kyc"
+      },
+      {
+        text: "KYT Data",
+        link: "/data/kyt"
+      },
+      {
+        text: "Webhooks",
+        link: "/data/webhooks"
       }
     ]
   },
