@@ -16,3 +16,7 @@
   transition: background-color 0.5s, color 0.5s;
   color: var(--vt-c-text-code);
 }
+
+.vp-adaptive-theme pre + pre {
+  display: none;
+}
