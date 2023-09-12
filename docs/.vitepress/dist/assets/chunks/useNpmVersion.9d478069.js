@@ -1,1 +1,0 @@
-import{f as s}from"./framework.9152ff1a.js";const t=(t="agio-sdk")=>{const a="loading...",o=s(a);return{version:o,load:async()=>{o.value=a;const s=await fetch(`https://registry.npmjs.org/${t}`),r=await s.json();o.value=r["dist-tags"].latest}}};export{t as u};
