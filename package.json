@@ -1,6 +1,7 @@
 {
   "name": "agio-docs",
   "version": "2.0.0-beta.0",
+  "type": "module",
   "scripts": {
     "prepush": "yarn && yarn build && git add docs/.vitepress/dist/. && git add docs/.vitepress/cache/",
     "build": "vitepress build docs",
@@ -21,7 +22,7 @@
     "markdown-it": "^13.0.1",
     "prettier": "^2.8.1",
     "terser": "^5.14.2",
-    "vitepress": "^1.0.0-alpha.35"
+    "vitepress": "^1.0.0-rc.12"
   },
   "engines": {
     "yarn": "1.x",
