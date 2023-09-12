@@ -20,7 +20,11 @@ const nav: ThemeConfig["nav"] = [
         text: "Configuration",
         link: "/guide/configuration"
       },
-      { text: "Examples", link: "/examples/javascript" },
+      {
+        text: "Version 2.x (beta)",
+        link: "/guide/v2"
+      },
+      { text: "Examples", link: "/examples/javascript" }
     ]
   },
   {
@@ -66,6 +70,15 @@ const defaultSidebarItems: SidebarGroup[] = [
       {
         text: "React Component",
         link: "/examples/react-component"
+      }
+    ]
+  },
+  {
+    text: "Version 2.x (beta)",
+    items: [
+      {
+        text: "Documentation",
+        link: "/guide/v2"
       }
     ]
   },
