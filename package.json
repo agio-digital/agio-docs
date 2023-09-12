@@ -1,6 +1,6 @@
 {
   "name": "agio-docs",
-  "version": "1.0.0",
+  "version": "2.0.0-beta.0",
   "scripts": {
     "prepush": "yarn && yarn build && git add docs/.vitepress/dist/. && git add docs/.vitepress/cache/",
     "build": "vitepress build docs",
