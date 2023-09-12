@@ -6,7 +6,9 @@
 @import "./utilities.css";
 @import "./style-guide.css";
 
-.button, a.button, .vt-doc a.button {
+.button,
+a.button,
+.vt-doc a.button {
   font-size: 16px;
   display: inline-block;
   background-color: var(--vt-c-bg-mute);
@@ -17,6 +19,51 @@
   color: var(--vt-c-text-code);
 }
 
+.button.button-primary,
+a.button.button-primary,
+.vt-doc a.button.button-primary {
+  background-color: var(--vt-c-brand);
+  color: var(--vt-c-text-inverse-1);
+}
+
 .vp-adaptive-theme pre + pre {
   display: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="color"],
+textarea,
+input:not([type]) {
+  background-color: var(--vt-c-bg-mute);
+  border: 1px solid var(--vt-c-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: var(--vt-c-text);
+  transition: background-color 0.5s, color 0.5s;
+  width: 100%;
+  display: block;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--vt-c-text);
+  display: block;
+  margin-bottom: 0.25rem;
 }

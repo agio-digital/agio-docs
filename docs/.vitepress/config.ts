@@ -153,7 +153,8 @@ export default defineConfigWithTheme<ThemeConfig>({
       `
       ${fs.readFileSync(path.resolve(__dirname, "theme/styles/theme-overrides.css"), "utf-8")}
     `
-    ]
+    ],
+    ["link", { rel: "stylesheet", href: "https://unpkg.com/tailwindcss@2.0.4/dist/tailwind.min.css" }]
   ],
 
   themeConfig: {
