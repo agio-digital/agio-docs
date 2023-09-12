@@ -1,29 +1,25 @@
 {
-  "hash": "cd54cc3d",
-  "browserHash": "f80db6d7",
+  "hash": "2390426e",
+  "browserHash": "835a2f08",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "1d622552",
+      "fileHash": "9b236c4d",
       "needsInterop": false
     },
-    "markdown-it": {
-      "src": "../../../../node_modules/markdown-it/index.js",
-      "file": "markdown-it.js",
-      "fileHash": "da5f8e39",
-      "needsInterop": true
+    "vitepress > @vue/devtools-api": {
+      "src": "../../../../node_modules/@vue/devtools-api/lib/esm/index.js",
+      "file": "vitepress___@vue_devtools-api.js",
+      "fileHash": "964cc8d1",
+      "needsInterop": false
     },
-    "highlight.js": {
-      "src": "../../../../node_modules/highlight.js/es/index.js",
-      "file": "highlight__js.js",
-      "fileHash": "5f2318c2",
+    "axios": {
+      "src": "../../../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "9e834cf8",
       "needsInterop": false
     }
   },
-  "chunks": {
-    "chunk-DFKQJ226": {
-      "file": "chunk-DFKQJ226.js"
-    }
-  }
+  "chunks": {}
 }

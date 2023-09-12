@@ -5,3 +5,14 @@
 @import "./inline-demo.css";
 @import "./utilities.css";
 @import "./style-guide.css";
+
+.button, a.button, .vt-doc a.button {
+  font-size: 16px;
+  display: inline-block;
+  background-color: var(--vt-c-bg-mute);
+  padding: 8px 18px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.5s, color 0.5s;
+  color: var(--vt-c-text-code);
+}
