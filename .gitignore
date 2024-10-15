@@ -4,5 +4,5 @@
 coverage
 /lib
 node_modules
-yarn.lock
 /dist
+.vitepress
