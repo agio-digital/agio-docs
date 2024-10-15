@@ -27,7 +27,7 @@ http {
   client_body_timeout 5;
 
   server {
-    listen $PORT;
+    listen {{port}};
     charset UTF-8;
     port_in_redirect off;
     keepalive_timeout 5;
