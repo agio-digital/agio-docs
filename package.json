@@ -3,7 +3,6 @@
   "version": "2.0.2",
   "type": "module",
   "scripts": {
-    "prepush": "yarn && yarn build && git add docs/.vitepress/dist/. && git add docs/.vitepress/cache/",
     "build": "NODE_ENV=production vitepress build docs",
     "dev": "vitepress dev docs",
     "docs:dev": "vitepress dev docs",
