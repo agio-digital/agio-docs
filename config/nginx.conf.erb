@@ -17,59 +17,29 @@ http {
 
   server_tokens off;
 
-
-  access_log logs/access.log;
-
-
-
-  error_log stderr error;
-
+  access_log /dev/stdout;
+  error_log /dev/stderr error;
 
   include mime.types;
   default_type application/octet-stream;
   sendfile on;
 
-  #Must read the body in 5 seconds.
   client_body_timeout 5;
 
   server {
-    listen 27597 reuseport;
+    listen $PORT;
     charset UTF-8;
     port_in_redirect off;
     keepalive_timeout 5;
     root docs/.vitepress/dist;
-  
-  
-
-  
-
-    mruby_post_read_handler /app/bin/config/lib/ngx_mruby/headers.rb cache;
 
     location / {
-      mruby_set $fallback /app/bin/config/lib/ngx_mruby/routes_fallback.rb cache;
-    
-      try_files $uri $uri/ $fallback;
-    
+      try_files $uri $uri/ /index.html =404;
     }
 
-  
-
-  
-
-  
-
-  
-
-  # need this b/c setting $fallback to =404 will try #{root}=404 instead of returning a 404
-  location @404 {
-    return 404;
-  }
-
-  # fallback proxy named match
-  
-
-  # fallback redirects named match
-  
-
+    error_page 404 /404.html;
+    location = /404.html {
+      internal;
+    }
   }
 }
