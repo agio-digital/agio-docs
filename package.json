@@ -9,19 +9,26 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "lint": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.13.0",
     "@vue/theme": "^2.3.0",
+    "agio-sdk": "^1.1.7",
+    "graphql": "^16.10.0",
     "highlight.js": "^11.11.1",
     "husky": "^4.3.8",
     "lint-staged": "^15.4.3",
     "markdown-it": "^14.1.0",
     "prettier": "^3.4.2",
     "terser": "^5.44.1",
-    "vitepress": "^1.6.4"
+    "typescript": "^5.7.3",
+    "vitepress": "^1.6.4",
+    "vitest": "^3.0.4"
   },
   "engines": {
     "yarn": "4.x",
