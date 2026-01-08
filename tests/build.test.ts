@@ -32,9 +32,9 @@ describe("VitePress Build", () => {
     expect(files).toContain("configuration.md");
   });
 
-  it("should build successfully", () => {
-    // This test runs the actual build - may be slow
-    // Skip in watch mode, run in CI
+  it.skip("should build successfully", () => {
+    // Skipped: Build is already run as a separate CI step
+    // This test would be redundant and slow in CI
     const result = execSync("yarn build", {
       encoding: "utf-8",
       timeout: 120000
@@ -43,7 +43,8 @@ describe("VitePress Build", () => {
     expect(result).toContain("build complete");
   });
 
-  it("should generate output files after build", () => {
+  it.skip("should generate output files after build", () => {
+    // Skipped: Depends on build test above
     const distDir = join(process.cwd(), "docs", ".vitepress", "dist");
 
     expect(existsSync(distDir)).toBe(true);
