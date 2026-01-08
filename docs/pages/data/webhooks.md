@@ -67,11 +67,7 @@ Please note, final reviewResult approval data is summarized via the “reviewApp
 #### reviewResult.rejectLabels - If the result is a rejection, this field will contain a list of labels that describe the reason for the rejection.
 
 ```json
-[
-  "UNSATISFACTORY_PHOTOS",
-  "GRAPHIC_EDITOR",
-  "FORGERY"
-]
+["UNSATISFACTORY_PHOTOS", "GRAPHIC_EDITOR", "FORGERY"]
 ```
 
 #### Example Initial Rejection
@@ -98,7 +94,7 @@ Please note, final reviewResult approval data is summarized via the “reviewApp
 ```json
 {
   "WebhookPayloadId": 1,
-  "applicantId": "5cb744200a975a67ed1798a4", 
+  "applicantId": "5cb744200a975a67ed1798a4",
   "inspectionId": "5cb744200a975a67ed1798a5",
   "correlationId": "req-fa94263f-0b23-42d7-9393-ab10b28ef42d",
   "externalUserId": "externalUserId",
