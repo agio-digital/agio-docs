@@ -1,4 +1,10 @@
-.yarn
+# Yarn 4
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 .env
 .parcel-cache
 coverage

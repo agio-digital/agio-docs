@@ -24,16 +24,17 @@
     "vitepress": "^1.0.0-rc.12"
   },
   "engines": {
-    "yarn": "1.x",
-    "node": "18.x"
+    "yarn": "4.x",
+    "node": "24.x"
   },
+  "packageManager": "yarn@4.6.0",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && yarn prepush"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*.{js,ts,vue,md,json,yml,yaml,css,html}": "prettier --write"
   },
   "dependencies": {
     "axios": "^1.5.0"
