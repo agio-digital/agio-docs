@@ -107,9 +107,11 @@ const queryParamsObject = computed(() => (iframeSrc.value?.split("?")?.[1]?.spli
 }, {}));
 </script>
 
-# Widget Integration Guide
+# Direct Widget Integration
 
-This document will provide you with a comprehensive overview of integrating our widget seamlessly into your application. Leveraging URL query parameters, you can customize the widget to suit your application's needs.
+Integrate the Agio verification widget directly into your application using an iframe. This approach provides a lightweight, no-dependency solution for embedding KYC/KYB verification flows.
+
+This guide covers the iframe-based widget integration using URL query parameters for customization.
 
 ## Table of Contents
 
@@ -358,7 +360,7 @@ axios
 ## Live Example
 
 <label for="initToken">Init Token:</label>
-<input id="initToken" v-model="initToken" placeholder="initToken" style="margin-bottom: 1rem;" readonly>
+<input id="initToken" v-model="initToken" placeholder="initToken" style="margin-bottom: 1rem;">
 
 <label for="externalUserId">External User ID:</label>
 <input id="externalUserId" v-model="mutationVariables.externalUserId" placeholder="externalUserId" style="margin-bottom: 1rem;">
