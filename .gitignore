@@ -14,3 +14,7 @@ node_modules
 .vitepress
 docs/.vitepress/dist
 docs/.vitepress/cache
+
+# Generated SpectaQL docs (built at deploy time)
+docs/public/spectaql
+.DS_Store
