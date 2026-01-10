@@ -24,11 +24,8 @@ const getMdRenderer = async () => {
     }
   });
 
-  //   md.use(componentPlugin, {});
   md.use(preWrapperPlugin);
   md.use(linkPlugin, { target: "_blank", rel: "noreferrer" });
-
-  console.log(md);
 
   return md;
 };
@@ -70,8 +67,6 @@ watch(
     if (!val) return;
 
     const renderer = await getMdRenderer();
-
-    console.log(renderer);
 
     const codeBlock = `
 \`\`\`${fileExtension.value}

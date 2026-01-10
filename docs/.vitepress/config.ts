@@ -1,10 +1,13 @@
 import fs from "fs";
 import path from "path";
-import { defineConfigWithTheme } from "vitepress";
+import { defineConfigWithTheme, loadEnv } from "vitepress";
 import type { Config as ThemeConfig } from "@vue/theme";
 import baseConfig from "@vue/theme/config";
 import { headerPlugin } from "./headerMdPlugin";
 import { SidebarGroup } from "@vue/theme/src/vitepress/config";
+
+// Load env vars from project root
+const env = loadEnv("", path.resolve(__dirname, "../.."));
 
 const nav: ThemeConfig["nav"] = [
   {
@@ -20,11 +23,42 @@ const nav: ThemeConfig["nav"] = [
         text: "Configuration",
         link: "/guide/configuration"
       },
+      { text: "Examples", link: "/examples/typescript" }
+    ]
+  },
+  {
+    text: "SDKs",
+    activeMatch: `^/(guide|sdk)/`,
+    items: [
       {
-        text: "Version 2.x (beta)",
-        link: "/guide/v2"
+        text: "Agio SDK",
+        items: [
+          { text: "TypeScript", link: "/guide/quick-start" },
+          { text: "Direct Widget", link: "/guide/direct-widget" }
+        ]
+      }
+    ]
+  },
+  {
+    text: "API Reference",
+    activeMatch: `^/api/`,
+    items: [
+      { text: "Overview", link: "/api/" },
+      { text: "Authentication", link: "/api/authentication" },
+      {
+        text: "GraphQL API",
+        items: [
+          { text: "Overview", link: "/api/graphql-overview" },
+          { text: "API Explorer", link: "/api/platform-api-explorer" }
+        ]
       },
-      { text: "Examples", link: "/examples/javascript" }
+      {
+        text: "Hasura API",
+        items: [
+          { text: "Overview", link: "/api/hasura/overview" },
+          { text: "API Explorer", link: "/api/hasura-explorer" }
+        ]
+      }
     ]
   },
   {
@@ -60,10 +94,6 @@ const defaultSidebarItems: SidebarGroup[] = [
     text: "Examples",
     items: [
       {
-        text: "JavaScript",
-        link: "/examples/javascript"
-      },
-      {
         text: "TypeScript",
         link: "/examples/typescript"
       },
@@ -74,11 +104,15 @@ const defaultSidebarItems: SidebarGroup[] = [
     ]
   },
   {
-    text: "Version 2.x (beta)",
+    text: "SDKs",
     items: [
       {
-        text: "Documentation",
-        link: "/guide/v2"
+        text: "TypeScript",
+        link: "/guide/quick-start"
+      },
+      {
+        text: "Direct Widget",
+        link: "/guide/direct-widget"
       }
     ]
   },
@@ -115,12 +149,43 @@ const defaultSidebarItems: SidebarGroup[] = [
   }
 ];
 
+const apiSidebarItems: SidebarGroup[] = [
+  {
+    text: "API Reference",
+    items: [
+      { text: "Overview", link: "/api/" },
+      { text: "Authentication", link: "/api/authentication" }
+    ]
+  },
+  {
+    text: "GraphQL API",
+    items: [
+      { text: "Overview", link: "/api/graphql-overview" },
+      { text: "API Explorer", link: "/api/platform-api-explorer" },
+      { text: "Queries", link: "/api/queries" },
+      { text: "Mutations", link: "/api/mutations" },
+      { text: "Types", link: "/api/types" },
+      { text: "Examples", link: "/api/examples" }
+    ]
+  },
+  {
+    text: "Hasura API",
+    items: [
+      { text: "Overview", link: "/api/hasura/overview" },
+      { text: "API Explorer", link: "/api/hasura-explorer" },
+      { text: "Tables", link: "/api/hasura/tables" },
+      { text: "Permissions", link: "/api/hasura/permissions" }
+    ]
+  }
+];
+
 export const sidebar: ThemeConfig["sidebar"] = {
-  // for guide or exaple
   "/guide/": defaultSidebarItems,
   "/examples/": defaultSidebarItems,
   "/typescript/": defaultSidebarItems,
-  "/changelog/": defaultSidebarItems
+  "/changelog/": defaultSidebarItems,
+  "/data/": defaultSidebarItems,
+  "/api/": apiSidebarItems
 };
 
 // Placeholder of the i18n config for @vuejs-translations.
@@ -205,8 +270,12 @@ export default defineConfigWithTheme<ThemeConfig>({
   },
 
   vite: {
+    envDir: "..",
+    publicDir: "../public",
     define: {
-      __VUE_OPTIONS_API__: false
+      __VUE_OPTIONS_API__: false,
+      "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(env.VITE_AUTH0_DOMAIN),
+      "import.meta.env.VITE_AUTH0_CLIENT_ID": JSON.stringify(env.VITE_AUTH0_CLIENT_ID)
     },
     optimizeDeps: {
       include: ["gsap", "dynamics.js"],

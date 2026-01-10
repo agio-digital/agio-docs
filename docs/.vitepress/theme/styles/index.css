@@ -91,3 +91,10 @@ label {
   display: block;
   margin-bottom: 0.25rem;
 }
+
+/* Auth user menu in navbar */
+.nav-user-area {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+}
