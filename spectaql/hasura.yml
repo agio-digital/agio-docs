@@ -1,0 +1,35 @@
+spectaql:
+  displayAllServers: false
+  targetDir: ./docs/public/spectaql/hasura
+  themeDir: ./spectaql/theme
+
+introspection:
+  url: https://develop-agiodigital.hasura.app/v1/graphql
+  headers:
+    X-Hasura-Admin-Secret: ${HASURA_ADMIN_SECRET}
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 2
+  removeTrailingPeriodFromDescriptions: true
+
+info:
+  title: Hasura GraphQL API
+  description: |
+    Direct database access with real-time subscriptions for reporting and dashboards.
+
+    The Hasura API provides:
+    - Real-time subscriptions to data changes
+    - Direct access to 800+ database tables
+    - Complex filtering and aggregations
+    - Row and column-level permissions
+  contact:
+    name: Agio Digital Support
+    url: https://www.agiodigital.com
+    email: support@agiodigital.com
+  x-logo:
+    url: https://www.agiodigital.com/favicon.ico
+    altText: Agio Digital
+
+servers:
+  - url: https://develop-agiodigital.hasura.app/v1/graphql
+    description: Develop Environment
+    production: false

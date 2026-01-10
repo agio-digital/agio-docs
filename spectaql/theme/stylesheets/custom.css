@@ -1,0 +1,63 @@
+/* Custom theme overrides for Agio branding */
+
+:root {
+  /* Agio brand colors */
+  --spectaql-brand-primary: #193f66;
+  --spectaql-brand-secondary: #2563eb;
+  --spectaql-bg-color: #ffffff;
+  --spectaql-text-color: #1a1a1a;
+}
+
+/* Header styling */
+#spectaql .sidebar-top-container {
+  background-color: var(--spectaql-brand-primary);
+}
+
+#spectaql #logo {
+  max-height: 40px;
+}
+
+/* Navigation links */
+#spectaql .nav-group-title {
+  color: var(--spectaql-brand-primary);
+  font-weight: 600;
+}
+
+#spectaql .nav-item.active a {
+  color: var(--spectaql-brand-primary);
+  border-left-color: var(--spectaql-brand-primary);
+}
+
+/* Operation type badges */
+#spectaql .operation-type.query {
+  background-color: #22c55e;
+}
+
+#spectaql .operation-type.mutation {
+  background-color: #f59e0b;
+}
+
+#spectaql .operation-type.subscription {
+  background-color: #8b5cf6;
+}
+
+/* Code blocks */
+#spectaql pre {
+  background-color: #1e293b;
+  border-radius: 8px;
+}
+
+#spectaql code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Type references */
+#spectaql .field-type a {
+  color: var(--spectaql-brand-secondary);
+}
+
+/* Arguments table */
+#spectaql .arguments-table th {
+  background-color: var(--spectaql-brand-primary);
+  color: white;
+}

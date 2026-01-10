@@ -1,0 +1,37 @@
+spectaql:
+  displayAllServers: false
+  targetDir: ./docs/public/spectaql/platform-api
+  themeDir: ./spectaql/theme
+
+introspection:
+  url: https://api-develop.agiodigital.com/graphql
+  headers:
+    X-API-Key: ${AGIO_API_KEY}
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 2
+  removeTrailingPeriodFromDescriptions: true
+
+info:
+  title: Agio Platform API
+  description: |
+    GraphQL API for portfolio management, trading, KYC, and fund administration.
+
+    This API provides access to:
+    - Portfolio & wallet management
+    - OTC trading and quotes
+    - KYC/AML compliance data
+    - Fund subscriptions and redemptions
+    - Document generation
+  termsOfService: https://www.agiodigital.com/terms
+  contact:
+    name: Agio Digital Support
+    url: https://www.agiodigital.com
+    email: support@agiodigital.com
+  x-logo:
+    url: https://www.agiodigital.com/favicon.ico
+    altText: Agio Digital
+
+servers:
+  - url: https://api-develop.agiodigital.com/graphql
+    description: Develop Environment
+    production: false
