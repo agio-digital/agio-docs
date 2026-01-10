@@ -1,5 +1,22 @@
 # Changelog
 
+## Version 2.0.0-beta.0
+
+_(preview release)_
+
+1. **Direct Widget Integration** - New iframe-based integration option with JWT token authentication
+2. **Documentation Restructure** - SDK documentation reorganized under "SDKs" menu
+3. **Expanded KYC Documentation** - Complete verification status and rejection label reference
+4. **KYT Webhook Documentation** - Full wallet verification webhook payload documentation
+
+### Migration Notes
+
+The TypeScript SDK API remains unchanged. The Direct Widget provides an alternative integration path:
+
+- Use `generateKycSdkInitToken` GraphQL mutation to obtain a JWT token
+- Embed the widget iframe with URL query parameters
+- No npm package installation required for Direct Widget integration
+
 ## Version 1.1.6
 
 _(no breaking changes)_

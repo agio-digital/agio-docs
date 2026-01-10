@@ -69,31 +69,6 @@ interface SdkConfig {
    */
   lang?: string;
   webSocketImpl?: ClientOptions["webSocketImpl"];
-  /**
-   * @description 2-letter ISO 639-1 language code, case-insensitive
-   * @example "en"
-   * @example "pt-BR"
-   */
-  lang?: string;
-
-  /**
-   * @description disable wallet address input field, preventing user from changing it
-   * @example true
-   */
-  walletAddressDisabled?: boolean;
-
-  /**
-   * @description use KYB flow instead of KYC
-   * @example true
-   */
-  kyb?: boolean;
-
-  /**
-   * @description use alternative KYC level
-   * In case a user can't provide a valid ID document (passport), the alternative KYC level can be used
-   * @example false
-   */
-  useAlternativeKycLevel?: boolean;
 }
 ```
 

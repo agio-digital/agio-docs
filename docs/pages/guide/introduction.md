@@ -20,21 +20,39 @@ footer: false
 
 ## What is Agio SDK? {#what-is-agio-sdk}
 
-The **Agio SDK** is a JavaScript and TypeScript library that enables you to integrate the Agio user verification process into your website or app. It provides a simple way to embed an iframe that guides users through the process of verifying their identity and connecting a blockchain wallet. The Agio SDK also allows you to receive updates on the user's verification status and data.
+The **Agio SDK** enables you to integrate KYC (Know Your Customer) and KYB (Know Your Business) verification flows into your website or application. Users are guided through identity verification and blockchain wallet connection with real-time status updates.
 
-To use the Agio SDK, you will need to install it using npm or yarn and then create an instance of the SDK by passing in a configuration object. This configuration object should include your Agio API token, the element that you want to mount the iframe to, and any callbacks that you want to register for handling events such as user data changes and errors.
+## Integration Options {#integration-options}
+
+Choose the integration method that best fits your needs:
+
+### TypeScript SDK (npm package)
+
+Install via npm/yarn for full programmatic control. Ideal for applications that need:
+
+- Real-time GraphQL subscriptions for user status updates
+- Event callbacks for verification milestones
+- React component support
+
+### Direct Widget (iframe)
+
+Embed the verification widget directly using an iframe with URL parameters. Best for:
+
+- Lightweight integrations with no dependencies
+- Server-side token generation via GraphQL API
+- Quick implementation without package installation
 
 <div class="vt-box-container next-steps">
   <a class="vt-box" href="/guide/quick-start">
-    <p class="next-steps-link">Installation</p>
-    <p class="next-steps-caption">Learn how to install the Agio SDK and get started.</p>
+    <p class="next-steps-link">TypeScript SDK</p>
+    <p class="next-steps-caption">Install the npm package and integrate with event callbacks.</p>
   </a>
-  <a class="vt-box" href="/guide/configuration">
-    <p class="next-steps-link">Configuration</p>
-    <p class="next-steps-caption">The section walks you through the process of creating a simple Agio SDK app.</p>
+  <a class="vt-box" href="/guide/direct-widget">
+    <p class="next-steps-link">Direct Widget</p>
+    <p class="next-steps-caption">Embed the widget via iframe with URL query parameters.</p>
   </a>
   <a class="vt-box" href="/examples/javascript">
-    <p class="next-steps-link">Check out the Examples</p>
-    <p class="next-steps-caption">Explore examples of implementing the Agio SDK in different frameworks.</p>
+    <p class="next-steps-link">Examples</p>
+    <p class="next-steps-caption">Explore implementation examples in JavaScript, TypeScript, and React.</p>
   </a>
 </div>

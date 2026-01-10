@@ -75,18 +75,22 @@ Please note, final reviewResult approval data is summarized via the “reviewApp
 ```json
 {
   "WebhookPayloadId": 1,
-  "applicantId": "5cb744200a975a67ed1798a4", // applicant ID
-  "inspectionId": "5cb744200a975a67ed1798a5", // applicant's inspection ID
+  "applicantId": "5cb744200a975a67ed1798a4",
+  "inspectionId": "5cb744200a975a67ed1798a5",
   "correlationId": "req-fa94263f-0b23-42d7-9393-ab10b28ef42d",
   "externalUserId": "externalUserId",
   "levelName": "basic-kyc-level",
   "type": "applicantReviewed",
   "reviewResult": {
     "reviewAnswer": "RED",
-          "moderationComment": "We do not accept screenshots. Please upload an original photo.",
-          "clientComment": "Screenshots are not accepted.",
-          "reviewRejectType": "RETRY",
-          "rejectLabels": ["UNSATISFACTORY_PHOTOS","SCREENSHOTS"]
+    "moderationComment": "We do not accept screenshots. Please upload an original photo.",
+    "clientComment": "Screenshots are not accepted.",
+    "reviewRejectType": "RETRY",
+    "rejectLabels": ["UNSATISFACTORY_PHOTOS", "SCREENSHOTS"]
+  },
+  "reviewStatus": "completed",
+  "createdAt": "2020-02-21 13:23:19+0000"
+}
 ```
 
 #### Example Final Rejection
@@ -132,4 +136,45 @@ Please note, final reviewResult approval data is summarized via the “reviewApp
 
 ## KYT Webhook
 
-Coming soon!
+The KYT (Know Your Transaction) webhook is sent when a wallet's verification status changes. This allows you to track wallet whitelisting status in real-time.
+
+### KYT Webhook Data Fields
+
+| Field              | Type      | Description                                                         |
+| ------------------ | --------- | ------------------------------------------------------------------- |
+| `id`               | integer   | Unique identifier for the wallet record                             |
+| `wallet_address`   | string    | The wallet address that was analyzed                                |
+| `external_user_id` | string    | Your internal user identifier                                       |
+| `status_id`        | integer   | Current wallet status (see below)                                   |
+| `clean_wallet`     | boolean   | Whether the wallet was marked as clean (new wallet with no history) |
+| `created_at`       | timestamp | When the wallet was submitted for analysis                          |
+| `updated_at`       | timestamp | When the status was last updated                                    |
+
+### KYT Status Codes
+
+| Status ID | Status        | Description                                                                        |
+| --------- | ------------- | ---------------------------------------------------------------------------------- |
+| `1`       | Pending       | Wallet is being analyzed                                                           |
+| `2`       | Approved      | Wallet passed risk analysis and manual review                                      |
+| `3`       | Denied        | Wallet failed risk analysis (high risk score, sanctioned addresses, illicit funds) |
+| `4`       | Auto-approved | Wallet passed automated risk analysis (low risk score)                             |
+
+### Example KYT Webhook Payload
+
+```json
+{
+  "id": 12345,
+  "wallet_address": "0x1234567890abcdef1234567890abcdef12345678",
+  "external_user_id": "user-abc-123",
+  "status_id": 4,
+  "clean_wallet": false,
+  "created_at": "2024-01-15T10:30:00Z",
+  "updated_at": "2024-01-15T10:31:45Z"
+}
+```
+
+### Notes
+
+- Wallets marked as `clean_wallet: true` are automatically assigned `status_id: 4` (Auto-approved)
+- All wallets start in `status_id: 1` (Pending) until analysis completes
+- Status IDs 2, 3, and 4 are final states
