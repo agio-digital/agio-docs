@@ -19,3 +19,5 @@ docs/.vitepress/cache
 docs/public/spectaql
 .DS_Store
 .claude/
+.vercel
+.env*.local
