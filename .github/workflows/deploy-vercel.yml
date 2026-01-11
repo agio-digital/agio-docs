@@ -46,6 +46,9 @@ jobs:
         run: yarn test
 
       - name: Build VitePress site
+        env:
+          VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
+          VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
         run: yarn build
 
       - name: Prepare Vercel Output
