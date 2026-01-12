@@ -49,6 +49,8 @@ jobs:
         env:
           VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
           VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
+          AGIO_API_KEY: ${{ secrets.AGIO_API_KEY }}
+          HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
         run: yarn build
 
       - name: Prepare Vercel Output
