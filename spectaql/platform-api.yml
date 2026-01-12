@@ -4,7 +4,7 @@ spectaql:
   themeDir: ./spectaql/theme
 
 introspection:
-  url: https://api-develop.agiodigital.com/graphql
+  url: https://dev.api.agiodigital.com/graphql
   headers:
     X-API-Key: ${AGIO_API_KEY}
   queryNameStrategy: capitalizeFirst
@@ -32,6 +32,6 @@ info:
     altText: Agio Digital
 
 servers:
-  - url: https://api-develop.agiodigital.com/graphql
+  - url: https://dev.api.agiodigital.com/graphql
     description: Develop Environment
     production: false
