@@ -4,9 +4,9 @@ spectaql:
   themeDir: ./spectaql/theme
 
 introspection:
-  url: https://dev.api.agiodigital.com/graphql
-  headers:
-    X-API-Key: ${AGIO_API_KEY}
+  # Use pre-cached introspection file for faster builds
+  # Regenerate with: yarn export:introspection
+  introspectionFile: ./spectaql/introspection/platform-api.json
   queryNameStrategy: capitalizeFirst
   fieldExpansionDepth: 2
   removeTrailingPeriodFromDescriptions: true

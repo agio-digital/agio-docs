@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "type": "module",
   "scripts": {
-    "build": "yarn generate:spectaql && NODE_ENV=production vitepress build docs",
+    "build": "NODE_ENV=production vitepress build docs",
     "dev": "vitepress dev docs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -14,7 +14,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "generate:api-docs": "tsx scripts/generate-api-docs.ts",
-    "generate:spectaql": "tsx scripts/generate-spectaql.ts"
+    "generate:spectaql": "tsx scripts/generate-spectaql.ts",
+    "export:introspection": "tsx scripts/export-introspection.ts"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
