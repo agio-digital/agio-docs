@@ -15,9 +15,9 @@ node_modules
 docs/.vitepress/dist
 docs/.vitepress/cache
 
-# SpectaQL - generated HTML ignored (too large, generated manually)
-# Introspection JSON files ARE committed for faster manual regeneration
-docs/public/spectaql/
+# SpectaQL - generated HTML ignored (generated during CI build)
+# Introspection JSON files ARE committed for faster builds
+docs/pages/public/spectaql/
 .DS_Store
 .claude/
 .vercel

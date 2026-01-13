@@ -1,6 +1,6 @@
 spectaql:
   displayAllServers: false
-  targetDir: ./docs/public/spectaql/platform-api
+  targetDir: ./docs/pages/public/spectaql/platform-api
   themeDir: ./spectaql/theme
 
 introspection:

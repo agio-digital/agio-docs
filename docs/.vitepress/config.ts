@@ -195,8 +195,8 @@ export const sidebar: ThemeConfig["sidebar"] = {
 export default defineConfigWithTheme<ThemeConfig>({
   extends: baseConfig,
   lang: "en-US",
-  title: "Agio SDK",
-  description: "Agio Management SDK - The Agio Management SDK is a set of tools to help you build your own applications on top of the Agio platform.",
+  title: "Agio Digital Ltd. - Developer Documentation",
+  description: "Developer documentation for Agio Digital Ltd. Build your own applications on top of the Agio platform.",
   srcDir: "pages",
   srcExclude: ["tutorial/**/description.md"],
   scrollOffset: "header",
@@ -271,7 +271,6 @@ export default defineConfigWithTheme<ThemeConfig>({
 
   vite: {
     envDir: "..",
-    publicDir: "../public",
     define: {
       __VUE_OPTIONS_API__: false,
       "import.meta.env.VITE_AUTH0_DOMAIN": JSON.stringify(env.VITE_AUTH0_DOMAIN),

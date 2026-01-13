@@ -2,14 +2,14 @@
  * Generate SpectaQL API Documentation
  *
  * This script generates interactive GraphQL documentation using SpectaQL
- * for both the Platform API and Hasura API endpoints.
+ * for the Platform API endpoint. Uses cached introspection files from
+ * spectaql/introspection/ directory.
  *
  * Usage:
  *   yarn generate:spectaql
  *
- * Environment variables (can be set in .env file):
- *   AGIO_API_KEY - API key for Platform API introspection
- *   HASURA_ADMIN_SECRET - Admin secret for Hasura introspection
+ * To update introspection cache:
+ *   yarn export:introspection
  */
 
 import "dotenv/config";
@@ -26,21 +26,13 @@ interface SpectaQLConfig {
   name: string;
   configFile: string;
   outputDir: string;
-  requiredEnvVar: string;
 }
 
 const configs: SpectaQLConfig[] = [
   {
     name: "Platform API",
     configFile: path.join(ROOT_DIR, "spectaql/platform-api.yml"),
-    outputDir: path.join(ROOT_DIR, "docs/public/spectaql/platform-api"),
-    requiredEnvVar: "AGIO_API_KEY"
-  },
-  {
-    name: "Hasura API",
-    configFile: path.join(ROOT_DIR, "spectaql/hasura.yml"),
-    outputDir: path.join(ROOT_DIR, "docs/public/spectaql/hasura"),
-    requiredEnvVar: "HASURA_ADMIN_SECRET"
+    outputDir: path.join(ROOT_DIR, "docs/pages/public/spectaql/platform-api")
   }
 ];
 
@@ -101,14 +93,6 @@ function createPlaceholderPage(outputDir: string, name: string, error: string): 
 function generateDocs(config: SpectaQLConfig): boolean {
   console.log(`\n=== Generating ${config.name} documentation ===\n`);
 
-  // Check for required environment variable
-  const envValue = process.env[config.requiredEnvVar];
-  if (!envValue) {
-    console.warn(`Warning: ${config.requiredEnvVar} not set, creating placeholder...`);
-    createPlaceholderPage(config.outputDir, config.name, `Missing environment variable: ${config.requiredEnvVar}`);
-    return false;
-  }
-
   // Create output directory
   fs.mkdirSync(config.outputDir, { recursive: true });
 
@@ -159,7 +143,6 @@ async function main(): Promise<void> {
   // This allows the main docs site to still build
   if (successCount === 0) {
     console.log("Note: No API docs were generated, but build will continue.");
-    console.log("Set AGIO_API_KEY and HASURA_ADMIN_SECRET to enable generation.");
   }
 }
 

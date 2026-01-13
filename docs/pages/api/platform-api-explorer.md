@@ -16,7 +16,7 @@ Interactive documentation for the Agio Platform GraphQL API. Browse queries, mut
       <li>KYC/AML compliance data</li>
       <li>Fund subscriptions and redemptions</li>
     </ul>
-    <a href="/spectaql/platform-api/" class="explorer-button" target="_blank">
+    <a href="/spectaql/platform-api/index.html" class="explorer-button" target="_blank">
       Open API Explorer →
     </a>
   </div>

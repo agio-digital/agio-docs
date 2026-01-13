@@ -45,6 +45,9 @@ jobs:
       - name: Run tests
         run: yarn test
 
+      - name: Generate SpectaQL API docs
+        run: yarn generate:spectaql
+
       - name: Build VitePress site
         env:
           VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
