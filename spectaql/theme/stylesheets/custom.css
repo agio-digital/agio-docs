@@ -47,8 +47,12 @@
   border-bottom: 1px solid var(--spectaql-border-color);
 }
 
-#spectaql .nav-group-items a {
-  color: #ffffff;
+#spectaql #sidebar .nav-group-items a {
+  color: #ffffff !important;
+}
+
+#spectaql #sidebar a {
+  color: #ffffff !important;
 }
 
 #spectaql .nav-group-items a:hover {
