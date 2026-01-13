@@ -36,3 +36,33 @@
 .dark .custom-block {
   color: var(--vt-c-text-2);
 }
+
+/* Fix VitePress layout positioning */
+.VPDoc {
+  padding-left: 0 !important;
+}
+
+.VPContent {
+  padding-left: 0 !important;
+}
+
+.VPDoc .container {
+  margin-left: 0 !important;
+}
+
+/* Ensure sidebar doesn't overlap content */
+.VPSidebar {
+  position: fixed !important;
+}
+
+/* Fix main content positioning relative to sidebar */
+@media (min-width: 960px) {
+  .VPDoc:not(.has-sidebar) .content {
+    max-width: 100% !important;
+  }
+
+  .VPDoc.has-sidebar .content {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+}

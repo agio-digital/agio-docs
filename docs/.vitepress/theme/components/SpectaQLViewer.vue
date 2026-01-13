@@ -86,12 +86,12 @@ onUnmounted(() => {
 <style scoped>
 .spectaql-container {
   position: fixed;
-  top: 0;
+  top: var(--vp-nav-height, 64px);
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 100;
-  background: white;
+  z-index: 50;
+  background: #0f172a;
 }
 
 .spectaql-iframe {
