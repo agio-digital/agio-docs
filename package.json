@@ -14,7 +14,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "generate:api-docs": "tsx scripts/generate-api-docs.ts",
-    "generate:spectaql": "tsx scripts/generate-spectaql.ts",
+    "generate:spectaql": "tsx scripts/generate-spectaql.ts && tsx scripts/bundle-spectaql.ts",
+    "bundle:spectaql": "tsx scripts/bundle-spectaql.ts",
     "export:introspection": "tsx scripts/export-introspection.ts"
   },
   "devDependencies": {

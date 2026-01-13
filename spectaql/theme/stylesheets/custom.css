@@ -1,63 +1,221 @@
-/* Custom theme overrides for Agio branding */
+/* Custom dark theme for Agio SpectaQL documentation */
 
 :root {
-  /* Agio brand colors */
-  --spectaql-brand-primary: #193f66;
-  --spectaql-brand-secondary: #2563eb;
-  --spectaql-bg-color: #ffffff;
-  --spectaql-text-color: #1a1a1a;
+  /* Agio brand colors - dark theme */
+  --spectaql-brand-primary: #60a5fa;
+  --spectaql-brand-secondary: #93c5fd;
+  --spectaql-bg-dark: #0f172a;
+  --spectaql-bg-sidebar: #1e293b;
+  --spectaql-bg-content: #0f172a;
+  --spectaql-bg-code: #1e293b;
+  --spectaql-text-primary: #f1f5f9;
+  --spectaql-text-secondary: #94a3b8;
+  --spectaql-border-color: #334155;
 }
 
-/* Header styling */
+/* Global dark background */
+#spectaql,
+#spectaql body,
+#spectaql #page {
+  background-color: var(--spectaql-bg-dark);
+  color: var(--spectaql-text-primary);
+}
+
+/* Sidebar */
+#spectaql #sidebar {
+  background-color: var(--spectaql-bg-sidebar);
+  border-right: 1px solid var(--spectaql-border-color);
+}
+
 #spectaql .sidebar-top-container {
-  background-color: var(--spectaql-brand-primary);
+  background-color: #193f66;
+  border-bottom: 1px solid var(--spectaql-border-color);
 }
 
 #spectaql #logo {
   max-height: 40px;
 }
 
-/* Navigation links */
+/* Navigation */
+#spectaql #nav {
+  background-color: var(--spectaql-bg-sidebar);
+}
+
 #spectaql .nav-group-title {
   color: var(--spectaql-brand-primary);
   font-weight: 600;
+  border-bottom: 1px solid var(--spectaql-border-color);
+}
+
+#spectaql .nav-group-items a {
+  color: var(--spectaql-text-secondary);
+}
+
+#spectaql .nav-group-items a:hover {
+  color: var(--spectaql-text-primary);
+  background-color: rgba(96, 165, 250, 0.1);
 }
 
 #spectaql .nav-item.active a {
   color: var(--spectaql-brand-primary);
   border-left-color: var(--spectaql-brand-primary);
+  background-color: rgba(96, 165, 250, 0.15);
+}
+
+/* Main content area */
+#spectaql #docs {
+  background-color: var(--spectaql-bg-content);
+}
+
+#spectaql .doc-row {
+  border-bottom: 1px solid var(--spectaql-border-color);
+}
+
+/* Headers */
+#spectaql h1,
+#spectaql h2,
+#spectaql h3,
+#spectaql h4,
+#spectaql h5 {
+  color: var(--spectaql-text-primary);
+}
+
+#spectaql .operation-heading {
+  color: var(--spectaql-text-primary);
 }
 
 /* Operation type badges */
 #spectaql .operation-type.query {
   background-color: #22c55e;
+  color: white;
 }
 
 #spectaql .operation-type.mutation {
   background-color: #f59e0b;
+  color: white;
 }
 
 #spectaql .operation-type.subscription {
   background-color: #8b5cf6;
+  color: white;
 }
 
 /* Code blocks */
 #spectaql pre {
-  background-color: #1e293b;
+  background-color: var(--spectaql-bg-code);
+  border: 1px solid var(--spectaql-border-color);
   border-radius: 8px;
 }
 
 #spectaql code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--spectaql-text-primary);
 }
 
-/* Type references */
+#spectaql pre code {
+  color: #e2e8f0;
+}
+
+/* Inline code */
+#spectaql p code,
+#spectaql li code,
+#spectaql td code {
+  background-color: var(--spectaql-bg-code);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  color: var(--spectaql-brand-secondary);
+}
+
+/* Type references and links */
+#spectaql a {
+  color: var(--spectaql-brand-primary);
+}
+
+#spectaql a:hover {
+  color: var(--spectaql-brand-secondary);
+}
+
 #spectaql .field-type a {
   color: var(--spectaql-brand-secondary);
 }
 
-/* Arguments table */
-#spectaql .arguments-table th {
-  background-color: var(--spectaql-brand-primary);
+/* Tables */
+#spectaql table {
+  background-color: var(--spectaql-bg-sidebar);
+  border: 1px solid var(--spectaql-border-color);
+}
+
+#spectaql th {
+  background-color: #193f66;
   color: white;
+  border-bottom: 1px solid var(--spectaql-border-color);
+}
+
+#spectaql td {
+  border-bottom: 1px solid var(--spectaql-border-color);
+  color: var(--spectaql-text-primary);
+}
+
+#spectaql tr:nth-child(even) {
+  background-color: rgba(30, 41, 59, 0.5);
+}
+
+#spectaql .arguments-table th {
+  background-color: #193f66;
+  color: white;
+}
+
+/* Field descriptions */
+#spectaql .field-description,
+#spectaql .description {
+  color: var(--spectaql-text-secondary);
+}
+
+/* Required/optional markers */
+#spectaql .required-marker {
+  color: #f87171;
+}
+
+/* Deprecation notices */
+#spectaql .deprecation-notice {
+  background-color: rgba(251, 191, 36, 0.2);
+  border-left: 4px solid #fbbf24;
+  color: #fbbf24;
+}
+
+/* Close button */
+#spectaql .close-button {
+  color: var(--spectaql-text-secondary);
+}
+
+#spectaql .close-button:hover {
+  color: var(--spectaql-text-primary);
+}
+
+/* Scrollbar styling for dark theme */
+#spectaql ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+#spectaql ::-webkit-scrollbar-track {
+  background: var(--spectaql-bg-sidebar);
+}
+
+#spectaql ::-webkit-scrollbar-thumb {
+  background: var(--spectaql-border-color);
+  border-radius: 4px;
+}
+
+#spectaql ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Introduction section */
+#spectaql #introduction {
+  background-color: var(--spectaql-bg-content);
+}
+
+#spectaql #introduction p {
+  color: var(--spectaql-text-secondary);
 }

@@ -15,9 +15,10 @@ node_modules
 docs/.vitepress/dist
 docs/.vitepress/cache
 
-# SpectaQL - generated HTML ignored (generated during CI build)
+# SpectaQL - generated files (generated during CI build)
 # Introspection JSON files ARE committed for faster builds
-docs/pages/public/spectaql/
+spectaql/output/
+docs/.vitepress/theme/data/spectaql-bundle.ts
 .DS_Store
 .claude/
 .vercel

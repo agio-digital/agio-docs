@@ -32,7 +32,7 @@ const configs: SpectaQLConfig[] = [
   {
     name: "Platform API",
     configFile: path.join(ROOT_DIR, "spectaql/platform-api.yml"),
-    outputDir: path.join(ROOT_DIR, "docs/pages/public/spectaql/platform-api")
+    outputDir: path.join(ROOT_DIR, "spectaql/output")
   }
 ];
 
