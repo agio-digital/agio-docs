@@ -1,6 +1,6 @@
 ---
 page: true
-title: Agio Management SDK - The Agio Management SDK is a set of tools to help you build your own applications on top of the Agio platform.
+title: Agio Digital Ltd. - Developer Documentation
 ---
 
 <script setup>

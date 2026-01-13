@@ -5,12 +5,11 @@ import SdkVersion from "./SdkVersion.vue";
 <template>
   <section id="hero">
     <h1 class="tagline">
-      The Agio<br />
-      <span class="accent">Management SDK</span>
+      <span class="accent">Agio Digital Ltd.</span><br />
+      Developer Documentation
     </h1>
     <p class="description">
-      The Agio Management SDK is a set of tools<br />
-      to help you build your own applications on top of the Agio platform.
+      Build your own applications on top of the Agio platform.
     </p>
 
     <div class="info custom-block">
