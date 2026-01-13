@@ -48,7 +48,7 @@
 }
 
 #spectaql .nav-group-items a {
-  color: var(--spectaql-text-secondary);
+  color: #ffffff;
 }
 
 #spectaql .nav-group-items a:hover {
