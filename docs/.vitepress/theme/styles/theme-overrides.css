@@ -37,26 +37,23 @@
   color: var(--vt-c-text-2);
 }
 
-/* Fix VitePress sidebar CSS variables */
-:root {
-  --vp-sidebar-width: 272px;
-  --vp-sidebar-width-small: 272px;
+/* Fix VitePress sidebar - simple padding */
+.VPSidebar {
+  width: 272px !important;
+  padding: 0 24px 32px 24px !important;
+}
+
+.VPContent.has-sidebar {
+  padding-left: 272px !important;
 }
 
 @media (min-width: 1440px) {
-  :root {
-    --vp-sidebar-width: 320px;
-    --vp-sidebar-width-small: 320px;
+  .VPSidebar {
+    width: 300px !important;
+    padding: 0 24px 32px 24px !important;
   }
-}
 
-/* Override VPContent padding calculation */
-.VPContent.has-sidebar {
-  padding-left: var(--vp-sidebar-width) !important;
-}
-
-.VPSidebar {
-  width: var(--vp-sidebar-width) !important;
-  padding-left: 24px !important;
-  padding-right: 24px !important;
+  .VPContent.has-sidebar {
+    padding-left: 300px !important;
+  }
 }
