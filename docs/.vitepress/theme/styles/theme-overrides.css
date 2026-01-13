@@ -37,15 +37,25 @@
   color: var(--vt-c-text-2);
 }
 
-/* Fix VPSidebar width */
+/* Fix VPSidebar width and positioning */
 .VPSidebar {
   width: 272px !important;
   max-width: 272px !important;
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+}
+
+.VPSidebar .nav {
+  padding-left: 0 !important;
 }
 
 @media (min-width: 960px) {
   .VPSidebar {
     width: 272px !important;
+  }
+
+  .VPContent.has-sidebar {
+    padding-left: 272px !important;
   }
 }
 
@@ -53,5 +63,10 @@
   .VPSidebar {
     width: 320px !important;
     max-width: 320px !important;
+    padding-left: 32px !important;
+  }
+
+  .VPContent.has-sidebar {
+    padding-left: 320px !important;
   }
 }
