@@ -36,3 +36,22 @@
 .dark .custom-block {
   color: var(--vt-c-text-2);
 }
+
+/* Fix VPSidebar width */
+.VPSidebar {
+  width: 272px !important;
+  max-width: 272px !important;
+}
+
+@media (min-width: 960px) {
+  .VPSidebar {
+    width: 272px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .VPSidebar {
+    width: 320px !important;
+    max-width: 320px !important;
+  }
+}
