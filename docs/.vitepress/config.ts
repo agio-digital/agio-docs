@@ -5,6 +5,7 @@ import type { Config as ThemeConfig } from "@vue/theme";
 import baseConfig from "@vue/theme/config";
 import { headerPlugin } from "./headerMdPlugin";
 import { SidebarGroup } from "@vue/theme/src/vitepress/config";
+import { withMermaid } from "vitepress-plugin-mermaid";
 
 // Load env vars from project root
 const env = loadEnv("", path.resolve(__dirname, "../.."));
@@ -84,6 +85,28 @@ const nav: ThemeConfig["nav"] = [
           { text: "Authentication", link: "/api/rest/auth" },
           { text: "Documents & PDFs", link: "/api/rest/documents" },
           { text: "Webhooks", link: "/api/rest/webhooks" }
+        ]
+      }
+    ]
+  },
+  {
+    text: "Guides",
+    activeMatch: `^/guides/`,
+    items: [
+      {
+        text: "Wallets",
+        items: [
+          { text: "Overview", link: "/guides/wallets/" },
+          { text: "Creating Wallets", link: "/guides/wallets/create" },
+          { text: "Transfers & Swaps", link: "/guides/wallets/transfers" }
+        ]
+      },
+      {
+        text: "Cards",
+        items: [
+          { text: "Overview", link: "/guides/cards/" },
+          { text: "Applying for Cards", link: "/guides/cards/apply" },
+          { text: "Funding & Withdrawals", link: "/guides/cards/funding" }
         ]
       }
     ]
@@ -250,6 +273,28 @@ const sumsubSdkSidebarItems: SidebarGroup[] = [
   }
 ];
 
+const guidesSidebarItems: SidebarGroup[] = [
+  {
+    text: "Wallet Guides",
+    items: [
+      { text: "Overview", link: "/guides/wallets/" },
+      { text: "Creating Wallets", link: "/guides/wallets/create" },
+      { text: "Balances & Assets", link: "/guides/wallets/balances" },
+      { text: "Transfers & Swaps", link: "/guides/wallets/transfers" }
+    ]
+  },
+  {
+    text: "Card Guides",
+    items: [
+      { text: "Overview", link: "/guides/cards/" },
+      { text: "Applying for Cards", link: "/guides/cards/apply" },
+      { text: "Creating & Managing", link: "/guides/cards/create" },
+      { text: "Funding & Withdrawals", link: "/guides/cards/funding" },
+      { text: "Transactions", link: "/guides/cards/transactions" }
+    ]
+  }
+];
+
 export const sidebar: ThemeConfig["sidebar"] = {
   "/guide/": defaultSidebarItems,
   "/examples/": defaultSidebarItems,
@@ -258,14 +303,15 @@ export const sidebar: ThemeConfig["sidebar"] = {
   "/data/": defaultSidebarItems,
   "/api/": apiSidebarItems,
   "/sdks/rain/": rainSdkSidebarItems,
-  "/sdks/sumsub/": sumsubSdkSidebarItems
+  "/sdks/sumsub/": sumsubSdkSidebarItems,
+  "/guides/": guidesSidebarItems
 };
 
 // Placeholder of the i18n config for @vuejs-translations.
 // const i18n: ThemeConfig['i18n'] = {
 // }
 
-export default defineConfigWithTheme<ThemeConfig>({
+export default withMermaid(defineConfigWithTheme<ThemeConfig>({
   extends: baseConfig,
   lang: "en-US",
   title: "Agio Digital Ltd. - Developer Documentation",
@@ -382,4 +428,4 @@ export default defineConfigWithTheme<ThemeConfig>({
   vue: {
     reactivityTransform: true
   }
-});
+}));
