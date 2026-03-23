@@ -15,7 +15,7 @@ import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
-import { buildSchema, GraphQLSchema, GraphQLObjectType, GraphQLField, GraphQLType, GraphQLInputObjectType } from "graphql";
+import { buildSchema, buildASTSchema, parse, GraphQLSchema, GraphQLObjectType, GraphQLField, GraphQLType, GraphQLInputObjectType } from "graphql";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -242,7 +242,8 @@ Run \`yarn generate:api-docs\` to regenerate.
   const combinedSchema = schemaFiles.map((f) => f.content).join("\n\n");
 
   try {
-    const schema = buildSchema(combinedSchema);
+    // Use assumeValid to handle extend type and duplicate definitions
+    const schema = buildASTSchema(parse(combinedSchema), { assumeValid: true });
 
     // Generate documentation
     console.log("Generating documentation...\n");

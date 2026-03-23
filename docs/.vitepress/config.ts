@@ -28,13 +28,31 @@ const nav: ThemeConfig["nav"] = [
   },
   {
     text: "SDKs",
-    activeMatch: `^/(guide|sdk)/`,
+    activeMatch: `^/(guide|sdk|sdks)/`,
     items: [
       {
         text: "Agio SDK",
         items: [
           { text: "TypeScript", link: "/guide/quick-start" },
           { text: "Direct Widget", link: "/guide/direct-widget" }
+        ]
+      },
+      {
+        text: "Rain SDK",
+        items: [
+          { text: "Overview", link: "/sdks/rain/" },
+          { text: "Cards", link: "/sdks/rain/cards" },
+          { text: "Applications", link: "/sdks/rain/applications" },
+          { text: "Smart Contracts", link: "/sdks/rain/contracts" },
+          { text: "Payment System", link: "/sdks/rain/payments" }
+        ]
+      },
+      {
+        text: "Sumsub SDK",
+        items: [
+          { text: "Overview", link: "/sdks/sumsub/" },
+          { text: "Applicants", link: "/sdks/sumsub/applicants" },
+          { text: "Webhooks", link: "/sdks/sumsub/webhooks" }
         ]
       }
     ]
@@ -57,6 +75,15 @@ const nav: ThemeConfig["nav"] = [
         items: [
           { text: "Overview", link: "/api/hasura/overview" },
           { text: "API Explorer", link: "/api/hasura-explorer" }
+        ]
+      },
+      {
+        text: "REST API",
+        items: [
+          { text: "Overview", link: "/api/rest/" },
+          { text: "Authentication", link: "/api/rest/auth" },
+          { text: "Documents & PDFs", link: "/api/rest/documents" },
+          { text: "Webhooks", link: "/api/rest/webhooks" }
         ]
       }
     ]
@@ -176,6 +203,50 @@ const apiSidebarItems: SidebarGroup[] = [
       { text: "Tables", link: "/api/hasura/tables" },
       { text: "Permissions", link: "/api/hasura/permissions" }
     ]
+  },
+  {
+    text: "REST API",
+    items: [
+      { text: "Overview", link: "/api/rest/" },
+      { text: "Authentication", link: "/api/rest/auth" },
+      { text: "Documents & PDFs", link: "/api/rest/documents" },
+      { text: "Webhooks", link: "/api/rest/webhooks" },
+      { text: "Static Assets", link: "/api/rest/assets" }
+    ]
+  }
+];
+
+const rainSdkSidebarItems: SidebarGroup[] = [
+  {
+    text: "Rain SDK",
+    items: [
+      { text: "Overview", link: "/sdks/rain/" },
+      { text: "Cards", link: "/sdks/rain/cards" },
+      { text: "Users", link: "/sdks/rain/users" },
+      { text: "Applications", link: "/sdks/rain/applications" }
+    ]
+  },
+  {
+    text: "Infrastructure",
+    items: [
+      { text: "Smart Contracts", link: "/sdks/rain/contracts" },
+      { text: "Payment System", link: "/sdks/rain/payments" },
+      { text: "Webhooks", link: "/sdks/rain/webhooks" },
+      { text: "TypeScript Types", link: "/sdks/rain/types" }
+    ]
+  }
+];
+
+const sumsubSdkSidebarItems: SidebarGroup[] = [
+  {
+    text: "Sumsub SDK",
+    items: [
+      { text: "Overview", link: "/sdks/sumsub/" },
+      { text: "Applicants", link: "/sdks/sumsub/applicants" },
+      { text: "Transactions (KYT)", link: "/sdks/sumsub/transactions" },
+      { text: "Webhooks", link: "/sdks/sumsub/webhooks" },
+      { text: "TypeScript Types", link: "/sdks/sumsub/types" }
+    ]
   }
 ];
 
@@ -185,7 +256,9 @@ export const sidebar: ThemeConfig["sidebar"] = {
   "/typescript/": defaultSidebarItems,
   "/changelog/": defaultSidebarItems,
   "/data/": defaultSidebarItems,
-  "/api/": apiSidebarItems
+  "/api/": apiSidebarItems,
+  "/sdks/rain/": rainSdkSidebarItems,
+  "/sdks/sumsub/": sumsubSdkSidebarItems
 };
 
 // Placeholder of the i18n config for @vuejs-translations.
