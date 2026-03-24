@@ -4,11 +4,11 @@ footer: false
 
 # Funding & Withdrawals
 
-Rain Cards are backed by stablecoin collateral. Depositing tokens into a Rain smart wallet establishes a credit limit. Withdrawing moves collateral back to the user's wallet. This guide covers the full deposit and withdrawal flows.
+Agio Cards are backed by stablecoin collateral. Depositing tokens into a Agio Card smart wallet establishes a credit limit. Withdrawing moves collateral back to the user's wallet. This guide covers the full deposit and withdrawal flows.
 
 ## Deposit Flow (Wallet to Card)
 
-Funding a card is a two-step process: get a swap quote, then execute it. The swap converts tokens from the user's smart wallet into USDC and sends them to the Rain collateral address.
+Funding a card is a two-step process: get a swap quote, then execute it. The swap converts tokens from the user's smart wallet into USDC and sends them to the Agio collateral address.
 
 ### Deposit Sequence
 
@@ -17,7 +17,7 @@ sequenceDiagram
     participant Client
     participant API as GraphQL API
     participant Wallet as Smart Wallet
-    participant Rain as Rain API
+    participant Agio as Agio Card API
 
     Client->>API: checkCardFundingWalletExists
     API-->>Client: Ethereum wallet confirmed
@@ -29,12 +29,12 @@ sequenceDiagram
 
     Client->>API: smartWalletExecuteSwapQuote({ quoteId })
     API->>Wallet: Execute swap UserOp
-    Wallet-->>Rain: USDC transferred to collateral address
+    Wallet-->>Agio: USDC transferred to collateral address
     API-->>Client: { transactionHash, status }
 
-    Rain-->>API: Webhook: collateral received
+    Agio-->>API: Webhook: collateral received
     API-->>Client: CARD_COLLATERAL_RECEIVED event
-    Rain-->>API: Webhook: collateral confirmed
+    Agio-->>API: Webhook: collateral confirmed
     API-->>Client: CARD_COLLATERAL_CONFIRMED event
 ```
 
@@ -111,7 +111,7 @@ mutation SmartWalletSwapQuote($input: SmartWalletSwapInput!) {
 | `fromToken`       | Token contract address to swap from                                                                          |
 | `toToken`         | USDC contract address (destination)                                                                          |
 | `amount`          | Amount in wei (smallest unit). For USDC with 6 decimals, `100000000` = 100 USDC.                             |
-| `recipient`       | Rain collateral wallet address. When set, swap output goes directly to this address.                         |
+| `recipient`       | Agio collateral wallet address. When set, swap output goes directly to this address.                         |
 | `providers`       | Optional. Array of swap providers to query (e.g., `["RELAY", "ALCHEMY"]`). Defaults to best-route selection. |
 
 ### Step 3: Execute the Swap
@@ -147,14 +147,14 @@ After execution, the platform emits events as the collateral is processed:
 
 | Event                       | Description                                         |
 | --------------------------- | --------------------------------------------------- |
-| `CARD_COLLATERAL_RECEIVED`  | Rain has received the stablecoin deposit            |
+| `CARD_COLLATERAL_RECEIVED`  | Agio has received the stablecoin deposit            |
 | `CARD_COLLATERAL_CONFIRMED` | Collateral is confirmed and credit limit is updated |
 
 Listen for these events via the `CardApplicationUpdates` subscription or the event bus to update the UI.
 
 ## Withdrawal Flow (Card to Wallet)
 
-Withdraw collateral from a Rain smart wallet back to the user's wallet.
+Withdraw collateral from a Agio Card smart wallet back to the user's wallet.
 
 ### Withdrawal Sequence
 
@@ -162,14 +162,14 @@ Withdraw collateral from a Rain smart wallet back to the user's wallet.
 sequenceDiagram
     participant Client
     participant API as GraphQL API
-    participant Rain as Rain Coordinator
+    participant Agio as Agio Coordinator
     participant Chain as Blockchain
 
     Client->>API: cardWithdraw(input)
-    API->>Rain: Sign withdrawal with owner EOA
-    Rain->>Chain: Submit UserOp via session key
-    Chain-->>Rain: Transaction confirmed
-    Rain-->>API: Transaction hash
+    API->>Agio: Sign withdrawal with owner EOA
+    Agio->>Chain: Submit UserOp via session key
+    Chain-->>Agio: Transaction confirmed
+    Agio-->>API: Transaction hash
     API-->>Client: { transactionHash, amount, chainId }
 ```
 
@@ -207,7 +207,7 @@ mutation CardWithdraw($input: CardWithdrawInput!) {
 | `chainId`      | Int     | Chain ID to withdraw from. When omitted, resolved by matching `tokenAddress` across all chains. |
 
 :::warning Signature Conflicts
-If the withdrawal fails with a `retryAfterSec` value, it means a Rain signature is currently active (e.g., from a pending deposit). The client should display this to the user and retry after the specified number of seconds.
+If the withdrawal fails with a `retryAfterSec` value, it means a Agio signature is currently active (e.g., from a pending deposit). The client should display this to the user and retry after the specified number of seconds.
 :::
 
 ## Balance Queries
@@ -217,7 +217,7 @@ If the withdrawal fails with a `retryAfterSec` value, it means a Rain signature 
 Query the balance for a specific card:
 
 ```graphql
-query RainCardBalance($cardId: Int!) {
+query AgioCardBalance($cardId: Int!) {
   rainCardBalance(cardId: $cardId) {
     success
     id

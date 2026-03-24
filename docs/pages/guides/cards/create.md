@@ -4,7 +4,7 @@ footer: false
 
 # Creating & Managing Cards
 
-Once a card application is approved, you can create virtual and physical Visa cards using the `createRainCard` mutation. This guide covers card creation, lifecycle management, and all available card operations.
+Once a card application is approved, you can create virtual and physical Visa cards using the `createAgioCard` mutation. This guide covers card creation, lifecycle management, and all available card operations.
 
 ## Creating Cards
 
@@ -14,11 +14,11 @@ Once a card application is approved, you can create virtual and physical Visa ca
 sequenceDiagram
     participant Client
     participant API as GraphQL API
-    participant Rain as Rain API
+    participant Agio as Agio Card API
 
-    Client->>API: createRainCard(input)
-    API->>Rain: Create card
-    Rain-->>API: Card issued (cardId, last4, expiry)
+    Client->>API: createAgioCard(input)
+    API->>Agio: Create card
+    Agio-->>API: Card issued (cardId, last4, expiry)
     API-->>Client: { id, cardId, status, last4 }
 
     alt Virtual Card
@@ -30,11 +30,11 @@ sequenceDiagram
     end
 ```
 
-### The createRainCard Mutation
+### The createAgioCard Mutation
 
 ```graphql
-mutation CreateRainCard($input: CreateRainCardInput!) {
-  createRainCard(input: $input) {
+mutation CreateAgioCard($input: CreateAgioCardInput!) {
+  createAgioCard(input: $input) {
     success
     id
     cardId
@@ -99,16 +99,16 @@ Physical cards require a shipping address and phone number. The card ships to th
 
 ### Input Fields
 
-| Field               | Type              | Description                                                                                               |
-| ------------------- | ----------------- | --------------------------------------------------------------------------------------------------------- |
-| `cardApplicationId` | Int!              | ID of the approved card application                                                                       |
-| `cardType`          | RainCardType!     | `"virtual"` or `"physical"`                                                                               |
-| `limit`             | CardLimitInput    | Spending limit: `{ amount, frequency }`                                                                   |
-| `displayName`       | String            | Name printed on card (max 26 chars, alphanumeric + spaces + periods + hyphens). Immutable after creation. |
-| `shipping`          | RainShippingInput | Required for physical cards. Ignored for virtual.                                                         |
-| `billing`           | RainAddressInput  | Billing address. Defaults to shipping address if omitted.                                                 |
-| `sessionId`         | String            | From `generateEncryptionKeys` (required if setting PIN)                                                   |
-| `encryptedPin`      | String            | Pre-encrypted PIN (4-12 digits)                                                                           |
+| Field               | Type                  | Description                                                                                               |
+| ------------------- | --------------------- | --------------------------------------------------------------------------------------------------------- |
+| `cardApplicationId` | Int!                  | ID of the approved card application                                                                       |
+| `cardType`          | AgioCardType!         | `"virtual"` or `"physical"`                                                                               |
+| `limit`             | CardLimitInput        | Spending limit: `{ amount, frequency }`                                                                   |
+| `displayName`       | String                | Name printed on card (max 26 chars, alphanumeric + spaces + periods + hyphens). Immutable after creation. |
+| `shipping`          | AgioCardShippingInput | Required for physical cards. Ignored for virtual.                                                         |
+| `billing`           | AgioCardAddressInput  | Billing address. Defaults to shipping address if omitted.                                                 |
+| `sessionId`         | String                | From `generateEncryptionKeys` (required if setting PIN)                                                   |
+| `encryptedPin`      | String                | Pre-encrypted PIN (4-12 digits)                                                                           |
 
 ### Spending Limit Frequencies
 
@@ -132,10 +132,10 @@ stateDiagram-v2
     [*] --> notActivated : Card created (physical)
     [*] --> active : Card created (virtual)
     notActivated --> active : Card activated
-    active --> locked : freezeRainCard
-    locked --> active : unfreezeRainCard
-    active --> canceled : cancelRainCard
-    locked --> canceled : cancelRainCard
+    active --> locked : freezeAgioCard
+    locked --> active : unfreezeAgioCard
+    active --> canceled : cancelAgioCard
+    locked --> canceled : cancelAgioCard
     canceled --> [*]
 ```
 
@@ -153,8 +153,8 @@ stateDiagram-v2
 Temporarily disable a card. The card cannot be used for transactions while frozen.
 
 ```graphql
-mutation FreezeRainCard($cardId: Int!) {
-  freezeRainCard(cardId: $cardId) {
+mutation FreezeAgioCard($cardId: Int!) {
+  freezeAgioCard(cardId: $cardId) {
     success
     id
     cardId
@@ -169,8 +169,8 @@ mutation FreezeRainCard($cardId: Int!) {
 Re-enable a frozen card.
 
 ```graphql
-mutation UnfreezeRainCard($cardId: Int!) {
-  unfreezeRainCard(cardId: $cardId) {
+mutation UnfreezeAgioCard($cardId: Int!) {
+  unfreezeAgioCard(cardId: $cardId) {
     success
     id
     cardId
@@ -185,8 +185,8 @@ mutation UnfreezeRainCard($cardId: Int!) {
 Permanently cancel a card. This action is irreversible.
 
 ```graphql
-mutation CancelRainCard($input: CancelRainCardInput!) {
-  cancelRainCard(input: $input) {
+mutation CancelAgioCard($input: CancelAgioCardInput!) {
+  cancelAgioCard(input: $input) {
     success
     id
     cardId
@@ -211,8 +211,8 @@ mutation CancelRainCard($input: CancelRainCardInput!) {
 Generate a new card number for an existing virtual card. The old card is canceled automatically and the new card inherits spending limits.
 
 ```graphql
-mutation ReplaceVirtualRainCard($cardId: Int!) {
-  replaceVirtualRainCard(cardId: $cardId) {
+mutation ReplaceVirtualAgioCard($cardId: Int!) {
+  replaceVirtualAgioCard(cardId: $cardId) {
     success
     id
     oldCardId
@@ -234,8 +234,8 @@ mutation ReplaceVirtualRainCard($cardId: Int!) {
 Replace a virtual or physical card with a reason code. Physical card replacements require a shipping address.
 
 ```graphql
-mutation ReplaceRainCard($input: ReplaceRainCardInput!) {
-  replaceRainCard(input: $input) {
+mutation ReplaceAgioCard($input: ReplaceAgioCardInput!) {
+  replaceAgioCard(input: $input) {
     success
     id
     oldCardId
@@ -277,8 +277,8 @@ Replacement reasons: `lost`, `stolen`, `damaged`.
 ### Update Spending Limit
 
 ```graphql
-mutation UpdateRainCardLimit($input: UpdateRainCardLimitInput!) {
-  updateRainCardLimit(input: $input) {
+mutation UpdateAgioCardLimit($input: UpdateAgioCardLimitInput!) {
+  updateAgioCardLimit(input: $input) {
     success
     id
     cardId
@@ -334,8 +334,8 @@ PINs are encrypted using RSA + AES-128-GCM. You must first generate an encryptio
 ### Set or Update PIN
 
 ```graphql
-mutation SetRainCardPin($input: SetRainCardPinInput!) {
-  setRainCardPin(input: $input) {
+mutation SetAgioCardPin($input: SetAgioCardPinInput!) {
+  setAgioCardPin(input: $input) {
     success
     id
     error
@@ -359,8 +359,8 @@ PIN requirements: 4-12 digits, no repeated digits (e.g., `1111`), no sequential 
 ### Reveal PIN
 
 ```graphql
-mutation GetRainCardPin($cardId: Int!, $sessionId: String!) {
-  getRainCardPin(cardId: $cardId, sessionId: $sessionId) {
+mutation GetAgioCardPin($cardId: Int!, $sessionId: String!) {
+  getAgioCardPin(cardId: $cardId, sessionId: $sessionId) {
     success
     id
     encryptedPin
@@ -376,8 +376,8 @@ The response `encryptedPin` must be decrypted client-side using the session key.
 Reveal the full card number (PAN), CVC, and expiry. Secrets are returned encrypted and must be decrypted client-side.
 
 ```graphql
-mutation RevealRainCardSecrets($cardId: Int!, $sessionId: String!) {
-  revealRainCardSecrets(cardId: $cardId, sessionId: $sessionId) {
+mutation RevealAgioCardSecrets($cardId: Int!, $sessionId: String!) {
+  revealAgioCardSecrets(cardId: $cardId, sessionId: $sessionId) {
     success
     id
     encryptedSecrets

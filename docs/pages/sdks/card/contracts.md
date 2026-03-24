@@ -4,22 +4,22 @@ footer: false
 
 # Smart Contracts
 
-Rain uses **ERC-4337 Account Abstraction** to provide on-chain smart contract wallets for each user or company. These wallets hold stablecoin collateral that backs the credit line for card spending.
+Agio uses **ERC-4337 Account Abstraction** to provide on-chain smart contract wallets for each user or company. These wallets hold stablecoin collateral that backs the credit line for card spending.
 
 ## Contract Structure
 
-Each user or company receives a `RainContract` with three key addresses:
+Each user or company receives a `AgioCardContract` with three key addresses:
 
 ```typescript
-interface RainContract {
+interface AgioCardContract {
   id: string;
   proxyAddress: string; // User's smart wallet (upgradeable proxy)
   depositAddress: string; // Where collateral is deposited
-  controllerAddress: string; // Rain's controller for limits/liquidation
+  controllerAddress: string; // Agio's controller for limits/liquidation
   chainId: number; // Blockchain network
   contractVersion: number; // Contract version
   tokens?: ContractToken[]; // Supported collateral tokens
-  onramp?: RainOnramp; // Fiat onramp bank details (if enabled)
+  onramp?: AgioCardOnramp; // Fiat onramp bank details (if enabled)
   status?: "active" | "inactive" | "pending";
 }
 
@@ -34,20 +34,20 @@ interface ContractToken {
 | Component              | Purpose                                      | Controlled By                  |
 | ---------------------- | -------------------------------------------- | ------------------------------ |
 | **Proxy Address**      | User's smart wallet for signing transactions | User (via Account Abstraction) |
-| **Deposit Address**    | Receives and holds collateral                | Rain system                    |
-| **Controller Address** | Enforces credit limits, triggers liquidation | Rain                           |
+| **Deposit Address**    | Receives and holds collateral                | Agio system                    |
+| **Controller Address** | Enforces credit limits, triggers liquidation | Agio                           |
 
 ## Query Contracts
 
 ```typescript
 // User contracts
-const { data: contracts } = await rain.contracts.getUserContracts("user-id");
+const { data: contracts } = await cards.contracts.getUserContracts("user-id");
 
 // Company contracts
-const { data: contracts } = await rain.contracts.getCompanyContracts("company-id");
+const { data: contracts } = await cards.contracts.getCompanyContracts("company-id");
 
 // Tenant contracts
-const { data: contracts } = await rain.contracts.getTenantContracts("tenant-id");
+const { data: contracts } = await cards.contracts.getTenantContracts("tenant-id");
 ```
 
 All contract endpoints return arrays since a user or company can have contracts on multiple chains.
@@ -56,14 +56,14 @@ All contract endpoints return arrays since a user or company can have contracts 
 
 ```typescript
 // Create contract for a user
-const { data: contract } = await rain.contracts.createUserContract("user-id", {
+const { data: contract } = await cards.contracts.createUserContract("user-id", {
   userAddress: "0x1234...",
   chainId: 1, // Ethereum mainnet
   contractVersion: 2
 });
 
 // Create contract for a company
-const { data: contract } = await rain.contracts.createCompanyContract("company-id", {
+const { data: contract } = await cards.contracts.createCompanyContract("company-id", {
   userAddress: "0x1234...",
   chainId: 137 // Polygon
 });
@@ -78,7 +78,7 @@ const { data: contract } = await rain.contracts.createCompanyContract("company-i
 ## Update a Contract
 
 ```typescript
-await rain.contracts.updateContract("contract-id", {
+await cards.contracts.updateContract("contract-id", {
   status: "active",
   depositAddress: "0xabcd...",
   controllerAddress: "0xefgh..."
@@ -101,7 +101,7 @@ await rain.contracts.updateContract("contract-id", {
 When enabled, contracts include virtual bank account details for direct fiat funding:
 
 ```typescript
-interface RainOnramp {
+interface AgioCardOnramp {
   ach: { accountNumber; routingNumber; beneficiaryName; beneficiaryAddress };
   rtp: { accountNumber; routingNumber; beneficiaryName; beneficiaryAddress };
   wire: { accountNumber; routingNumber; beneficiaryName; beneficiaryAddress };
@@ -133,7 +133,7 @@ User Intent
 | **Programmable Limits** | Controller enforces spending rules automatically           |
 | **Gasless UX**          | Paymaster sponsors transaction fees for users              |
 
-The Controller contract is Rain's key enforcement mechanism:
+The Controller contract is Agio's key enforcement mechanism:
 
 1. **Credit Limit Enforcement** -- sets limits based on `collateral x advanceRate`
 2. **Auto-Liquidation** -- triggers after 8-day grace period if the statement is unpaid

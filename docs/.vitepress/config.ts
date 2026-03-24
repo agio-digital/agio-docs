@@ -32,13 +32,13 @@ const nav: ThemeConfig["nav"] = [
         ]
       },
       {
-        text: "Rain SDK",
+        text: "Agio Card SDK",
         items: [
-          { text: "Overview", link: "/sdks/rain/" },
-          { text: "Cards", link: "/sdks/rain/cards" },
-          { text: "Applications", link: "/sdks/rain/applications" },
-          { text: "Smart Contracts", link: "/sdks/rain/contracts" },
-          { text: "Payment System", link: "/sdks/rain/payments" }
+          { text: "Overview", link: "/sdks/card/" },
+          { text: "Cards", link: "/sdks/card/cards" },
+          { text: "Applications", link: "/sdks/card/applications" },
+          { text: "Smart Contracts", link: "/sdks/card/contracts" },
+          { text: "Payment System", link: "/sdks/card/payments" }
         ]
       },
       {
@@ -221,23 +221,23 @@ const apiSidebarItems: SidebarGroup[] = [
   }
 ];
 
-const rainSdkSidebarItems: SidebarGroup[] = [
+const cardSdkSidebarItems: SidebarGroup[] = [
   {
-    text: "Rain SDK",
+    text: "Agio Card SDK",
     items: [
-      { text: "Overview", link: "/sdks/rain/" },
-      { text: "Cards", link: "/sdks/rain/cards" },
-      { text: "Users", link: "/sdks/rain/users" },
-      { text: "Applications", link: "/sdks/rain/applications" }
+      { text: "Overview", link: "/sdks/card/" },
+      { text: "Cards", link: "/sdks/card/cards" },
+      { text: "Users", link: "/sdks/card/users" },
+      { text: "Applications", link: "/sdks/card/applications" }
     ]
   },
   {
     text: "Infrastructure",
     items: [
-      { text: "Smart Contracts", link: "/sdks/rain/contracts" },
-      { text: "Payment System", link: "/sdks/rain/payments" },
-      { text: "Webhooks", link: "/sdks/rain/webhooks" },
-      { text: "TypeScript Types", link: "/sdks/rain/types" }
+      { text: "Smart Contracts", link: "/sdks/card/contracts" },
+      { text: "Payment System", link: "/sdks/card/payments" },
+      { text: "Webhooks", link: "/sdks/card/webhooks" },
+      { text: "TypeScript Types", link: "/sdks/card/types" }
     ]
   }
 ];
@@ -284,7 +284,7 @@ export const sidebar: ThemeConfig["sidebar"] = {
   "/changelog/": defaultSidebarItems,
   "/data/": defaultSidebarItems,
   "/api/": apiSidebarItems,
-  "/sdks/rain/": rainSdkSidebarItems,
+  "/sdks/card/": cardSdkSidebarItems,
   "/sdks/sumsub/": sumsubSdkSidebarItems,
   "/guides/": guidesSidebarItems
 };

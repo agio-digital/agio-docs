@@ -8,7 +8,7 @@ Before issuing cards, users must complete a card application that triggers KYC (
 
 ## Individual Application
 
-Individual applications collect personal identity information and submit it to Rain for KYC/AML review.
+Individual applications collect personal identity information and submit it to Agio for KYC/AML review.
 
 ### Application Flow
 
@@ -16,28 +16,28 @@ Individual applications collect personal identity information and submit it to R
 sequenceDiagram
     participant Client
     participant API as GraphQL API
-    participant Rain as Rain API
+    participant Agio as Agio Card API
     participant KYC as KYC Provider
 
-    Client->>API: createRainCardApplication(input)
-    API->>Rain: Submit application
-    Rain->>KYC: Trigger KYC review
-    Rain-->>API: Application created (status: pending)
+    Client->>API: createAgioCardApplication(input)
+    API->>Agio: Submit application
+    Agio->>KYC: Trigger KYC review
+    Agio-->>API: Application created (status: pending)
     API-->>Client: { applicantId, applicationStatus }
 
     Note over Client,KYC: KYC review in progress
 
     alt Approved
-        KYC-->>Rain: Identity verified
-        Rain-->>API: Webhook: status → approved
+        KYC-->>Agio: Identity verified
+        Agio-->>API: Webhook: status → approved
         API-->>Client: CARD_APPLICATION_APPROVED event
     else Needs Verification
-        KYC-->>Rain: Additional verification required
-        Rain-->>API: applicationCompletionUrl
+        KYC-->>Agio: Additional verification required
+        Agio-->>API: applicationCompletionUrl
         API-->>Client: Redirect user to verification URL
     else Denied
-        KYC-->>Rain: Identity check failed
-        Rain-->>API: Webhook: status → denied
+        KYC-->>Agio: Identity check failed
+        Agio-->>API: Webhook: status → denied
         API-->>Client: CARD_APPLICATION_DENIED event
     end
 ```
@@ -45,8 +45,8 @@ sequenceDiagram
 ### Submit an Application
 
 ```graphql
-mutation CreateRainCardApplication($input: CreateRainCardApplicationInput!) {
-  createRainCardApplication(input: $input) {
+mutation CreateAgioCardApplication($input: CreateAgioCardApplicationInput!) {
+  createAgioCardApplication(input: $input) {
     success
     applicantId
     rainApplicationId
@@ -105,29 +105,29 @@ Corporate applications onboard a company and its beneficial owners. The process 
 sequenceDiagram
     participant Client
     participant API as GraphQL API
-    participant Rain as Rain API
+    participant Agio as Agio Card API
     participant KYB as KYB/KYC Provider
 
     Client->>API: createRainCorporateApplication(input)
-    API->>Rain: Submit corporate application
-    Rain->>KYB: Trigger KYB review
-    Rain->>KYB: Trigger KYC for each UBO
-    Rain-->>API: Application created (status: pending)
+    API->>Agio: Submit corporate application
+    Agio->>KYB: Trigger KYB review
+    Agio->>KYB: Trigger KYC for each UBO
+    Agio-->>API: Application created (status: pending)
     API-->>Client: { companyId, applicationStatus }
 
     Note over Client,KYB: KYB + UBO KYC reviews in progress
 
     loop Each UBO
-        KYB-->>Rain: UBO verification result
-        Rain-->>API: UBO status update
+        KYB-->>Agio: UBO verification result
+        Agio-->>API: UBO status update
     end
 
     alt All Approved
-        KYB-->>Rain: Company + all UBOs verified
-        Rain-->>API: Webhook: status → approved
+        KYB-->>Agio: Company + all UBOs verified
+        Agio-->>API: Webhook: status → approved
         API-->>Client: CARD_APPLICATION_APPROVED event
     else UBO Needs Verification
-        Rain-->>API: applicationCompletionLink per UBO
+        Agio-->>API: applicationCompletionLink per UBO
         API-->>Client: Share verification links with UBOs
     end
 ```
@@ -226,12 +226,12 @@ mutation CreateRainCorporateApplication($input: CreateRainCorporateApplicationIn
 
 ### Key Corporate Fields
 
-| Section             | Fields                                                                                       | Notes                             |
-| ------------------- | -------------------------------------------------------------------------------------------- | --------------------------------- |
-| **Entity**          | name, description, industry (NAICS), registrationNumber, taxId, website, type, expectedSpend | `website` is required by Rain API |
-| **Initial User**    | Personal details + `walletAddress` + `isTermsOfServiceAccepted`                              | First user/admin of the company   |
-| **Representatives** | Array of persons authorized to act on behalf of the company                                  | At least one required             |
-| **UBOs**            | Array of persons with 25%+ ownership                                                         | Each triggers individual KYC      |
+| Section             | Fields                                                                                       | Notes                                  |
+| ------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------- |
+| **Entity**          | name, description, industry (NAICS), registrationNumber, taxId, website, type, expectedSpend | `website` is required by Agio Card API |
+| **Initial User**    | Personal details + `walletAddress` + `isTermsOfServiceAccepted`                              | First user/admin of the company        |
+| **Representatives** | Array of persons authorized to act on behalf of the company                                  | At least one required                  |
+| **UBOs**            | Array of persons with 25%+ ownership                                                         | Each triggers individual KYC           |
 
 After corporate approval, add users to the company, then issue cards to each user.
 
@@ -239,13 +239,13 @@ After corporate approval, add users to the company, then issue cards to each use
 
 | Status              | Description                                   | Action                                      |
 | ------------------- | --------------------------------------------- | ------------------------------------------- |
-| `approved`          | Verified. Cards can be issued.                | Proceed to `createRainCard`                 |
+| `approved`          | Verified. Cards can be issued.                | Proceed to `createAgioCard`                 |
 | `pending`           | Under review. No action required.             | Poll or subscribe for updates               |
 | `needsInformation`  | Additional information required.              | Check `applicationReason` for details       |
 | `needsVerification` | Identity verification pending.                | Redirect user to `applicationCompletionUrl` |
-| `manualReview`      | Flagged for manual review by Rain compliance. | Wait for resolution                         |
+| `manualReview`      | Flagged for manual review by Agio compliance. | Wait for resolution                         |
 | `denied`            | Application denied.                           | Display denial to user                      |
-| `locked`            | Account locked by compliance.                 | Contact Rain support                        |
+| `locked`            | Account locked by compliance.                 | Contact Agio support                        |
 | `canceled`          | Application canceled.                         | Resubmit if needed                          |
 
 ## Monitoring Application Status

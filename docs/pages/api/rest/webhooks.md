@@ -11,7 +11,7 @@ The Agio Platform uses an event-driven architecture. Webhooks fall into three ca
 | Category                | Auth Mechanism                                    |
 | ----------------------- | ------------------------------------------------- |
 | External (BitGo)        | Payload signature verification (HMAC)             |
-| External (Rain)         | Payload signature verification                    |
+| External (Agio Card)    | Payload signature verification                    |
 | External (Sumsub)       | Payload signature verification (HMAC-SHA1)        |
 | External (Auth0)        | IP allowlist                                      |
 | Database event triggers | `x-agio-api-token` header (platform admin secret) |
@@ -43,11 +43,11 @@ Receives transaction notifications from BitGo. Payloads are signed using BitGo's
 
 ---
 
-### POST /webhooks/on-rain-webhook
+### POST /webhooks/on-card-webhook
 
-Receives card and payment events from Rain Cards.
+Receives card and payment events from Agio Cards.
 
-- **Auth:** Rain payload signature
+- **Auth:** Agio Card payload signature
 - **Triggers:** Card status changes, transaction authorizations, settlements, card spend events
 
 **Example payload:**

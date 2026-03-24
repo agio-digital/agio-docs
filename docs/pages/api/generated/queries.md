@@ -34,12 +34,12 @@ footer: false
 | `crsReportableFunds`                    | `[CrsDataQualitySummary!]!`            | -                            |
 | `smartWalletSessionKeys`                | `SmartWalletSessionKeysResponse`       | -                            |
 | `kms`                                   | `KMSQuery!`                            | -                            |
-| `rainCardBalance`                       | `RainCardBalanceResponse!`             | Get balance for a Rain Card. |
+| `rainCardBalance`                       | `AgioCardBalanceResponse!`             | Get balance for a Agio Card. |
 
 Returns credit limit, pending charges, posted charges, balance due, and spending power.
 Requires the user to own the card. |
-| `rainCardBalanceByRainUserId` | `RainCardBalanceResponse!` | Admin-only: Get Rain Card balance by Rain user ID. Bypasses ownership checks. |
-| `rainCorporateApplicationPrefill` | `RainCorporateApplicationPrefill!` | Prefill data for the corporate Rain card application form from the org's Sumsub KYB.
+| `rainCardBalanceByAgioCardUserId` | `AgioCardBalanceResponse!` | Admin-only: Get Agio Card balance by Agio user ID. Bypasses ownership checks. |
+| `rainCorporateApplicationPrefill` | `RainCorporateApplicationPrefill!` | Prefill data for the corporate Agio card application form from the org's Sumsub KYB.
 Returns verified UBO and representative data from nested sub-applicants.
 Empty lists are returned if no Sumsub KYB applicant exists for the org. |
 | `redis` | `RedisQuery!` | - |

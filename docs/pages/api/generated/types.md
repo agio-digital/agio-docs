@@ -1325,9 +1325,9 @@ Response from address autocomplete API
 
 ---
 
-## CancelRainCardInput (Input)
+## CancelAgioCardInput (Input)
 
-Input for canceling a Rain Card (irreversible)
+Input for canceling a Agio Card (irreversible)
 
 | Field    | Type     | Description                                       |
 | -------- | -------- | ------------------------------------------------- |
@@ -1382,7 +1382,7 @@ Spending limit configuration
 
 ## CardWithdrawInput (Input)
 
-Input for withdrawing collateral from a Rain Card smart wallet
+Input for withdrawing collateral from a Agio Card smart wallet
 
 | Field          | Type      | Description                                                                                   |
 | -------------- | --------- | --------------------------------------------------------------------------------------------- |
@@ -1404,22 +1404,22 @@ Response from card withdrawal operation
 | `tokenAddress`                                                            | `String`   | Token contract address withdrawn                                                                                   |
 | `amount`                                                                  | `String`   | Amount withdrawn (human-readable)                                                                                  |
 | `error`                                                                   | `String`   | Error message if the withdrawal failed                                                                             |
-| `retryAfterSec`                                                           | `Int`      | Seconds until the active Rain signature expires. Present when success=false due to a signature conflict (409/425). |
+| `retryAfterSec`                                                           | `Int`      | Seconds until the active Agio signature expires. Present when success=false due to a signature conflict (409/425). |
 | The client should surface this to the user and retry after this duration. |
 
 ---
 
 ## ChargeCardInput (Input)
 
-Input for charging a Rain Card with a fee.
+Input for charging a Agio Card with a fee.
 Requires card:charge permission. Debits from the user's collateral balance.
 
-| Field                                                             | Type      | Description                                                                  |
-| ----------------------------------------------------------------- | --------- | ---------------------------------------------------------------------------- |
-| `rainUserId`                                                      | `uuid!`   | Rain user ID to charge (from Rain API, not our internal user ID)             |
-| `feeCents`                                                        | `Int!`    | Fee amount in cents (e.g., 2550 for $25.50)                                  |
-| `feeDescription`                                                  | `String!` | Description of the fee (e.g., "Monthly service fee", "Card replacement fee") |
-| Stored in fee_description field and used as Rain API description. |
+| Field                                                                  | Type      | Description                                                                  |
+| ---------------------------------------------------------------------- | --------- | ---------------------------------------------------------------------------- |
+| `rainUserId`                                                           | `uuid!`   | Agio user ID to charge (from Agio Card API, not our internal user ID)        |
+| `feeCents`                                                             | `Int!`    | Fee amount in cents (e.g., 2550 for $25.50)                                  |
+| `feeDescription`                                                       | `String!` | Description of the fee (e.g., "Monthly service fee", "Card replacement fee") |
+| Stored in fee_description field and used as Agio Card API description. |
 
 ---
 
@@ -1430,7 +1430,7 @@ Response from card charge operation
 | Field            | Type       | Description                             |
 | ---------------- | ---------- | --------------------------------------- |
 | `success`        | `Boolean!` | Whether the charge succeeded            |
-| `chargeId`       | `String`   | Charge ID returned by Rain API          |
+| `chargeId`       | `String`   | Charge ID returned by Agio Card API     |
 | `amount`         | `Float`    | Amount charged in USD                   |
 | `feeDescription` | `String`   | Description of the fee that was charged |
 | `error`          | `String`   | Error message if the charge failed      |
@@ -1552,7 +1552,7 @@ Legal entity information for corporate applications
 | `industry`           | `String!` | NAICS industry code (e.g., "541512" for Computer Systems Design) |
 | `registrationNumber` | `String!` | Business registration number                                     |
 | `taxId`              | `String!` | Tax ID (EIN)                                                     |
-| `website`            | `String!` | Company website URL (REQUIRED by Rain API)                       |
+| `website`            | `String!` | Company website URL (REQUIRED by Agio Card API)                  |
 | `type`               | `String!` | Entity type (LLC, Corporation, Partnership, etc.)                |
 | `expectedSpend`      | `String!` | Expected monthly spend range                                     |
 
@@ -1562,27 +1562,27 @@ Legal entity information for corporate applications
 
 Initial user for corporate application (must have wallet address)
 
-| Field                                                      | Type                | Description                                                                         |
-| ---------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| `firstName`                                                | `String!`           | -                                                                                   |
-| `lastName`                                                 | `String!`           | -                                                                                   |
-| `birthDate`                                                | `String!`           | -                                                                                   |
-| `nationalId`                                               | `String!`           | -                                                                                   |
-| `countryOfIssue`                                           | `String!`           | -                                                                                   |
-| `email`                                                    | `String!`           | -                                                                                   |
-| `address`                                                  | `RainAddressInput!` | -                                                                                   |
-| `phoneCountryCode`                                         | `String`            | -                                                                                   |
-| `phoneNumber`                                              | `String`            | -                                                                                   |
-| `isTermsOfServiceAccepted`                                 | `Boolean!`          | -                                                                                   |
-| `role`                                                     | `String`            | -                                                                                   |
-| `walletAddress`                                            | `String`            | -                                                                                   |
-| `solanaAddress`                                            | `String`            | -                                                                                   |
-| `cardNickname`                                             | `String`            | User-defined card nickname for the initial user's card (optional).                  |
+| Field                                                      | Type                    | Description                                                                         |
+| ---------------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------- |
+| `firstName`                                                | `String!`               | -                                                                                   |
+| `lastName`                                                 | `String!`               | -                                                                                   |
+| `birthDate`                                                | `String!`               | -                                                                                   |
+| `nationalId`                                               | `String!`               | -                                                                                   |
+| `countryOfIssue`                                           | `String!`               | -                                                                                   |
+| `email`                                                    | `String!`               | -                                                                                   |
+| `address`                                                  | `AgioCardAddressInput!` | -                                                                                   |
+| `phoneCountryCode`                                         | `String`                | -                                                                                   |
+| `phoneNumber`                                              | `String`                | -                                                                                   |
+| `isTermsOfServiceAccepted`                                 | `Boolean!`              | -                                                                                   |
+| `role`                                                     | `String`                | -                                                                                   |
+| `walletAddress`                                            | `String`                | -                                                                                   |
+| `solanaAddress`                                            | `String`                | -                                                                                   |
+| `cardNickname`                                             | `String`                | User-defined card nickname for the initial user's card (optional).                  |
 | Max 26 chars: alphanumeric, spaces, periods, hyphens only. |
-| `requestedLimitAmount`                                     | `Int`               | Desired credit limit amount in dollars for initial user's card (e.g., 25000)        |
-| `requestedLimitFrequency`                                  | `String`            | Limit frequency for initial user's card (e.g., "30 day", "7 day")                   |
-| `sessionId`                                                | `String`            | Session ID from generateEncryptionKeys mutation (required if encryptedPin provided) |
-| `encryptedPin`                                             | `String`            | Encrypted PIN for initial user (use encryptPassphraseForTransfer from agio-utils).  |
+| `requestedLimitAmount`                                     | `Int`                   | Desired credit limit amount in dollars for initial user's card (e.g., 25000)        |
+| `requestedLimitFrequency`                                  | `String`                | Limit frequency for initial user's card (e.g., "30 day", "7 day")                   |
+| `sessionId`                                                | `String`                | Session ID from generateEncryptionKeys mutation (required if encryptedPin provided) |
+| `encryptedPin`                                             | `String`                | Encrypted PIN for initial user (use encryptPassphraseForTransfer from agio-utils).  |
 
 PIN (4-6 digits) is staged during application and set automatically when card is activated.
 Must meet security requirements: no repeated digits, no sequential patterns. |
@@ -1593,17 +1593,17 @@ Must meet security requirements: no repeated digits, no sequential patterns. |
 
 Person data for corporate applications (UBOs, representatives)
 
-| Field              | Type                | Description |
-| ------------------ | ------------------- | ----------- |
-| `firstName`        | `String!`           | -           |
-| `lastName`         | `String!`           | -           |
-| `birthDate`        | `String!`           | -           |
-| `nationalId`       | `String!`           | -           |
-| `countryOfIssue`   | `String!`           | -           |
-| `email`            | `String!`           | -           |
-| `address`          | `RainAddressInput!` | -           |
-| `phoneCountryCode` | `String`            | -           |
-| `phoneNumber`      | `String`            | -           |
+| Field              | Type                    | Description |
+| ------------------ | ----------------------- | ----------- |
+| `firstName`        | `String!`               | -           |
+| `lastName`         | `String!`               | -           |
+| `birthDate`        | `String!`               | -           |
+| `nationalId`       | `String!`               | -           |
+| `countryOfIssue`   | `String!`               | -           |
+| `email`            | `String!`               | -           |
+| `address`          | `AgioCardAddressInput!` | -           |
+| `phoneCountryCode` | `String`                | -           |
+| `phoneNumber`      | `String`                | -           |
 
 ---
 
@@ -1784,7 +1784,7 @@ Person data for corporate applications (UBOs, representatives)
 
 ---
 
-## CreateRainCardApplicationInput (Input)
+## CreateAgioCardApplicationInput (Input)
 
 | Field                      | Type       | Description                                                                         |
 | -------------------------- | ---------- | ----------------------------------------------------------------------------------- |
@@ -1793,7 +1793,7 @@ Person data for corporate applications (UBOs, representatives)
 | `annualSalary`             | `String!`  | Estimated annual salary                                                             |
 | `accountPurpose`           | `String!`  | Purpose of the account (e.g., "Savings", "Business")                                |
 | `expectedMonthlyVolume`    | `String!`  | Expected monthly transaction volume                                                 |
-| `isTermsOfServiceAccepted` | `Boolean!` | User must accept Rain's terms of service                                            |
+| `isTermsOfServiceAccepted` | `Boolean!` | User must accept Agio's terms of service                                            |
 | `cardNickname`             | `String`   | User-defined card nickname (optional)                                               |
 | `requestedLimitAmount`     | `Int`      | Desired credit limit amount in dollars (e.g., 25000)                                |
 | `requestedLimitFrequency`  | `String`   | Limit frequency (e.g., "30 day", "7 day")                                           |
@@ -1805,27 +1805,27 @@ Must meet security requirements: no repeated digits, no sequential patterns. |
 
 ---
 
-## CreateRainCardInput (Input)
+## CreateAgioCardInput (Input)
 
-Input for creating a new Rain Card (virtual or physical)
+Input for creating a new Agio Card (virtual or physical)
 Unified mutation that handles both card types via cardType discriminator.
 
-| Field                                                                                                        | Type                | Description                                                                                        |
-| ------------------------------------------------------------------------------------------------------------ | ------------------- | -------------------------------------------------------------------------------------------------- |
-| `cardApplicationId`                                                                                          | `Int!`              | Card application ID (AgioCard_card_application.id) - the approved application to create card under |
-| `cardType`                                                                                                   | `RainCardType!`     | Card type - determines whether shipping is required                                                |
-| `sessionId`                                                                                                  | `String`            | Session ID from generateEncryptionKeys mutation (required if encryptedPin provided)                |
-| `encryptedPin`                                                                                               | `String`            | Encrypted PIN (use encryptPassphraseForTransfer from agio-utils).                                  |
+| Field                                                                                                        | Type                    | Description                                                                                        |
+| ------------------------------------------------------------------------------------------------------------ | ----------------------- | -------------------------------------------------------------------------------------------------- |
+| `cardApplicationId`                                                                                          | `Int!`                  | Card application ID (AgioCard_card_application.id) - the approved application to create card under |
+| `cardType`                                                                                                   | `AgioCardType!`         | Card type - determines whether shipping is required                                                |
+| `sessionId`                                                                                                  | `String`                | Session ID from generateEncryptionKeys mutation (required if encryptedPin provided)                |
+| `encryptedPin`                                                                                               | `String`                | Encrypted PIN (use encryptPassphraseForTransfer from agio-utils).                                  |
 | For virtual cards, PIN is set immediately. For physical cards, PIN is staged and set when card is activated. |
-| `limit`                                                                                                      | `CardLimitInput`    | Optional spending limit                                                                            |
-| `displayName`                                                                                                | `String`            | Display name on card (max 26 chars: alphanumeric, space, period, hyphen)                           |
+| `limit`                                                                                                      | `CardLimitInput`        | Optional spending limit                                                                            |
+| `displayName`                                                                                                | `String`                | Display name on card (max 26 chars: alphanumeric, space, period, hyphen)                           |
 | Can only be set at creation - immutable after.                                                               |
-| `shipping`                                                                                                   | `RainShippingInput` | Shipping address - REQUIRED for physical cards, ignored for virtual                                |
-| `billing`                                                                                                    | `RainAddressInput`  | Billing address - defaults to shipping address if omitted                                          |
+| `shipping`                                                                                                   | `AgioCardShippingInput` | Shipping address - REQUIRED for physical cards, ignored for virtual                                |
+| `billing`                                                                                                    | `AgioCardAddressInput`  | Billing address - defaults to shipping address if omitted                                          |
 
 ---
 
-## CreateRainCardResponse
+## CreateAgioCardResponse
 
 Response from creating a new card
 
@@ -1833,7 +1833,7 @@ Response from creating a new card
 | ----------------- | ---------- | --------------------------------------- |
 | `success`         | `Boolean!` | -                                       |
 | `id`              | `Int`      | Our internal card ID (AgioCard_card.id) |
-| `cardId`          | `String`   | New card ID from Rain                   |
+| `cardId`          | `String`   | New card ID from Agio                   |
 | `cardType`        | `String`   | Card type (virtual or physical)         |
 | `status`          | `String`   | Card status after creation              |
 | `last4`           | `String`   | Last 4 digits of card number            |
@@ -1845,12 +1845,12 @@ Response from creating a new card
 
 ## CreateRainCorporateApplicationInput (Input)
 
-Input for creating a corporate (company) Rain Card application
+Input for creating a corporate (company) Agio Card application
 
 | Field                      | Type                                    | Description                                                    |
 | -------------------------- | --------------------------------------- | -------------------------------------------------------------- |
 | `name`                     | `String!`                               | Company name                                                   |
-| `address`                  | `RainAddressInput!`                     | Company physical address                                       |
+| `address`                  | `AgioCardAddressInput!`                 | Company physical address                                       |
 | `entity`                   | `CorporateApplicationEntityInput!`      | Company legal entity information                               |
 | `initialUser`              | `CorporateApplicationInitialUserInput!` | Initial user/admin of the company - must have a wallet address |
 | `representatives`          | `[CorporateApplicationPersonInput!]!`   | Company representatives                                        |
@@ -3334,46 +3334,46 @@ current market rates while validating the original quote hasn't expired. |
 | `requestOtcQuote` | `RequestQuoteTradeResponse` | - |
 | `refreshOtcQuote` | `RefreshOtcQuoteResponse` | - |
 | `calculateOtcQuote` | `CalculateOtcQuoteResponse` | - |
-| `createRainCardApplication` | `RainCardApplicationResponse!` | Create a Rain Card application for a user with completed KYC.
+| `createAgioCardApplication` | `AgioCardApplicationResponse!` | Create a Agio Card application for a user with completed KYC.
 Requires normal-kyc-level verification. |
-| `freezeRainCard` | `RainCardOperationResponse!` | Freeze a Rain Card. Calls Rain API and returns immediate response.
+| `freezeAgioCard` | `AgioCardOperationResponse!` | Freeze a Agio Card. Calls Agio Card API and returns immediate response.
 Card status will be updated via webhook.
 Requires the user to own the card. |
-| `unfreezeRainCard` | `RainCardOperationResponse!` | Unfreeze a Rain Card. Calls Rain API and returns immediate response.
+| `unfreezeAgioCard` | `AgioCardOperationResponse!` | Unfreeze a Agio Card. Calls Agio Card API and returns immediate response.
 Card status will be updated via webhook.
 Requires the user to own the card. |
-| `revealRainCardSecrets` | `RainCardSecretsResponse!` | Reveal sensitive card details (PAN, CVC, expiry).
+| `revealAgioCardSecrets` | `AgioCardSecretsResponse!` | Reveal sensitive card details (PAN, CVC, expiry).
 Requires the user to own the card.
 Returns encryptedSecrets - use decryptWithSessionKey from agio-utils to decrypt JSON. |
-| `replaceVirtualRainCard` | `RainCardReplacementResponse!` | Replace a virtual Rain Card with a new one.
+| `replaceVirtualAgioCard` | `AgioCardReplacementResponse!` | Replace a virtual Agio Card with a new one.
 The old card is canceled and a new card is created with new PAN, token, and expiration.
 The new card inherits spending limits from the old card.
 Only virtual cards can be replaced - physical cards will return an error.
 Requires the user to own the card. |
-| `setRainCardPin` | `RainCardPinResponse!` | Set or update a Rain Card's PIN.
+| `setAgioCardPin` | `AgioCardPinResponse!` | Set or update a Agio Card's PIN.
 PIN must be 4-12 digits and meet security requirements.
 Requires the user to own the card. |
-| `getRainCardPin` | `RainCardPinResponse!` | Retrieve a Rain Card's PIN.
+| `getAgioCardPin` | `AgioCardPinResponse!` | Retrieve a Agio Card's PIN.
 Returns encryptedPin - use decryptWithSessionKey from agio-utils to decrypt.
 Requires the user to own the card. |
-| `freezeRainCardByRainCardId` | `RainCardOperationResponse!` | Admin-only: Freeze Rain Card by Rain card ID. Bypasses ownership checks. |
-| `unfreezeRainCardByRainCardId` | `RainCardOperationResponse!` | Admin-only: Unfreeze Rain Card by Rain card ID. Bypasses ownership checks. |
-| `revealRainCardSecretsByRainCardId` | `RainCardSecretsResponse!` | Admin-only: Reveal card secrets by Rain card ID. Bypasses ownership checks.
+| `freezeAgioCardByAgioCardId` | `AgioCardOperationResponse!` | Admin-only: Freeze Agio Card by Agio card ID. Bypasses ownership checks. |
+| `unfreezeAgioCardByAgioCardId` | `AgioCardOperationResponse!` | Admin-only: Unfreeze Agio Card by Agio card ID. Bypasses ownership checks. |
+| `revealAgioCardSecretsByAgioCardId` | `AgioCardSecretsResponse!` | Admin-only: Reveal card secrets by Agio card ID. Bypasses ownership checks.
 Returns encryptedSecrets - use decryptWithSessionKey from agio-utils to decrypt JSON. |
-| `replaceVirtualRainCardByRainCardId` | `RainCardReplacementResponse!` | Admin-only: Replace virtual card by Rain card ID. Bypasses ownership checks. |
-| `setRainCardPinByRainCardId` | `RainCardPinResponse!` | Admin-only: Set card PIN by Rain card ID. Bypasses ownership checks.
+| `replaceVirtualAgioCardByAgioCardId` | `AgioCardReplacementResponse!` | Admin-only: Replace virtual card by Agio card ID. Bypasses ownership checks. |
+| `setAgioCardPinByAgioCardId` | `AgioCardPinResponse!` | Admin-only: Set card PIN by Agio card ID. Bypasses ownership checks.
 PIN must be encrypted using encryptPassphraseForTransfer from agio-utils. |
-| `getRainCardPinByRainCardId` | `RainCardPinResponse!` | Admin-only: Get card PIN by Rain card ID. Bypasses ownership checks.
+| `getAgioCardPinByAgioCardId` | `AgioCardPinResponse!` | Admin-only: Get card PIN by Agio card ID. Bypasses ownership checks.
 Returns encryptedPin - use decryptWithSessionKey from agio-utils to decrypt. |
-| `createRainCorporateApplication` | `RainCorporateApplicationResponse!` | Create a Rain Corporate Card application for a company.
+| `createRainCorporateApplication` | `RainCorporateApplicationResponse!` | Create a Agio Corporate Card application for a company.
 Requires entity information, initial user, representatives, and UBOs.
-Website is REQUIRED by Rain API. |
+Website is REQUIRED by Agio Card API. |
 | `validateAddress` | `AddressValidationResponse!` | Validate an address using Google Address Validation API.
 Returns validation result with confidence level (HIGH, MEDIUM, or LOW).
 Useful for validating user addresses before creating cards, shipping groups, or billing operations.
 Cached for 30 days per Google's recommendations. |
-| `validateRainShippingAddress` | `AddressValidationResponse!` | Validate a shipping address via Rain's address validation endpoint.
-Determines whether Rain can ship a physical card to this address.
+| `validateRainShippingAddress` | `AddressValidationResponse!` | Validate a shipping address via Agio's address validation endpoint.
+Determines whether Agio can ship a physical card to this address.
 Uses Google Address Validation with geocoding fallback — broader country coverage than validateAddress. |
 | `autocompleteAddress` | `AutocompleteAddressResponse!` | Autocomplete address search using Google Places API.
 Returns address suggestions based on partial input.
@@ -3381,33 +3381,33 @@ Useful for address entry forms with typeahead functionality.
 Results cached for 24 hours. |
 | `resolvePlaceAddress` | `ResolvePlaceAddressResponse!` | Resolve a Google Place ID to a structured address object.
 Use the placeId returned by autocompleteAddress to fetch precise address fields. |
-| `updateCardNickname` | `RainCardOperationResponse!` | Update a Rain Card's nickname (display name).
+| `updateCardNickname` | `AgioCardOperationResponse!` | Update a Agio Card's nickname (display name).
 Validates: max 26 chars, alphanumeric + spaces + periods + hyphens only.
 Updates local database. Requires the user to own the card. |
-| `updateRainUserProfile` | `RainCardOperationResponse!` | Update Rain user profile (address and/or phone).
-Syncs to both Rain API and local database.
+| `updateAgioCardUserProfile` | `AgioCardOperationResponse!` | Update Agio user profile (address and/or phone).
+Syncs to both Agio Card API and local database.
 Requires the user to own the card application. |
-| `updateRainCompanyAddress` | `RainCardOperationResponse!` | Update Rain company address.
-Syncs to both Rain API and local database.
+| `updateRainCompanyAddress` | `AgioCardOperationResponse!` | Update Agio company address.
+Syncs to both Agio Card API and local database.
 Requires organization admin or Agio admin role. |
-| `updateRainCardLimit` | `RainCardLimitResponse!` | Update a Rain Card's spending limit.
-Updates both Rain API and local database.
+| `updateAgioCardLimit` | `AgioCardLimitResponse!` | Update a Agio Card's spending limit.
+Updates both Agio Card API and local database.
 Requires the user to own the card application. |
-| `lockRainCard` | `RainCardOperationResponse!` | Lock a Rain Card (alias for freeze). Card cannot be used for transactions.
-Use unlockRainCard to restore card functionality.
+| `lockAgioCard` | `AgioCardOperationResponse!` | Lock a Agio Card (alias for freeze). Card cannot be used for transactions.
+Use unlockAgioCard to restore card functionality.
 Requires the user to own the card. |
-| `unlockRainCard` | `RainCardOperationResponse!` | Unlock a Rain Card (alias for unfreeze). Restores card functionality.
+| `unlockAgioCard` | `AgioCardOperationResponse!` | Unlock a Agio Card (alias for unfreeze). Restores card functionality.
 Requires the user to own the card. |
-| `cancelRainCard` | `RainCardOperationResponse!` | Cancel a Rain Card permanently (irreversible).
+| `cancelAgioCard` | `AgioCardOperationResponse!` | Cancel a Agio Card permanently (irreversible).
 Card cannot be reactivated after cancellation.
 Requires the user to own the card. |
-| `createRainCard` | `CreateRainCardResponse!` | Create a new Rain Card for an approved application.
+| `createAgioCard` | `CreateAgioCardResponse!` | Create a new Agio Card for an approved application.
 Supports both virtual and physical cards via cardType discriminator.
 
 - Virtual cards: PIN set immediately, card active after creation
 - Physical cards: PIN staged, shipping required, activated when received
   Requires an approved card application. |
-  | `replaceRainCard` | `RainCardReplacementResponse!` | Replace an existing Rain Card (for lost/stolen/damaged cards).
+  | `replaceAgioCard` | `AgioCardReplacementResponse!` | Replace an existing Agio Card (for lost/stolen/damaged cards).
   Creates a new card with new PAN and credentials.
   The old card is canceled automatically.
 - Virtual cards: New card created immediately
@@ -3416,14 +3416,14 @@ Supports both virtual and physical cards via cardType discriminator.
   | `payInvoiceWithCardBalance` | `PayInvoiceWithCardBalanceResponse!` | Pay an invoice using card balance.
   Debits the user's card collateral balance and records payment against the invoice.
   Requires the user to own both the card application and the invoice. |
-  | `updateRainCardLimitByRainCardId` | `RainCardLimitResponse!` | Admin-only: Update card limit by Rain card ID. Bypasses ownership checks. |
-  | `cancelRainCardByRainCardId` | `RainCardOperationResponse!` | Admin-only: Cancel card by Rain card ID. Bypasses ownership checks. |
-  | `createRainCardByRainUserId` | `CreateRainCardResponse!` | Admin-only: Create card for a user by Rain user ID. Bypasses ownership checks. |
-  | `chargeCard` | `ChargeCardResponse!` | Charge a Rain Card with a fee. Requires card:charge permission.
+  | `updateAgioCardLimitByAgioCardId` | `AgioCardLimitResponse!` | Admin-only: Update card limit by Agio card ID. Bypasses ownership checks. |
+  | `cancelAgioCardByAgioCardId` | `AgioCardOperationResponse!` | Admin-only: Cancel card by Agio card ID. Bypasses ownership checks. |
+  | `createAgioCardByAgioCardUserId` | `CreateAgioCardResponse!` | Admin-only: Create card for a user by Agio user ID. Bypasses ownership checks. |
+  | `chargeCard` | `ChargeCardResponse!` | Charge a Agio Card with a fee. Requires card:charge permission.
   Debits from user's card collateral balance and records the transaction. |
-  | `cardWithdraw` | `CardWithdrawResponse!` | Withdraw collateral from a Rain Card smart wallet.
+  | `cardWithdraw` | `CardWithdrawResponse!` | Withdraw collateral from a Agio Card smart wallet.
   Signs the withdrawal with the owner EOA via Alchemy Signer and submits
-  via session key UserOp through the Rain coordinator contract. |
+  via session key UserOp through the Agio coordinator contract. |
   | `runCardReminders` | `CardReminderRunResponse!` | Admin-only: Manually trigger unused card reminder processing.
   Finds cards with no transactions and sends reminder emails based on the schedule.
   Use dryRun: true (default) to preview which reminders would be sent. |
@@ -3580,7 +3580,7 @@ Supports both virtual and physical cards via cardType discriminator.
 | Field               | Type   | Description                                          |
 | ------------------- | ------ | ---------------------------------------------------- |
 | `invoiceId`         | `Int!` | Invoice to pay                                       |
-| `cardApplicationId` | `Int!` | Card application to charge (determines Rain user ID) |
+| `cardApplicationId` | `Int!` | Card application to charge (determines Agio user ID) |
 
 ---
 
@@ -3765,12 +3765,12 @@ Supports both virtual and physical cards via cardType discriminator.
 | `crsReportableFunds`                    | `[CrsDataQualitySummary!]!`            | -                            |
 | `smartWalletSessionKeys`                | `SmartWalletSessionKeysResponse`       | -                            |
 | `kms`                                   | `KMSQuery!`                            | -                            |
-| `rainCardBalance`                       | `RainCardBalanceResponse!`             | Get balance for a Rain Card. |
+| `rainCardBalance`                       | `AgioCardBalanceResponse!`             | Get balance for a Agio Card. |
 
 Returns credit limit, pending charges, posted charges, balance due, and spending power.
 Requires the user to own the card. |
-| `rainCardBalanceByRainUserId` | `RainCardBalanceResponse!` | Admin-only: Get Rain Card balance by Rain user ID. Bypasses ownership checks. |
-| `rainCorporateApplicationPrefill` | `RainCorporateApplicationPrefill!` | Prefill data for the corporate Rain card application form from the org's Sumsub KYB.
+| `rainCardBalanceByAgioCardUserId` | `AgioCardBalanceResponse!` | Admin-only: Get Agio Card balance by Agio user ID. Bypasses ownership checks. |
+| `rainCorporateApplicationPrefill` | `RainCorporateApplicationPrefill!` | Prefill data for the corporate Agio card application form from the org's Sumsub KYB.
 Returns verified UBO and representative data from nested sub-applicants.
 Empty lists are returned if no Sumsub KYB applicant exists for the org. |
 | `redis` | `RedisQuery!` | - |
@@ -3871,9 +3871,9 @@ Identifier can be: numeric token ID, CoinGecko slug, or symbol (case-insensitive
 
 ---
 
-## RainAddressInput (Input)
+## AgioCardAddressInput (Input)
 
-Address input for Rain API applications
+Address input for Agio Card API applications
 
 | Field         | Type      | Description |
 | ------------- | --------- | ----------- |
@@ -3887,7 +3887,7 @@ Address input for Rain API applications
 
 ---
 
-## RainCardAddress
+## AgioCardAddress
 
 | Field         | Type      | Description |
 | ------------- | --------- | ----------- |
@@ -3900,7 +3900,7 @@ Address input for Rain API applications
 
 ---
 
-## RainCardApplication
+## AgioCardApplication
 
 | Field                                 | Type                         | Description |
 | ------------------------------------- | ---------------------------- | ----------- |
@@ -3908,7 +3908,7 @@ Address input for Rain API applications
 | `rainApplicationId`                   | `String!`                    | -           |
 | `applicantId`                         | `String!`                    | -           |
 | `walletAddress`                       | `String!`                    | -           |
-| `applicationStatus`                   | `RainCardApplicationStatus!` | -           |
+| `applicationStatus`                   | `AgioCardApplicationStatus!` | -           |
 | `applicationReason`                   | `String`                     | -           |
 | `isActive`                            | `Boolean!`                   | -           |
 | `firstName`                           | `String`                     | -           |
@@ -3916,16 +3916,16 @@ Address input for Rain API applications
 | `email`                               | `String`                     | -           |
 | `phoneCountryCode`                    | `String`                     | -           |
 | `phoneNumber`                         | `String`                     | -           |
-| `address`                             | `RainCardAddress`            | -           |
+| `address`                             | `AgioCardAddress`            | -           |
 | `solanaAddress`                       | `String`                     | -           |
-| `applicationExternalVerificationLink` | `RainCardApplicationLink`    | -           |
-| `applicationCompletionLink`           | `RainCardApplicationLink`    | -           |
+| `applicationExternalVerificationLink` | `AgioCardApplicationLink`    | -           |
+| `applicationCompletionLink`           | `AgioCardApplicationLink`    | -           |
 | `createdAt`                           | `timestamptz`                | -           |
 | `updatedAt`                           | `timestamptz`                | -           |
 
 ---
 
-## RainCardApplicationLink
+## AgioCardApplicationLink
 
 | Field    | Type      | Description |
 | -------- | --------- | ----------- |
@@ -3934,7 +3934,7 @@ Address input for Rain API applications
 
 ---
 
-## RainCardApplicationResponse
+## AgioCardApplicationResponse
 
 | Field                      | Type       | Description                                                            |
 | -------------------------- | ---------- | ---------------------------------------------------------------------- |
@@ -3948,9 +3948,9 @@ Address input for Rain API applications
 
 ---
 
-## RainCardBalance
+## AgioCardBalance
 
-User balance information from Rain API.
+User balance information from Agio Card API.
 All monetary values are in USD (converted from cents).
 
 | Field            | Type     | Description                                                                     |
@@ -3963,7 +3963,7 @@ All monetary values are in USD (converted from cents).
 
 ---
 
-## RainCardBalanceResponse
+## AgioCardBalanceResponse
 
 Response from fetching card balance
 
@@ -3971,14 +3971,14 @@ Response from fetching card balance
 | --------- | ----------------- | --------------------------------------- |
 | `success` | `Boolean!`        | -                                       |
 | `id`      | `Int`             | Our internal card ID (AgioCard_card.id) |
-| `balance` | `RainCardBalance` | -                                       |
+| `balance` | `AgioCardBalance` | -                                       |
 | `error`   | `String`          | -                                       |
 
 ---
 
-## RainCardExpiry
+## AgioCardExpiry
 
-Card expiry date returned from Rain API
+Card expiry date returned from Agio Card API
 
 | Field   | Type      | Description |
 | ------- | --------- | ----------- |
@@ -3987,7 +3987,7 @@ Card expiry date returned from Rain API
 
 ---
 
-## RainCardLimitResponse
+## AgioCardLimitResponse
 
 Response from updating card limit
 
@@ -3995,28 +3995,28 @@ Response from updating card limit
 | ---------------- | ---------- | --------------------------------------- |
 | `success`        | `Boolean!` | -                                       |
 | `id`             | `Int`      | Our internal card ID (AgioCard_card.id) |
-| `cardId`         | `String`   | Rain card ID                            |
+| `cardId`         | `String`   | Agio card ID                            |
 | `limitAmount`    | `Int`      | -                                       |
 | `limitFrequency` | `String`   | -                                       |
 | `error`          | `String`   | -                                       |
 
 ---
 
-## RainCardOperationResponse
+## AgioCardOperationResponse
 
-Response from Rain API card operations (freeze, unfreeze, cancel)
+Response from Agio Card API card operations (freeze, unfreeze, cancel)
 
 | Field     | Type       | Description                             |
 | --------- | ---------- | --------------------------------------- |
 | `success` | `Boolean!` | -                                       |
 | `id`      | `Int`      | Our internal card ID (AgioCard_card.id) |
-| `cardId`  | `String`   | Rain card ID                            |
+| `cardId`  | `String`   | Agio card ID                            |
 | `status`  | `String`   | -                                       |
 | `error`   | `String`   | -                                       |
 
 ---
 
-## RainCardPinResponse
+## AgioCardPinResponse
 
 Response from PIN operations (set/get)
 
@@ -4029,7 +4029,7 @@ Response from PIN operations (set/get)
 
 ---
 
-## RainCardReplacementResponse
+## AgioCardReplacementResponse
 
 Response from replacing a virtual card
 
@@ -4043,20 +4043,20 @@ Response from replacing a virtual card
 
 ---
 
-## RainCardSecrets
+## AgioCardSecrets
 
-Decrypted card secrets from Rain API.
+Decrypted card secrets from Agio Card API.
 These are sensitive values - handle with care.
 
 | Field    | Type             | Description                               |
 | -------- | ---------------- | ----------------------------------------- |
 | `pan`    | `String!`        | Full Primary Account Number (card number) |
 | `cvc`    | `String!`        | Card Verification Code (CVV/CVC)          |
-| `expiry` | `RainCardExpiry` | Card expiration date                      |
+| `expiry` | `AgioCardExpiry` | Card expiration date                      |
 
 ---
 
-## RainCardSecretsResponse
+## AgioCardSecretsResponse
 
 Response from revealing card secrets
 
@@ -4086,7 +4086,7 @@ Prefilled address from Sumsub KYB data (all fields optional — populate what's 
 
 ## RainCorporateApplicationPrefill
 
-Prefilled data for a corporate Rain card application, sourced from the org's Sumsub KYB applicant.
+Prefilled data for a corporate Agio card application, sourced from the org's Sumsub KYB applicant.
 Returns whatever verified data is available — may be partial if KYB is incomplete.
 
 | Field                | Type                             | Description |
@@ -4102,7 +4102,7 @@ Returns whatever verified data is available — may be partial if KYB is incompl
 
 ## RainCorporateApplicationResponse
 
-Response from creating a corporate Rain Card application
+Response from creating a corporate Agio Card application
 
 | Field               | Type       | Description |
 | ------------------- | ---------- | ----------- |
@@ -4135,11 +4135,11 @@ Prefilled person data for UBOs / representatives from Sumsub verified sub-applic
 
 ## RainReplacedCard
 
-Details of a replaced card from Rain API
+Details of a replaced card from Agio Card API
 
 | Field             | Type      | Description                                   |
 | ----------------- | --------- | --------------------------------------------- |
-| `id`              | `String!` | New card ID from Rain                         |
+| `id`              | `String!` | New card ID from Agio                         |
 | `type`            | `String!` | Card type (always "virtual" for replacements) |
 | `status`          | `String!` | Card status after replacement                 |
 | `last4`           | `String!` | Last 4 digits of new card number              |
@@ -4148,22 +4148,22 @@ Details of a replaced card from Rain API
 
 ---
 
-## RainShippingInput (Input)
+## AgioCardShippingInput (Input)
 
 Shipping address input for physical cards
 
-| Field         | Type                 | Description                                      |
-| ------------- | -------------------- | ------------------------------------------------ |
-| `line1`       | `String!`            | -                                                |
-| `line2`       | `String`             | -                                                |
-| `city`        | `String!`            | -                                                |
-| `region`      | `String!`            | -                                                |
-| `postalCode`  | `String!`            | -                                                |
-| `countryCode` | `String!`            | -                                                |
-| `phoneNumber` | `String!`            | Phone number (required by Rain API for shipping) |
-| `firstName`   | `String`             | -                                                |
-| `lastName`    | `String`             | -                                                |
-| `method`      | `RainShippingMethod` | Shipping method (standard or express)            |
+| Field         | Type                 | Description                                           |
+| ------------- | -------------------- | ----------------------------------------------------- |
+| `line1`       | `String!`            | -                                                     |
+| `line2`       | `String`             | -                                                     |
+| `city`        | `String!`            | -                                                     |
+| `region`      | `String!`            | -                                                     |
+| `postalCode`  | `String!`            | -                                                     |
+| `countryCode` | `String!`            | -                                                     |
+| `phoneNumber` | `String!`            | Phone number (required by Agio Card API for shipping) |
+| `firstName`   | `String`             | -                                                     |
+| `lastName`    | `String`             | -                                                     |
+| `method`      | `RainShippingMethod` | Shipping method (standard or express)                 |
 
 ---
 
@@ -4327,7 +4327,7 @@ Shipping address input for physical cards
 
 ---
 
-## ReplaceRainCardInput (Input)
+## ReplaceAgioCardInput (Input)
 
 Input for replacing an existing card (lost/stolen/damaged)
 
@@ -4335,7 +4335,7 @@ Input for replacing an existing card (lost/stolen/damaged)
 | ----------------- | ------------------------ | ---------------------------------------------------------------------------- |
 | `cardId`          | `Int!`                   | Card ID (AgioCard_card.id - our internal card ID)                            |
 | `reason`          | `RainReplacementReason!` | Reason for replacement                                                       |
-| `shippingAddress` | `RainShippingInput`      | Shipping address for physical card replacement (required for physical cards) |
+| `shippingAddress` | `AgioCardShippingInput`  | Shipping address for physical card replacement (required for physical cards) |
 
 ---
 
@@ -4671,7 +4671,7 @@ Response from resolving a place ID to a structured address
 
 ---
 
-## SetRainCardPinInput (Input)
+## SetAgioCardPinInput (Input)
 
 Input for setting a card PIN
 
@@ -4782,7 +4782,7 @@ Structured error response for smart wallet operations
 | `amount`                                                                                | `String!`         | Amount in wei (smallest unit). Frontend must convert human-readable to wei using token decimals. |
 | `toChainId`                                                                             | `Int`             | -                                                                                                |
 | `recipient`                                                                             | `String`          | Optional recipient address. If specified, swap output is sent directly to this address           |
-| instead of back to the wallet. Useful for "swap and send" flows like Rain Card funding. |
+| instead of back to the wallet. Useful for "swap and send" flows like Agio Card funding. |
 | `providers`                                                                             | `[SwapProvider!]` | Preferred swap providers to query. Empty/null defaults to [RELAY, ALCHEMY, SYMBIOSIS]            |
 
 which are compared in parallel and the best executable route is selected automatically.
@@ -5884,9 +5884,9 @@ A single hop in a swap route (e.g. ETH→USDC on Uniswap, then USDC bridged via 
 
 ---
 
-## UpdateRainCardLimitInput (Input)
+## UpdateAgioCardLimitInput (Input)
 
-Input for updating a Rain Card's spending limit
+Input for updating a Agio Card's spending limit
 
 | Field            | Type                  | Description                                       |
 | ---------------- | --------------------- | ------------------------------------------------- |
@@ -5898,23 +5898,23 @@ Input for updating a Rain Card's spending limit
 
 ## UpdateRainCompanyAddressInput (Input)
 
-Input for updating Rain company address
+Input for updating Agio company address
 
-| Field               | Type                | Description                                      |
-| ------------------- | ------------------- | ------------------------------------------------ |
-| `cardApplicationId` | `Int!`              | Card application ID to identify the Rain company |
-| `address`           | `RainAddressInput!` | Updated company address                          |
+| Field               | Type                    | Description                                      |
+| ------------------- | ----------------------- | ------------------------------------------------ |
+| `cardApplicationId` | `Int!`                  | Card application ID to identify the Agio company |
+| `address`           | `AgioCardAddressInput!` | Updated company address                          |
 
 ---
 
-## UpdateRainUserProfileInput (Input)
+## UpdateAgioCardUserProfileInput (Input)
 
-Input for updating Rain user billing address
+Input for updating Agio user billing address
 
-| Field               | Type                | Description                                   |
-| ------------------- | ------------------- | --------------------------------------------- |
-| `cardApplicationId` | `Int!`              | Card application ID to identify the Rain user |
-| `address`           | `RainAddressInput!` | Updated billing address                       |
+| Field               | Type                    | Description                                   |
+| ------------------- | ----------------------- | --------------------------------------------- |
+| `cardApplicationId` | `Int!`                  | Card application ID to identify the Agio user |
+| `address`           | `AgioCardAddressInput!` | Updated billing address                       |
 
 ---
 
@@ -5963,9 +5963,9 @@ Input for updating Rain user billing address
 
 Input for validating an address
 
-| Field     | Type                | Description                                                                       |
-| --------- | ------------------- | --------------------------------------------------------------------------------- |
-| `address` | `RainAddressInput!` | Address to validate before creating cards, shipping groups, or billing operations |
+| Field     | Type                    | Description                                                                       |
+| --------- | ----------------------- | --------------------------------------------------------------------------------- |
+| `address` | `AgioCardAddressInput!` | Address to validate before creating cards, shipping groups, or billing operations |
 
 ---
 

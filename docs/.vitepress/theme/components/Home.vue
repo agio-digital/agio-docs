@@ -14,10 +14,10 @@ const categories = [
   {
     icon: "💳",
     title: "Cards & Payments",
-    description: "Issue corporate crypto cards, manage funding, and track transactions via Rain integration.",
+    description: "Issue prepaid crypto cards, manage funding, and track transactions via the Agio Card API.",
     links: [
       { text: "Card Guide", href: "/guides/cards/" },
-      { text: "Rain SDK", href: "/sdks/rain/" }
+      { text: "Agio Card SDK", href: "/sdks/card/" }
     ]
   },
   {
@@ -106,7 +106,7 @@ const categories = [
         <h4>SDKs</h4>
         <a href="/guide/quick-start">TypeScript SDK</a>
         <a href="/guide/direct-widget">Direct Widget</a>
-        <a href="/sdks/rain/">Rain SDK</a>
+        <a href="/sdks/card/">Agio Card SDK</a>
         <a href="/sdks/sumsub/">Sumsub SDK</a>
       </div>
       <div class="quick-link-group">

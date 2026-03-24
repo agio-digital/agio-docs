@@ -4,14 +4,14 @@ footer: false
 
 # Applications
 
-KYC (Know Your Customer) and KYB (Know Your Business) application flows for onboarding individuals and companies to Rain Cards.
+KYC (Know Your Customer) and KYB (Know Your Business) application flows for onboarding individuals and companies to Agio Cards.
 
 ## Individual Consumer Application
 
-For individual cardholders. Triggers Rain's KYC/AML process.
+For individual cardholders. Triggers Agio's KYC/AML process.
 
 ```typescript
-const { data: application } = await rain.applications.createApplication({
+const { data: application } = await cards.applications.createApplication({
   firstName: "John",
   lastName: "Doe",
   email: "john@example.com",
@@ -42,7 +42,7 @@ const { data: application } = await rain.applications.createApplication({
 If you have existing KYC data from Sumsub, pass a share token instead:
 
 ```typescript
-const { data: application } = await rain.applications.createApplication({
+const { data: application } = await cards.applications.createApplication({
   sumsubShareToken: "token-from-sumsub",
   walletAddress: "0x...",
   ipAddress: "192.168.1.1",
@@ -59,7 +59,7 @@ const { data: application } = await rain.applications.createApplication({
 ### Update an Individual Application
 
 ```typescript
-await rain.applications.updateApplication("user-id", {
+await cards.applications.updateApplication("user-id", {
   occupation: "15-1199",
   annualSalary: "150000_TO_250000"
 });
@@ -68,7 +68,7 @@ await rain.applications.updateApplication("user-id", {
 ### Upload KYC Documents
 
 ```typescript
-await rain.applications.uploadUserDocument("user-id", {
+await cards.applications.uploadUserDocument("user-id", {
   document: passportBuffer,
   name: "passport_front.jpg",
   type: "passport",
@@ -84,7 +84,7 @@ Supported document types: `idCard`, `passport`, `drivers`, `residencePermit`, `u
 For companies issuing cards to employees. Triggers KYB for the company and KYC for all beneficial owners.
 
 ```typescript
-const { data: company } = await rain.applications.createCorporateApplication({
+const { data: company } = await cards.applications.createCorporateApplication({
   name: "Acme Corp",
   address: {
     line1: "123 Business Ave",
@@ -162,7 +162,7 @@ const { data: company } = await rain.applications.createCorporateApplication({
 ### Update a Corporate Application
 
 ```typescript
-await rain.applications.updateCorporateApplication("company-id", {
+await cards.applications.updateCorporateApplication("company-id", {
   name: "Acme Corp (Updated)",
   entity: { expectedSpend: "50000_TO_100000" }
 });
@@ -173,7 +173,7 @@ await rain.applications.updateCorporateApplication("company-id", {
 ### Individual Application Status
 
 ```typescript
-const { data: status } = await rain.applications.getApplicationStatus("user-id");
+const { data: status } = await cards.applications.getApplicationStatus("user-id");
 
 if (status.applicationStatus === "approved") {
   // Proceed to issue cards
@@ -185,7 +185,7 @@ if (status.applicationStatus === "approved") {
 ### Corporate Application Status
 
 ```typescript
-const { data: status } = await rain.applications.getCorporateApplicationStatus("company-id");
+const { data: status } = await cards.applications.getCorporateApplicationStatus("company-id");
 
 if (status.applicationStatus === "approved") {
   // Proceed to add users and issue cards
@@ -208,9 +208,9 @@ status.ultimateBeneficialOwners.forEach((ubo) => {
 | `pending`           | Under review. No action required.                                 |
 | `needsInformation`  | Additional information required. Check `applicationReason`.       |
 | `needsVerification` | Identity verification pending. Check `applicationCompletionLink`. |
-| `manualReview`      | Flagged for manual review by Rain compliance.                     |
+| `manualReview`      | Flagged for manual review by Agio compliance.                     |
 | `denied`            | Application denied.                                               |
-| `locked`            | Account locked. Contact Rain support.                             |
+| `locked`            | Account locked. Contact Agio support.                             |
 | `canceled`          | Application canceled.                                             |
 
 ## UBO Tracking (Corporate)
@@ -223,7 +223,7 @@ interface CorporateApplicationUBO {
   firstName: string;
   lastName: string;
   email: string;
-  applicationStatus: RainApplicationStatus;
+  applicationStatus: AgioCardApplicationStatus;
   applicationCompletionLink?: { url: string; params: Record<string, string> };
   applicationReason?: string;
 }

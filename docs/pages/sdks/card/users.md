@@ -4,20 +4,20 @@ footer: false
 
 # Users
 
-Manage Rain cardholders -- create, update, delete users and query their balances.
+Manage Agio cardholders -- create, update, delete users and query their balances.
 
 ## List Users
 
 ```typescript
-const { data: users } = await rain.users.getUsers();
+const { data: users } = await cards.users.getUsers();
 ```
 
-Returns an array of `RainUser` objects.
+Returns an array of `AgioCardUser` objects.
 
 ## Get a User
 
 ```typescript
-const { data: user } = await rain.users.getUser("user-id");
+const { data: user } = await cards.users.getUser("user-id");
 
 console.log(user.firstName); // "Jane"
 console.log(user.role); // "cardholder"
@@ -27,7 +27,7 @@ console.log(user.status); // "active"
 ## Create a User
 
 ```typescript
-const { data: user } = await rain.users.createUser({
+const { data: user } = await cards.users.createUser({
   firstName: "Jane",
   lastName: "Smith",
   email: "jane@example.com",
@@ -46,7 +46,7 @@ const { data: user } = await rain.users.createUser({
 ## Update a User
 
 ```typescript
-await rain.users.updateUser("user-id", {
+await cards.users.updateUser("user-id", {
   firstName: "Janet",
   phoneCountryCode: "1",
   phoneNumber: "5555551234",
@@ -59,13 +59,13 @@ Updatable fields include `firstName`, `lastName`, `email`, `role`, `isActive`, `
 ## Delete a User
 
 ```typescript
-await rain.users.deleteUser("user-id");
+await cards.users.deleteUser("user-id");
 ```
 
 ## Get User Balance
 
 ```typescript
-const { data: balance } = await rain.users.getUserBalance("user-id");
+const { data: balance } = await cards.users.getUserBalance("user-id");
 
 console.log(`Credit limit: $${balance.creditLimit / 100}`);
 console.log(`Spending power: $${balance.spendingPower / 100}`);
@@ -79,7 +79,7 @@ See the [Payment System](./payments) page for full details on the credit balance
 After a corporate application is approved, add employees to the company. The `initialUser` from the application is created automatically -- this endpoint is for additional users.
 
 ```typescript
-const { data: user } = await rain.users.createUserInCompany("company-id", {
+const { data: user } = await cards.users.createUserInCompany("company-id", {
   firstName: "Jane",
   lastName: "Smith",
   email: "jane@company.com",
@@ -91,7 +91,7 @@ const { data: user } = await rain.users.createUserInCompany("company-id", {
 });
 
 // Then issue a card for the new user
-const { data: card } = await rain.cards.createCard({
+const { data: card } = await cards.cards.createCard({
   userId: user.id,
   type: "virtual",
   limit: { amount: 50000, frequency: "per30DayPeriod" }
@@ -116,14 +116,14 @@ const { data: card } = await rain.cards.createCard({
 Apply custom fees to a user's account. Charges are **per-user, not per-card** and reduce the user's spending power.
 
 ```typescript
-await rain.users.chargeUser("user-id", {
+await cards.users.chargeUser("user-id", {
   amount: 500, // $5.00 in cents
   description: "Express shipping fee"
 });
 ```
 
 :::warning
-Custom charges are post-authorization and may cause a user's balance to go negative. The Rain charge API does not accept an idempotency key -- implement your own deduplication logic.
+Custom charges are post-authorization and may cause a user's balance to go negative. The Agio charge API does not accept an idempotency key -- implement your own deduplication logic.
 :::
 
 ## User Roles

@@ -45,7 +45,7 @@ x-agio-api-token: <key>
 
 ### Webhook Signatures
 
-External services (BitGo, Rain, Sumsub) sign their payloads. Each service uses its own verification scheme documented in the [Webhooks](/api/rest/webhooks) reference.
+External services (BitGo, Agio Card, Sumsub) sign their payloads. Each service uses its own verification scheme documented in the [Webhooks](/api/rest/webhooks) reference.
 
 ## Common Headers
 

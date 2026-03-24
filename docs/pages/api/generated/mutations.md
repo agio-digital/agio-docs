@@ -182,46 +182,46 @@ current market rates while validating the original quote hasn't expired. |
 | `requestOtcQuote` | `RequestQuoteTradeResponse` | - |
 | `refreshOtcQuote` | `RefreshOtcQuoteResponse` | - |
 | `calculateOtcQuote` | `CalculateOtcQuoteResponse` | - |
-| `createRainCardApplication` | `RainCardApplicationResponse!` | Create a Rain Card application for a user with completed KYC.
+| `createAgioCardApplication` | `AgioCardApplicationResponse!` | Create a Agio Card application for a user with completed KYC.
 Requires normal-kyc-level verification. |
-| `freezeRainCard` | `RainCardOperationResponse!` | Freeze a Rain Card. Calls Rain API and returns immediate response.
+| `freezeAgioCard` | `AgioCardOperationResponse!` | Freeze a Agio Card. Calls Agio Card API and returns immediate response.
 Card status will be updated via webhook.
 Requires the user to own the card. |
-| `unfreezeRainCard` | `RainCardOperationResponse!` | Unfreeze a Rain Card. Calls Rain API and returns immediate response.
+| `unfreezeAgioCard` | `AgioCardOperationResponse!` | Unfreeze a Agio Card. Calls Agio Card API and returns immediate response.
 Card status will be updated via webhook.
 Requires the user to own the card. |
-| `revealRainCardSecrets` | `RainCardSecretsResponse!` | Reveal sensitive card details (PAN, CVC, expiry).
+| `revealAgioCardSecrets` | `AgioCardSecretsResponse!` | Reveal sensitive card details (PAN, CVC, expiry).
 Requires the user to own the card.
 Returns encryptedSecrets - use decryptWithSessionKey from agio-utils to decrypt JSON. |
-| `replaceVirtualRainCard` | `RainCardReplacementResponse!` | Replace a virtual Rain Card with a new one.
+| `replaceVirtualAgioCard` | `AgioCardReplacementResponse!` | Replace a virtual Agio Card with a new one.
 The old card is canceled and a new card is created with new PAN, token, and expiration.
 The new card inherits spending limits from the old card.
 Only virtual cards can be replaced - physical cards will return an error.
 Requires the user to own the card. |
-| `setRainCardPin` | `RainCardPinResponse!` | Set or update a Rain Card's PIN.
+| `setAgioCardPin` | `AgioCardPinResponse!` | Set or update a Agio Card's PIN.
 PIN must be 4-12 digits and meet security requirements.
 Requires the user to own the card. |
-| `getRainCardPin` | `RainCardPinResponse!` | Retrieve a Rain Card's PIN.
+| `getAgioCardPin` | `AgioCardPinResponse!` | Retrieve a Agio Card's PIN.
 Returns encryptedPin - use decryptWithSessionKey from agio-utils to decrypt.
 Requires the user to own the card. |
-| `freezeRainCardByRainCardId` | `RainCardOperationResponse!` | Admin-only: Freeze Rain Card by Rain card ID. Bypasses ownership checks. |
-| `unfreezeRainCardByRainCardId` | `RainCardOperationResponse!` | Admin-only: Unfreeze Rain Card by Rain card ID. Bypasses ownership checks. |
-| `revealRainCardSecretsByRainCardId` | `RainCardSecretsResponse!` | Admin-only: Reveal card secrets by Rain card ID. Bypasses ownership checks.
+| `freezeAgioCardByAgioCardId` | `AgioCardOperationResponse!` | Admin-only: Freeze Agio Card by Agio card ID. Bypasses ownership checks. |
+| `unfreezeAgioCardByAgioCardId` | `AgioCardOperationResponse!` | Admin-only: Unfreeze Agio Card by Agio card ID. Bypasses ownership checks. |
+| `revealAgioCardSecretsByAgioCardId` | `AgioCardSecretsResponse!` | Admin-only: Reveal card secrets by Agio card ID. Bypasses ownership checks.
 Returns encryptedSecrets - use decryptWithSessionKey from agio-utils to decrypt JSON. |
-| `replaceVirtualRainCardByRainCardId` | `RainCardReplacementResponse!` | Admin-only: Replace virtual card by Rain card ID. Bypasses ownership checks. |
-| `setRainCardPinByRainCardId` | `RainCardPinResponse!` | Admin-only: Set card PIN by Rain card ID. Bypasses ownership checks.
+| `replaceVirtualAgioCardByAgioCardId` | `AgioCardReplacementResponse!` | Admin-only: Replace virtual card by Agio card ID. Bypasses ownership checks. |
+| `setAgioCardPinByAgioCardId` | `AgioCardPinResponse!` | Admin-only: Set card PIN by Agio card ID. Bypasses ownership checks.
 PIN must be encrypted using encryptPassphraseForTransfer from agio-utils. |
-| `getRainCardPinByRainCardId` | `RainCardPinResponse!` | Admin-only: Get card PIN by Rain card ID. Bypasses ownership checks.
+| `getAgioCardPinByAgioCardId` | `AgioCardPinResponse!` | Admin-only: Get card PIN by Agio card ID. Bypasses ownership checks.
 Returns encryptedPin - use decryptWithSessionKey from agio-utils to decrypt. |
-| `createRainCorporateApplication` | `RainCorporateApplicationResponse!` | Create a Rain Corporate Card application for a company.
+| `createRainCorporateApplication` | `RainCorporateApplicationResponse!` | Create a Agio Corporate Card application for a company.
 Requires entity information, initial user, representatives, and UBOs.
-Website is REQUIRED by Rain API. |
+Website is REQUIRED by Agio Card API. |
 | `validateAddress` | `AddressValidationResponse!` | Validate an address using Google Address Validation API.
 Returns validation result with confidence level (HIGH, MEDIUM, or LOW).
 Useful for validating user addresses before creating cards, shipping groups, or billing operations.
 Cached for 30 days per Google's recommendations. |
-| `validateRainShippingAddress` | `AddressValidationResponse!` | Validate a shipping address via Rain's address validation endpoint.
-Determines whether Rain can ship a physical card to this address.
+| `validateRainShippingAddress` | `AddressValidationResponse!` | Validate a shipping address via Agio's address validation endpoint.
+Determines whether Agio can ship a physical card to this address.
 Uses Google Address Validation with geocoding fallback — broader country coverage than validateAddress. |
 | `autocompleteAddress` | `AutocompleteAddressResponse!` | Autocomplete address search using Google Places API.
 Returns address suggestions based on partial input.
@@ -229,33 +229,33 @@ Useful for address entry forms with typeahead functionality.
 Results cached for 24 hours. |
 | `resolvePlaceAddress` | `ResolvePlaceAddressResponse!` | Resolve a Google Place ID to a structured address object.
 Use the placeId returned by autocompleteAddress to fetch precise address fields. |
-| `updateCardNickname` | `RainCardOperationResponse!` | Update a Rain Card's nickname (display name).
+| `updateCardNickname` | `AgioCardOperationResponse!` | Update a Agio Card's nickname (display name).
 Validates: max 26 chars, alphanumeric + spaces + periods + hyphens only.
 Updates local database. Requires the user to own the card. |
-| `updateRainUserProfile` | `RainCardOperationResponse!` | Update Rain user profile (address and/or phone).
-Syncs to both Rain API and local database.
+| `updateAgioCardUserProfile` | `AgioCardOperationResponse!` | Update Agio user profile (address and/or phone).
+Syncs to both Agio Card API and local database.
 Requires the user to own the card application. |
-| `updateRainCompanyAddress` | `RainCardOperationResponse!` | Update Rain company address.
-Syncs to both Rain API and local database.
+| `updateRainCompanyAddress` | `AgioCardOperationResponse!` | Update Agio company address.
+Syncs to both Agio Card API and local database.
 Requires organization admin or Agio admin role. |
-| `updateRainCardLimit` | `RainCardLimitResponse!` | Update a Rain Card's spending limit.
-Updates both Rain API and local database.
+| `updateAgioCardLimit` | `AgioCardLimitResponse!` | Update a Agio Card's spending limit.
+Updates both Agio Card API and local database.
 Requires the user to own the card application. |
-| `lockRainCard` | `RainCardOperationResponse!` | Lock a Rain Card (alias for freeze). Card cannot be used for transactions.
-Use unlockRainCard to restore card functionality.
+| `lockAgioCard` | `AgioCardOperationResponse!` | Lock a Agio Card (alias for freeze). Card cannot be used for transactions.
+Use unlockAgioCard to restore card functionality.
 Requires the user to own the card. |
-| `unlockRainCard` | `RainCardOperationResponse!` | Unlock a Rain Card (alias for unfreeze). Restores card functionality.
+| `unlockAgioCard` | `AgioCardOperationResponse!` | Unlock a Agio Card (alias for unfreeze). Restores card functionality.
 Requires the user to own the card. |
-| `cancelRainCard` | `RainCardOperationResponse!` | Cancel a Rain Card permanently (irreversible).
+| `cancelAgioCard` | `AgioCardOperationResponse!` | Cancel a Agio Card permanently (irreversible).
 Card cannot be reactivated after cancellation.
 Requires the user to own the card. |
-| `createRainCard` | `CreateRainCardResponse!` | Create a new Rain Card for an approved application.
+| `createAgioCard` | `CreateAgioCardResponse!` | Create a new Agio Card for an approved application.
 Supports both virtual and physical cards via cardType discriminator.
 
 - Virtual cards: PIN set immediately, card active after creation
 - Physical cards: PIN staged, shipping required, activated when received
   Requires an approved card application. |
-  | `replaceRainCard` | `RainCardReplacementResponse!` | Replace an existing Rain Card (for lost/stolen/damaged cards).
+  | `replaceAgioCard` | `AgioCardReplacementResponse!` | Replace an existing Agio Card (for lost/stolen/damaged cards).
   Creates a new card with new PAN and credentials.
   The old card is canceled automatically.
 - Virtual cards: New card created immediately
@@ -264,14 +264,14 @@ Supports both virtual and physical cards via cardType discriminator.
   | `payInvoiceWithCardBalance` | `PayInvoiceWithCardBalanceResponse!` | Pay an invoice using card balance.
   Debits the user's card collateral balance and records payment against the invoice.
   Requires the user to own both the card application and the invoice. |
-  | `updateRainCardLimitByRainCardId` | `RainCardLimitResponse!` | Admin-only: Update card limit by Rain card ID. Bypasses ownership checks. |
-  | `cancelRainCardByRainCardId` | `RainCardOperationResponse!` | Admin-only: Cancel card by Rain card ID. Bypasses ownership checks. |
-  | `createRainCardByRainUserId` | `CreateRainCardResponse!` | Admin-only: Create card for a user by Rain user ID. Bypasses ownership checks. |
-  | `chargeCard` | `ChargeCardResponse!` | Charge a Rain Card with a fee. Requires card:charge permission.
+  | `updateAgioCardLimitByAgioCardId` | `AgioCardLimitResponse!` | Admin-only: Update card limit by Agio card ID. Bypasses ownership checks. |
+  | `cancelAgioCardByAgioCardId` | `AgioCardOperationResponse!` | Admin-only: Cancel card by Agio card ID. Bypasses ownership checks. |
+  | `createAgioCardByAgioCardUserId` | `CreateAgioCardResponse!` | Admin-only: Create card for a user by Agio user ID. Bypasses ownership checks. |
+  | `chargeCard` | `ChargeCardResponse!` | Charge a Agio Card with a fee. Requires card:charge permission.
   Debits from user's card collateral balance and records the transaction. |
-  | `cardWithdraw` | `CardWithdrawResponse!` | Withdraw collateral from a Rain Card smart wallet.
+  | `cardWithdraw` | `CardWithdrawResponse!` | Withdraw collateral from a Agio Card smart wallet.
   Signs the withdrawal with the owner EOA via Alchemy Signer and submits
-  via session key UserOp through the Rain coordinator contract. |
+  via session key UserOp through the Agio coordinator contract. |
   | `runCardReminders` | `CardReminderRunResponse!` | Admin-only: Manually trigger unused card reminder processing.
   Finds cards with no transactions and sends reminder emails based on the schedule.
   Use dryRun: true (default) to preview which reminders would be sent. |

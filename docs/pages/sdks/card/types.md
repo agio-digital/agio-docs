@@ -4,18 +4,18 @@ footer: false
 
 # TypeScript Types
 
-Complete reference of all exported types from the Rain SDK, organized by domain.
+Complete reference of all exported types from the Agio Card SDK, organized by domain.
 
 ## Core Types
 
 ```typescript
-import type { RainUser, RainCard, RainTransaction, RainWebhook, RainAddress, RainConfig, RainClient } from "rain-sdk";
+import type { AgioCardUser, AgioCard, RainTransaction, RainWebhook, RainAddress, AgioCardConfig, RainClient } from "agio-card-sdk";
 ```
 
-### RainUser
+### AgioCardUser
 
 ```typescript
-interface RainUser {
+interface AgioCardUser {
   id: string;
   firstName: string;
   lastName: string;
@@ -28,10 +28,10 @@ interface RainUser {
 }
 ```
 
-### RainCard
+### AgioCard
 
 ```typescript
-interface RainCard {
+interface AgioCard {
   id: string;
   companyId?: string;
   userId: string;
@@ -111,7 +111,7 @@ import type {
   UpdateCardRequest,
   LimitFrequency,
   RevealedCardSecrets
-} from "rain-sdk";
+} from "agio-card-sdk";
 ```
 
 ### CardLimit
@@ -153,13 +153,13 @@ interface CardShipping {
 ## User Types
 
 ```typescript
-import type { CreateUserRequest, UpdateUserRequest, CreateUserInCompanyRequest, ChargeUserRequest, RainUserBalance } from "rain-sdk";
+import type { CreateUserRequest, UpdateUserRequest, CreateUserInCompanyRequest, ChargeUserRequest, AgioCardUserBalance } from "agio-card-sdk";
 ```
 
-### RainUserBalance
+### AgioCardUserBalance
 
 ```typescript
-interface RainUserBalance {
+interface AgioCardUserBalance {
   creditLimit: number;
   pendingCharges: number;
   postedCharges: number;
@@ -183,18 +183,18 @@ import type {
   CorporateApplicationInitialUser,
   CorporateApplicationEntity,
   CorporateApplicationUBO,
-  RainApplicationStatus,
+  AgioCardApplicationStatus,
   RainApplicationLink,
   RainDocumentType,
   RainDocumentSide,
   UploadDocumentRequest
-} from "rain-sdk";
+} from "agio-card-sdk";
 ```
 
-### RainApplicationStatus
+### AgioCardApplicationStatus
 
 ```typescript
-type RainApplicationStatus = "approved" | "pending" | "needsInformation" | "needsVerification" | "manualReview" | "denied" | "locked" | "canceled";
+type AgioCardApplicationStatus = "approved" | "pending" | "needsInformation" | "needsVerification" | "manualReview" | "denied" | "locked" | "canceled";
 ```
 
 ### CorporateApplicationEntity
@@ -215,7 +215,7 @@ interface CorporateApplicationEntity {
 ## Company Types
 
 ```typescript
-import type { RainCompany, UpdateCompanyRequest, CompanyListFilters, CreateCompanyChargeRequest, RainCompanyCharge } from "rain-sdk";
+import type { RainCompany, UpdateCompanyRequest, CompanyListFilters, CreateCompanyChargeRequest, RainCompanyCharge } from "agio-card-sdk";
 ```
 
 ### RainCompany
@@ -225,7 +225,7 @@ interface RainCompany {
   id: string;
   name: string;
   address: RainAddress;
-  applicationStatus: RainApplicationStatus;
+  applicationStatus: AgioCardApplicationStatus;
   ultimateBeneficialOwners?: UltimateBeneficialOwner[];
   applicationCompletionLink?: RainApplicationLink;
   applicationReason?: string;
@@ -235,7 +235,7 @@ interface RainCompany {
 ## Contract Types
 
 ```typescript
-import type { RainContract, CreateContractRequest, UpdateContractRequest, ContractToken, RainOnramp, RainOnrampBankingDetails } from "rain-sdk";
+import type { AgioCardContract, CreateContractRequest, UpdateContractRequest, ContractToken, AgioCardOnramp, AgioCardOnrampBankingDetails } from "agio-card-sdk";
 ```
 
 ### ContractToken
@@ -252,7 +252,7 @@ interface ContractToken {
 ## Balance Types
 
 ```typescript
-import type { CreditBalance } from "rain-sdk";
+import type { CreditBalance } from "agio-card-sdk";
 ```
 
 ### CreditBalance
@@ -278,7 +278,7 @@ import type {
   CollateralTransaction,
   PaymentTransaction,
   FeeTransaction
-} from "rain-sdk";
+} from "agio-card-sdk";
 ```
 
 ### SpendTransaction
@@ -318,7 +318,7 @@ import type {
   ValidateAddressRequest,
   AddressValidationResponse,
   AddressValidationConfidence // "HIGH" | "MEDIUM" | "LOW"
-} from "rain-sdk";
+} from "agio-card-sdk";
 ```
 
 ### AddressValidationResponse
@@ -333,7 +333,7 @@ interface AddressValidationResponse {
 ## Signature Types
 
 ```typescript
-import type { SignatureResponse, SignatureParams, BlockchainSignature } from "rain-sdk";
+import type { SignatureResponse, SignatureParams, BlockchainSignature } from "agio-card-sdk";
 ```
 
 ### SignatureResponse
@@ -345,7 +345,7 @@ type SignatureResponse = { status: "ready"; signature: BlockchainSignature; expi
 ## Webhook Types
 
 ```typescript
-import type { WebhookEvent, WebhookResource, WebhookAction, WebhookSigningKey, TransactionWebhookBody, CreateSecondaryKeyResponse, PromoteKeyResponse } from "rain-sdk";
+import type { WebhookEvent, WebhookResource, WebhookAction, WebhookSigningKey, TransactionWebhookBody, CreateSecondaryKeyResponse, PromoteKeyResponse } from "agio-card-sdk";
 ```
 
 ## Dispute Types
@@ -359,19 +359,19 @@ import type {
   UploadDisputeEvidenceInput,
   DisputeStatus, // "pending" | "inReview" | "accepted" | "rejected" | "canceled"
   DisputeType // "fraud" | "creditNotProcessed" | "serviceNotReceived" | "merchandiseIssue" | "other"
-} from "rain-sdk";
+} from "agio-card-sdk";
 ```
 
 ## Key Types
 
 ```typescript
-import type { RainKey, CreateKeyRequest } from "rain-sdk";
+import type { RainKey, CreateKeyRequest } from "agio-card-sdk";
 ```
 
 ## Payment Types
 
 ```typescript
-import type { InitiatePaymentRequest, InitiatePaymentResponse } from "rain-sdk";
+import type { InitiatePaymentRequest, InitiatePaymentResponse } from "agio-card-sdk";
 ```
 
 ## Display Name Utilities
@@ -386,7 +386,7 @@ import {
   DISPLAY_NAME_PATTERN, // Regex pattern
   INVALID_CHARS_PATTERN, // Regex for invalid chars
   type ValidateDisplayNameResult
-} from "rain-sdk";
+} from "agio-card-sdk";
 ```
 
 ### ValidateDisplayNameResult

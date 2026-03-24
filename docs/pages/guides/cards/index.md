@@ -4,7 +4,7 @@ footer: false
 
 # Cards Overview
 
-Rain Cards are crypto-collateralized Visa credit cards backed by stablecoin deposits (USDC or PYUSD). Depositing stablecoins into a Rain smart wallet establishes a credit limit, and cardholders can spend up to that limit using virtual or physical Visa cards anywhere Visa is accepted.
+Agio Cards are crypto-collateralized Visa credit cards backed by stablecoin deposits (USDC or PYUSD). Depositing stablecoins into a Agio Card smart wallet establishes a credit limit, and cardholders can spend up to that limit using virtual or physical Visa cards anywhere Visa is accepted.
 
 All card operations are performed via GraphQL through the Agio Platform API.
 
@@ -36,7 +36,7 @@ flowchart LR
 | **Use cases**       | Online purchases, subscriptions                      | In-person, ATM, tap-to-pay               |
 | **Shipping**        | Not required                                         | Required (address + phone number)        |
 | **PIN**             | Set at creation                                      | Staged at creation, activated on receipt |
-| **Replacement**     | `replaceVirtualRainCard` — new card number instantly | `replaceRainCard` with shipping address  |
+| **Replacement**     | `replaceVirtualAgioCard` — new card number instantly | `replaceAgioCard` with shipping address  |
 | **Spending limits** | Configurable (rolling period)                        | Configurable (rolling period)            |
 | **Cancellation**    | Permanent, irreversible                              | Permanent, irreversible                  |
 
@@ -45,18 +45,18 @@ flowchart LR
 | Action                 | GraphQL Operation                                      | Type         |
 | ---------------------- | ------------------------------------------------------ | ------------ |
 | List cards             | `vwCards`                                              | Query        |
-| Apply (individual)     | `createRainCardApplication`                            | Mutation     |
+| Apply (individual)     | `createAgioCardApplication`                            | Mutation     |
 | Apply (corporate)      | `createRainCorporateApplication`                       | Mutation     |
-| Create card            | `createRainCard`                                       | Mutation     |
-| Freeze card            | `freezeRainCard`                                       | Mutation     |
-| Unfreeze card          | `unfreezeRainCard`                                     | Mutation     |
-| Cancel card            | `cancelRainCard`                                       | Mutation     |
-| Replace virtual card   | `replaceVirtualRainCard`                               | Mutation     |
-| Replace any card       | `replaceRainCard`                                      | Mutation     |
-| Update spending limit  | `updateRainCardLimit`                                  | Mutation     |
-| Set PIN                | `setRainCardPin`                                       | Mutation     |
-| Reveal PIN             | `getRainCardPin`                                       | Mutation     |
-| Reveal card secrets    | `revealRainCardSecrets`                                | Mutation     |
+| Create card            | `createAgioCard`                                       | Mutation     |
+| Freeze card            | `freezeAgioCard`                                       | Mutation     |
+| Unfreeze card          | `unfreezeAgioCard`                                     | Mutation     |
+| Cancel card            | `cancelAgioCard`                                       | Mutation     |
+| Replace virtual card   | `replaceVirtualAgioCard`                               | Mutation     |
+| Replace any card       | `replaceAgioCard`                                      | Mutation     |
+| Update spending limit  | `updateAgioCardLimit`                                  | Mutation     |
+| Set PIN                | `setAgioCardPin`                                       | Mutation     |
+| Reveal PIN             | `getAgioCardPin`                                       | Mutation     |
+| Reveal card secrets    | `revealAgioCardSecrets`                                | Mutation     |
 | Rename card            | `updateCardNickname`                                   | Mutation     |
 | Star/unstar card       | `updateCardStarred`                                    | Mutation     |
 | Fund card              | `smartWalletSwapQuote` → `smartWalletExecuteSwapQuote` | Mutation     |
@@ -67,7 +67,7 @@ flowchart LR
 | Application updates    | `CardApplicationUpdates`                               | Subscription |
 
 :::warning Amounts in Cents
-All monetary amounts in the Rain Card API are in **cents** (smallest currency unit). `50000` = $500.00. The only exception is `cardWithdraw`, which accepts human-readable token amounts (e.g., `"100.5"`).
+All monetary amounts in the Agio Card API are in **cents** (smallest currency unit). `50000` = $500.00. The only exception is `cardWithdraw`, which accepts human-readable token amounts (e.g., `"100.5"`).
 :::
 
 ## Guides

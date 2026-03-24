@@ -4,16 +4,16 @@ footer: false
 
 # Payment System
 
-Rain operates as a **collateralized credit card system** backed by stablecoins. Your crypto collateral secures your credit line, eliminating default risk while enabling fiat spending.
+Agio Cards operate as a **prepaid card system** backed by stablecoins. Your crypto collateral secures your credit line, eliminating default risk while enabling fiat spending.
 
 ## How It Works
 
 1. **Deposit collateral** -- Send supported stablecoins to your on-chain contract
-2. **Spend with cards** -- Rain fronts fiat payments to merchants when you swipe
+2. **Spend with cards** -- Agio fronts fiat payments to merchants when you swipe
 3. **Collateral stays on-chain** -- Your crypto remains untouched during the billing period
 4. **Monthly statement** -- At month end, you receive a statement with total balance owed
 5. **8-day grace period** -- Pay off the balance manually within 8 days
-6. **Auto-liquidation** -- If unpaid, Rain liquidates the owed amount from your collateral
+6. **Auto-liquidation** -- If unpaid, Agio liquidates the owed amount from your collateral
 7. **Remainder carries forward** -- Remaining collateral stays available for next month
 
 ## Collateral Rates
@@ -37,13 +37,13 @@ Query balances at tenant, company, or user level. All amounts are in **cents**.
 
 ```typescript
 // Tenant-level balance
-const { data: tenantBalance } = await rain.balances.getTenantBalances();
+const { data: tenantBalance } = await cards.balances.getTenantBalances();
 
 // Company-level balance
-const { data: companyBalance } = await rain.balances.getCompanyBalances("company-id");
+const { data: companyBalance } = await cards.balances.getCompanyBalances("company-id");
 
 // User-level balance
-const { data: userBalance } = await rain.balances.getUserBalances("user-id");
+const { data: userBalance } = await cards.balances.getUserBalances("user-id");
 ```
 
 ### CreditBalance Interface
@@ -76,14 +76,14 @@ Initiate on-chain payments for companies or individual users:
 
 ```typescript
 // Company payment
-const { data: payment } = await rain.payments.initiateCompanyPayment("company-id", {
+const { data: payment } = await cards.payments.initiateCompanyPayment("company-id", {
   amount: 50000, // $500.00 in cents
   walletAddress: "0x...",
   chainId: 1 // Ethereum mainnet
 });
 
 // User payment
-const { data: payment } = await rain.payments.initiateUserPayment("user-id", {
+const { data: payment } = await cards.payments.initiateUserPayment("user-id", {
   amount: 25000,
   walletAddress: "0x...",
   chainId: 137 // Polygon
@@ -94,14 +94,14 @@ const { data: payment } = await rain.payments.initiateUserPayment("user-id", {
 
 ### Platform Fees
 
-Rain charges platform fees (monthly/annual) directly. These appear as webhook events with `transactionType: "fee"`.
+Agio charges platform fees (monthly/annual) directly. These appear as webhook events with `transactionType: "fee"`.
 
 ### Custom Charges
 
 Apply custom fees to users via the charge API. Charges are **per-user, not per-card**.
 
 ```typescript
-await rain.users.chargeUser("user-id", {
+await cards.users.chargeUser("user-id", {
   amount: 2550, // $25.50 in cents
   description: "Monthly service fee"
 });
@@ -114,7 +114,7 @@ Spending Power = Credit Limit - Pending - Posted - Fees + Payments
 Fees reduce the credit balance (spending power), not the collateral directly. Collateral is only liquidated during the monthly auto-liquidation cycle.
 
 :::warning
-Custom charges are post-authorization and may cause a user's balance to go negative. The Rain charge API does not accept an idempotency key -- implement your own deduplication logic.
+Custom charges are post-authorization and may cause a user's balance to go negative. The Agio charge API does not accept an idempotency key -- implement your own deduplication logic.
 :::
 
 ## Supported Stablecoins
@@ -131,9 +131,9 @@ Custom charges are post-authorization and may cause a user's balance to go negat
 
 ## Infrastructure Flow
 
-Under the hood, Rain's payment infrastructure works as follows:
+Under the hood, Agio's payment infrastructure works as follows:
 
-1. **Borrowing** -- Rain borrows from on-chain lenders (Credit Coop, Huma Finance) against receivables
+1. **Borrowing** -- Agio borrows from on-chain lenders (Credit Coop, Huma Finance) against receivables
 2. **Off-ramping** -- Stablecoins are off-ramped through issuers (e.g., Circle for USDC)
-3. **Settlement** -- Rain settles with Visa and merchants in fiat
+3. **Settlement** -- Agio settles with Visa and merchants in fiat
 4. **Reconciliation** -- At month end, balances are reconciled against collateral
