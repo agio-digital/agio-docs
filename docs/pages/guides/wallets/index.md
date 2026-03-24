@@ -38,16 +38,28 @@ ERC-4337 account-abstraction wallets powered by Alchemy. These wallets support g
 ## Wallet Lifecycle
 
 ```mermaid
-flowchart LR
-    A[Create Wallet] --> B[Fund Wallet]
-    B --> C{Operation}
-    C --> D[Transfer]
-    C --> E[Swap Tokens]
-    C --> F[Manage Settings]
-    D --> G[Track Transaction]
-    E --> G
-    F --> B
-    G --> B
+flowchart TD
+    A["Create Wallet<br/>createDigitalWallet"] --> B{Wallet Type?}
+
+    B -->|Type 0: Custodial| C["BitGo Managed<br/>Multi-sig keys"]
+    B -->|Type 1: Hot| D["User Key<br/>+ BitGo co-sign"]
+    B -->|Type 2: Smart| E["ERC-4337<br/>Alchemy + session keys"]
+
+    C --> F["Generate Address<br/>createDigitalWalletAddress"]
+    D --> F
+    E --> F
+
+    F --> G["Fund Wallet"]
+
+    G --> H{Operation}
+
+    H -->|Transfer| I["smartWalletSendTransaction<br/>or bitgoSendTransaction"]
+    H -->|Swap| J["smartWalletSwapQuote<br/>→ smartWalletExecuteSwapQuote"]
+    H -->|Whitelist| K["addDigitalWalletWhitelistEntry"]
+
+    I --> L["Background Sync<br/>(BullMQ job)"]
+    J --> L
+    L --> M["Real-time Update<br/>walletTransactions subscription"]
 ```
 
 ## Quick Reference

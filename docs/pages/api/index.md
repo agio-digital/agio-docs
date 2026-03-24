@@ -39,6 +39,18 @@ A database-driven GraphQL API powered by Hasura GraphQL Engine. This provides:
 | **Cards & Payments**       | Corporate card management, funding, transactions                   |
 | **Documents & Reporting**  | PDF generation, statements, invoices, agreements                   |
 
+## Which API Should I Use?
+
+```mermaid
+flowchart TD
+    A["What are you building?"]
+    A -->|Wallet ops, Trading,<br/>Fund mgmt, PDF generation| B["Platform API"]
+    A -->|Dashboards, Reporting,<br/>Real-time data, Analytics| C["Hasura API"]
+
+    B --> D["Business logic + validation<br/>https://api.agiodigital.com/graphql"]
+    C --> E["Direct DB + subscriptions<br/>https://hasura.agiodigital.com/v1/graphql"]
+```
+
 ## Getting Started
 
 <div class="vt-box-container next-steps">

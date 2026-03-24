@@ -14,6 +14,25 @@ POST https://api.agiodigital.com/graphql
 
 All requests must include the `X-API-Key` header. See [Authentication](/api/authentication) for details.
 
+## Architecture
+
+The Platform API sits between client applications and the database, providing business logic, validation, and integrations with external services.
+
+```mermaid
+flowchart LR
+    Client["Client App"] --> API["Platform API<br/>Apollo Server"]
+    Client --> Hasura["Hasura Gateway"]
+
+    API --> HasuraSDK["Hasura SDK<br/>(data-access-admin)"]
+    HasuraSDK --> DB["PostgreSQL"]
+    Hasura --> DB
+
+    API --> BitGo["BitGo<br/>Wallet ops"]
+    API --> Rain["Rain<br/>Card ops"]
+    API --> Sumsub["Sumsub<br/>KYC/KYB"]
+    API --> BullMQ["BullMQ<br/>Background jobs"]
+```
+
 ## Schema Overview
 
 The API is organized into the following domains:

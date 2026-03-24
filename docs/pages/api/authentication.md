@@ -20,7 +20,7 @@ API keys are issued at the organization level and provide access based on your c
 To request an API key:
 
 1. Contact your Agio account manager
-2. Specify your required access tier (see [API Access Tiers](/api/#api-access-tiers))
+2. Specify your required access categories (see [API Categories](/api/#api-categories))
 3. Provide the IP addresses or ranges to whitelist (optional but recommended)
 4. Receive your API key securely
 
@@ -83,6 +83,37 @@ response = requests.post(url, json={"query": query}, headers=headers)
 print(response.json())
 ```
 
+## Authentication Flow
+
+```mermaid
+sequenceDiagram
+    participant Client as Client App
+    participant Auth0 as Auth0
+    participant API as Platform API
+    participant Hasura as Hasura Gateway
+    participant DB as PostgreSQL
+
+    Client->>Auth0: Login (email/password or SSO)
+    Auth0->>Auth0: Post-login action<br/>sync user to DB
+    Auth0-->>Client: Access Token + ID Token
+
+    rect rgb(240, 245, 255)
+    Note over Client,API: Platform API requests
+    Client->>API: GraphQL request<br/>Authorization: Bearer token
+    API->>API: Validate JWT<br/>GraphQL Shield rules
+    API->>DB: Execute via Hasura SDK
+    DB-->>Client: Response
+    end
+
+    rect rgb(240, 255, 245)
+    Note over Client,Hasura: Hasura API requests
+    Client->>Hasura: GraphQL request<br/>X-Hasura-Admin-Secret
+    Hasura->>Hasura: Apply row-level security<br/>based on role headers
+    Hasura->>DB: Execute query
+    DB-->>Client: Filtered response
+    end
+```
+
 ## Hasura API Authentication
 
 For the Hasura API, use the same API key in the `X-Hasura-Admin-Secret` header:
@@ -120,14 +151,7 @@ AGIO_API_KEY=your-api-key-here
 
 ### Restrict Key Scope
 
-Request only the permissions you need. Lower access tiers reduce risk:
-
-| Tier                 | Risk Level | Recommendation                   |
-| -------------------- | ---------- | -------------------------------- |
-| Tier 1 (Read-only)   | Low        | Use for dashboards and reporting |
-| Tier 2 (Trading)     | Medium     | Use for trading integrations     |
-| Tier 3 (Fund Admin)  | Medium     | Use for fund management          |
-| Tier 4 (Full Access) | High       | Use only when necessary          |
+Request only the permissions you need for your use case.
 
 ### IP Whitelisting
 

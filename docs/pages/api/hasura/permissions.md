@@ -14,6 +14,16 @@ Hasura permissions are defined at three levels:
 2. **Row Level** - Which rows within a table (using filters)
 3. **Column Level** - Which columns are visible
 
+```mermaid
+flowchart TD
+    Request["GraphQL Request"] --> Headers["X-Hasura-Role<br/>X-Hasura-User-Id<br/>X-Hasura-Organization-Id"]
+    Headers --> Table["Table-level check<br/>Can this role access the table?"]
+    Table -->|Yes| Row["Row-level filter<br/>user_id = X-Hasura-User-Id<br/>organization_id = X-Hasura-Organization-Id"]
+    Table -->|No| Denied["403 Forbidden"]
+    Row --> Column["Column-level filter<br/>Hide sensitive columns"]
+    Column --> Result["Filtered Response"]
+```
+
 ## Available Roles
 
 ### Core Roles

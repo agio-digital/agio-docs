@@ -66,6 +66,21 @@ Role-based access control ensures users only see authorized data:
 
 The database is organized into logical schemas. All Hasura table names are prefixed with their schema (e.g., `AgioAuth_user`).
 
+```mermaid
+erDiagram
+    AgioAuth_user ||--o{ AgioCrypto_digital_wallet : owns
+    AgioAuth_user ||--o{ AgioAuth_user_organization : belongs_to
+    AgioAuth_organization ||--o{ AgioAuth_user_organization : has
+    AgioAuth_organization ||--o{ AgioCrypto_digital_wallet : owns
+    AgioAuth_organization ||--o| KycData_kyc_profile : has
+    AgioAuth_user ||--o| KycData_kyc_profile : has
+    AgioCrypto_digital_wallet ||--o{ AgioCrypto_bitgo_transaction : records
+    AgioFunds_fund ||--o{ AgioFunds_fund_subscription : has
+    AgioAuth_organization ||--o{ AgioFunds_fund : manages
+    AgioAuth_user ||--o{ AgioCard_card : holds
+    AgioAuth_organization ||--o{ AgioBilling_invoice : billed
+```
+
 | Schema | Description |
 | --- | --- |
 | **AgioAuth** | Users, organizations, roles, permissions, addresses |
