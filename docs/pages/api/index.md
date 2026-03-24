@@ -58,10 +58,10 @@ A database-driven GraphQL API powered by Hasura GraphQL Engine. This provides:
 
 ## Base URLs
 
-| Environment | Platform API                              | Hasura API                                      |
-| ----------- | ----------------------------------------- | ----------------------------------------------- |
-| Production  | `https://api.agiodigital.com/graphql`     | `https://hasura.agiodigital.com/v1/graphql`     |
-| Development | `https://api-dev.agiodigital.com/graphql` | `https://hasura-dev.agiodigital.com/v1/graphql` |
+| Environment | Platform API                                  | Hasura API                                              |
+| ----------- | --------------------------------------------- | ------------------------------------------------------- |
+| Production  | `https://api.agiodigital.com/graphql`         | `https://hasura.agiodigital.com/v1/graphql`             |
+| Development | `https://dev.api.agiodigital.com/graphql`     | `https://develop-agiodigital.hasura.app/v1/graphql`     |
 
 ## Rate Limits
 

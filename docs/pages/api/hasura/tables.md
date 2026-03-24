@@ -4,69 +4,58 @@ footer: false
 
 # Hasura Tables Reference
 
-Reference for key database tables accessible via the Hasura GraphQL API.
+Reference for key database tables accessible via the Hasura GraphQL API. All table names in Hasura are prefixed with their schema name (e.g., `AgioAuth_user`).
 
-## Core Tables
+## Database Schemas
 
-### organization
-
-Organization/company records.
-
-```graphql
-type organization {
-  id: uuid!
-  name: String!
-  type: String
-  status: String!
-  auth0_organization_id: String
-  created_at: timestamptz!
-  updated_at: timestamptz!
-
-  # Relationships
-  users: [user!]!
-  digital_wallets: [digital_wallet!]!
-  funds: [fund!]!
-}
-```
-
-**Common Queries:**
-
-```graphql
-# Get organization with members
-query GetOrganization($id: uuid!) {
-  organization_by_pk(id: $id) {
-    id
-    name
-    users {
-      id
-      email
-      role
-    }
-  }
-}
-```
+| Schema | Description |
+| --- | --- |
+| **AgioAuth** | Users, organizations, roles, permissions, addresses |
+| **AgioCrypto** | Digital wallets, transactions, coins, networks |
+| **AgioFunds** | Funds, subscriptions, redemptions, NAV history |
+| **AgioBilling** | Invoices, quotes, line items, payments |
+| **AgioCard** | Rain corporate cards, card transactions, applications |
+| **KycData** | KYC/KYB profiles, verification levels, Sumsub data |
+| **AgioOnboarding** | Onboarding flows, cases, form submissions |
+| **AgioMessaging** | Notifications, user messaging |
+| **AgioBanking** | Bank accounts, wire transfers |
+| **AgioAccounting** | Accounting records, journal entries |
+| **AgioActivity** | Activity logs, audit trails |
+| **AgioData** | Reference data, country lists, currencies |
 
 ---
 
-### user
+## Core Tables (AgioAuth)
+
+### AgioAuth_user
 
 Platform user accounts.
 
 ```graphql
-type user {
-  id: Int!
-  user_id: String! # Auth0 user_id
+type AgioAuth_user {
+  user_id: String!          # Auth0 user_id (e.g., "auth0|abc123")
   email: String
-  first_name: String
-  last_name: String
-  phone: String
-  status: String!
+  given_name: String
+  family_name: String
+  phone_number: String
+  name: String
+  nickname: String
+  address: String
+  city: String
+  postal_code: String
+  country_code: String
+  state_or_province: String
+  user_role_id: Int
+  client_type_id: Int
+  disabled: Boolean
   created_at: timestamptz!
+  updated_at: timestamptz!
 
   # Relationships
-  organization: organization
-  digital_wallets: [digital_wallet!]!
-  kyc_profiles: [kyc_profile!]!
+  user_role: AgioAuth_user_role
+  user_organizations: [AgioAuth_user_organization!]!
+  digital_wallets: [AgioCrypto_digital_wallet!]!
+  permissions: AgioAuth_vw_active_user_permissions
 }
 ```
 
@@ -75,13 +64,15 @@ type user {
 ```graphql
 # Get user by Auth0 ID
 query GetUser($userId: String!) {
-  user(where: { user_id: { _eq: $userId } }) {
-    id
+  AgioAuth_user(where: { user_id: { _eq: $userId } }) {
+    user_id
     email
-    first_name
-    last_name
-    organization {
-      name
+    given_name
+    family_name
+    user_organizations {
+      organization {
+        organization_name
+      }
     }
   }
 }
@@ -89,462 +80,306 @@ query GetUser($userId: String!) {
 
 ---
 
-## Crypto & Wallets
+### AgioAuth_organization
 
-### digital_wallet
+Organization/company records.
+
+```graphql
+type AgioAuth_organization {
+  id: uuid!
+  organization_name: String!
+  organization_type_id: Int
+  logo_url: String
+  kyc_profile_id: uuid
+  parent_organization_id: uuid
+  tin: String
+  lei: String
+  created_at: timestamptz!
+  updated_at: timestamptz!
+
+  # Relationships
+  user_organizations: [AgioAuth_user_organization!]!
+  digital_wallets: [AgioCrypto_digital_wallet!]!
+  kyc_profile: KycData_kyc_profile
+}
+```
+
+**Common Queries:**
+
+```graphql
+# Get organization with members
+query GetOrganization($id: uuid!) {
+  AgioAuth_organization_by_pk(id: $id) {
+    id
+    organization_name
+    user_organizations {
+      user {
+        email
+        given_name
+        family_name
+      }
+      role {
+        role_name
+      }
+    }
+  }
+}
+```
+
+---
+
+## Crypto & Wallets (AgioCrypto)
+
+### AgioCrypto_digital_wallet
 
 Digital wallet records for cryptocurrency storage.
 
 ```graphql
-type digital_wallet {
+type AgioCrypto_digital_wallet {
   id: Int!
-  label: String!
-  coin: String!
-  wallet_type: String! # hot, cold, trading, evm, sol
-  status: String!
-  usd_value: numeric
-  native_coin_balance: numeric
+  nickname: String
+  network_id: Int
+  wallet_address: String
+  wallet_type_id: Int
+  status_id: Int
   user_id: String
   organization_id: uuid
-  bitgo_wallet_id: String
+  fund_id: Int
+  external_id: String
+  is_whitelisted: Boolean
+  is_starred: Boolean
+  deleted: Boolean
+  readonly: Boolean
   created_at: timestamptz!
   updated_at: timestamptz!
 
   # Relationships
-  user: user
-  organization: organization
-  transactions: [digital_wallet_transaction!]!
-  assets: [digital_wallet_asset!]!
-  whitelist_entries: [digital_wallet_whitelist_entry!]!
+  user: AgioAuth_user
+  organization: AgioAuth_organization
+  network: AgioCrypto_bip0044_network
+  transactions: [AgioCrypto_bitgo_transaction!]!
 }
 ```
 
 **Common Queries:**
 
 ```graphql
-# Get wallets by organization with balances
+# Get wallets by organization
 query GetOrgWallets($orgId: uuid!) {
-  digital_wallet(where: { organization_id: { _eq: $orgId } }, order_by: { usd_value: desc_nulls_last }) {
+  AgioCrypto_digital_wallet(
+    where: { organization_id: { _eq: $orgId }, deleted: { _neq: true } }
+    order_by: { updated_at: desc }
+  ) {
     id
-    label
-    coin
-    wallet_type
-    usd_value
-    native_coin_balance
-  }
-}
-
-# Aggregate wallet value
-query GetTotalValue($orgId: uuid!) {
-  digital_wallet_aggregate(where: { organization_id: { _eq: $orgId } }) {
-    aggregate {
-      sum {
-        usd_value
-      }
-    }
-  }
-}
-```
-
----
-
-### digital_wallet_transaction
-
-Transaction records for digital wallets.
-
-```graphql
-type digital_wallet_transaction {
-  id: Int!
-  digital_wallet_id: Int!
-  transaction_id: String!
-  tx_hash: String
-  type: String! # send, receive, trade
-  status: String! # pending, confirmed, failed
-  amount: numeric!
-  fee: numeric
-  from_address: String
-  to_address: String
-  confirmations: Int
-  created_at: timestamptz!
-  confirmed_at: timestamptz
-
-  # Relationships
-  digital_wallet: digital_wallet!
-}
-```
-
-**Common Queries:**
-
-```graphql
-# Get recent transactions
-query GetRecentTransactions($walletId: Int!, $limit: Int = 20) {
-  digital_wallet_transaction(where: { digital_wallet_id: { _eq: $walletId } }, order_by: { created_at: desc }, limit: $limit) {
-    id
-    type
-    status
-    amount
-    tx_hash
-    created_at
-  }
-}
-```
-
----
-
-### digital_wallet_asset
-
-Asset holdings within a wallet.
-
-```graphql
-type digital_wallet_asset {
-  id: Int!
-  digital_wallet_id: Int!
-  coin_id: String!
-  symbol: String!
-  name: String!
-  balance: numeric!
-  usd_value: numeric
-  unit_price_usd: numeric
-  updated_at: timestamptz!
-
-  # Relationships
-  digital_wallet: digital_wallet!
-  coin: coin!
-}
-```
-
----
-
-### coin
-
-Cryptocurrency metadata and pricing.
-
-```graphql
-type coin {
-  id: String!
-  symbol: String!
-  name: String!
-  price_usd: numeric
-  market_cap: numeric
-  market_cap_rank: Int
-  price_updated_at: timestamptz
-  logo_url: String
-}
-```
-
-**Common Queries:**
-
-```graphql
-# Get top coins by market cap
-query GetTopCoins($limit: Int = 100) {
-  coin(where: { market_cap_rank: { _is_null: false } }, order_by: { market_cap_rank: asc }, limit: $limit) {
-    id
-    symbol
-    name
-    price_usd
-    market_cap
-    market_cap_rank
-  }
-}
-```
-
----
-
-## Fund Management
-
-### fund
-
-Investment fund records.
-
-```graphql
-type fund {
-  id: Int!
-  name: String!
-  description: String
-  currency: String!
-  status: String! # active, closed, pending
-  nav: numeric
-  nav_date: date
-  total_assets: numeric
-  management_fee_rate: numeric
-  performance_fee_rate: numeric
-  organization_id: uuid
-  created_at: timestamptz!
-
-  # Relationships
-  organization: organization
-  fund_subscriptions: [fund_subscription!]!
-  fund_redemptions: [fund_redemption!]!
-  fund_nav_history: [fund_nav_history!]!
-}
-```
-
-**Common Queries:**
-
-```graphql
-# Get fund with NAV history
-query GetFundWithHistory($fundId: Int!) {
-  fund_by_pk(id: $fundId) {
-    id
-    name
-    nav
-    nav_date
-    fund_nav_history(order_by: { nav_date: desc }, limit: 30) {
-      nav_date
-      nav
-      total_assets
-    }
-  }
-}
-```
-
----
-
-### fund_subscription
-
-Fund subscription requests.
-
-```graphql
-type fund_subscription {
-  id: Int!
-  fund_id: Int!
-  user_id: String!
-  subscription_amount: numeric!
-  subscription_shares: numeric
-  nav: numeric
-  status: String! # pending, approved, rejected, processed
-  created_at: timestamptz!
-  processed_at: timestamptz
-
-  # Relationships
-  fund: fund!
-  user: user!
-}
-```
-
----
-
-### fund_redemption
-
-Fund redemption requests.
-
-```graphql
-type fund_redemption {
-  id: Int!
-  fund_id: Int!
-  user_id: String!
-  redemption_shares: numeric!
-  redemption_amount: numeric
-  nav: numeric
-  status: String!
-  created_at: timestamptz!
-  processed_at: timestamptz
-
-  # Relationships
-  fund: fund!
-  user: user!
-}
-```
-
----
-
-## KYC & Compliance
-
-### kyc_profile
-
-KYC verification profiles.
-
-```graphql
-type kyc_profile {
-  id: Int!
-  user_id: String!
-  applicant_id: String # SumSub applicant ID
-  sumsub_email: String
-  sumsub_first_name: String
-  sumsub_last_name: String
-  sumsub_phone: String
-  most_recent_review_status: String
-  last_approved_date: timestamptz
-  last_approved_level_name: String
-  risk_score: numeric
-  created_at: timestamptz!
-
-  # Relationships
-  user: user!
-  kyc_documents: [kyc_document!]!
-}
-```
-
-**Common Queries:**
-
-```graphql
-# Get users pending KYC review
-query GetPendingKyc {
-  kyc_profile(where: { most_recent_review_status: { _eq: "pending" } }) {
-    id
-    sumsub_email
-    sumsub_first_name
-    sumsub_last_name
-    user {
-      organization {
-        name
-      }
-    }
-  }
-}
-```
-
----
-
-### kyc_document
-
-KYC verification documents.
-
-```graphql
-type kyc_document {
-  id: Int!
-  kyc_profile_id: Int!
-  document_type: String! # passport, id_card, drivers_license
-  country: String
-  status: String!
-  review_result: String # GREEN, RED, YELLOW
-  created_at: timestamptz!
-
-  # Relationships
-  kyc_profile: kyc_profile!
-}
-```
-
----
-
-## Billing
-
-### invoice
-
-Invoice records.
-
-```graphql
-type invoice {
-  id: Int!
-  invoice_number: String!
-  organization_id: uuid
-  user_id: String
-  status: String! # draft, sent, paid, overdue, cancelled
-  subtotal: numeric!
-  tax: numeric
-  total: numeric!
-  currency: String!
-  due_date: date
-  paid_at: timestamptz
-  created_at: timestamptz!
-
-  # Relationships
-  organization: organization
-  user: user
-  invoice_line_items: [invoice_line_item!]!
-}
-```
-
-**Common Queries:**
-
-```graphql
-# Get overdue invoices
-query GetOverdueInvoices {
-  invoice(where: { status: { _eq: "sent" }, due_date: { _lt: "now()" } }, order_by: { due_date: asc }) {
-    id
-    invoice_number
-    total
-    due_date
-    organization {
+    nickname
+    wallet_address
+    wallet_type_id
+    network {
+      symbol
       name
     }
   }
 }
+
+# Aggregate wallet count
+query GetWalletCount($orgId: uuid!) {
+  AgioCrypto_digital_wallet_aggregate(
+    where: { organization_id: { _eq: $orgId }, deleted: { _neq: true } }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
 ```
 
 ---
 
-### quote
+### AgioCrypto_coins
 
-Quote/proposal records.
+Cryptocurrency metadata and pricing.
 
 ```graphql
-type quote {
+type AgioCrypto_coins {
+  id: String!
+  symbol: String!
+  name: String!
+  network_id: Int
+  logo_url: String
+
+  # Relationships
+  network: AgioCrypto_bip0044_network
+}
+```
+
+**Common Queries:**
+
+```graphql
+# Get coins for a network
+query GetCoins($networkId: Int!) {
+  AgioCrypto_coins(where: { network_id: { _eq: $networkId } }) {
+    id
+    symbol
+    name
+    logo_url
+  }
+}
+```
+
+---
+
+## Fund Management (AgioFunds)
+
+### AgioFunds_fund
+
+Investment fund records.
+
+```graphql
+type AgioFunds_fund {
   id: Int!
-  quote_number: String!
-  case_id: Int
-  status: String! # draft, sent, accepted, rejected, expired
-  subtotal: numeric!
+  name: String!
+  description: String
+  currency: String!
+  organization_id: uuid
+  created_at: timestamptz!
+
+  # Relationships
+  organization: AgioAuth_organization
+  fund_subscriptions: [AgioFunds_fund_subscription!]!
+}
+```
+
+**Common Queries:**
+
+```graphql
+# Get fund with subscriptions
+query GetFund($fundId: Int!) {
+  AgioFunds_fund_by_pk(id: $fundId) {
+    id
+    name
+    currency
+    organization {
+      organization_name
+    }
+    fund_subscriptions(order_by: { created_at: desc }) {
+      id
+      status
+      created_at
+    }
+  }
+}
+```
+
+---
+
+## KYC & Compliance (KycData)
+
+### KycData_kyc_profile
+
+KYC/KYB verification profiles. Stored in the `KycData` schema (not AgioAuth).
+
+```graphql
+type KycData_kyc_profile {
+  id: uuid!
+  user_id: String
+  organization_id: uuid
+  sumsub_applicant_id: String
+  external_user_id: String
+  most_recent_review_status: String
+  created_at: timestamptz!
+  updated_at: timestamptz!
+
+  # Relationships
+  user: AgioAuth_user
+  organization: AgioAuth_organization
+  last_approved_level: KycData_kyc_level
+  most_recent_level: KycData_kyc_level
+}
+```
+
+**Common Queries:**
+
+```graphql
+# Get KYC profiles pending review
+query GetPendingKyc {
+  KycData_kyc_profile(
+    where: { most_recent_review_status: { _eq: "pending" } }
+  ) {
+    id
+    sumsub_applicant_id
+    user {
+      email
+      given_name
+      family_name
+    }
+  }
+}
+```
+
+---
+
+## Cards & Payments (AgioCard)
+
+### AgioCard_card
+
+Corporate crypto cards via Rain integration.
+
+```graphql
+type AgioCard_card {
+  id: uuid!
+  user_id: String
+  organization_id: uuid
+  rain_card_id: String
+  status: String
+  last_four: String
+  created_at: timestamptz!
+
+  # Relationships
+  user: AgioAuth_user
+  organization: AgioAuth_organization
+  balance: AgioCard_card_balance
+  transactions: [AgioCard_card_transaction!]!
+}
+```
+
+---
+
+## Billing (AgioBilling)
+
+### AgioBilling_invoice
+
+Invoice records.
+
+```graphql
+type AgioBilling_invoice {
+  id: Int!
+  invoice_number: String!
+  organization_id: uuid
+  user_id: String
+  status: String!
   total: numeric!
   currency: String!
-  valid_until: date
+  due_date: date
   created_at: timestamptz!
 
   # Relationships
-  case: case
-  quote_line_items: [quote_line_item!]!
+  organization: AgioAuth_organization
+  user: AgioAuth_user
+  case: AgioOnboarding_case
+  invoice_line_items: [AgioBilling_invoice_line_item!]!
 }
 ```
 
 ---
 
-## Trading
+## Messaging (AgioMessaging)
 
-### otc_quote
-
-OTC trade quotes.
-
-```graphql
-type otc_quote {
-  id: uuid!
-  organization_id: uuid
-  from_currency: String!
-  to_currency: String!
-  quote_size: numeric!
-  side: String! # BUY, SELL
-  quote_price: numeric
-  quote_fee_perc: numeric
-  status: String! # pending, accepted, expired, cancelled
-  expires_at: timestamptz!
-  created_at: timestamptz!
-
-  # Relationships
-  organization: organization
-  otc_trade: otc_trade
-}
-```
-
----
-
-### otc_trade
-
-Executed OTC trades.
-
-```graphql
-type otc_trade {
-  id: uuid!
-  quote_id: uuid!
-  status: String! # pending, completed, failed
-  executed_price: numeric
-  executed_size: numeric
-  fee: numeric
-  executed_at: timestamptz
-
-  # Relationships
-  otc_quote: otc_quote!
-}
-```
-
----
-
-## Messaging
-
-### notification
+### AgioMessaging_user_notifications
 
 User notifications.
 
 ```graphql
-type notification {
+type AgioMessaging_user_notifications {
   id: Int!
   user_id: String!
   type: String!
@@ -554,7 +389,7 @@ type notification {
   created_at: timestamptz!
 
   # Relationships
-  user: user!
+  user: AgioAuth_user!
 }
 ```
 
@@ -563,7 +398,10 @@ type notification {
 ```graphql
 # Get unread notifications
 query GetUnreadNotifications($userId: String!) {
-  notification(where: { user_id: { _eq: $userId }, read: { _eq: false } }, order_by: { created_at: desc }) {
+  AgioMessaging_user_notifications(
+    where: { user_id: { _eq: $userId }, read: { _eq: false } }
+    order_by: { created_at: desc }
+  ) {
     id
     type
     title
@@ -571,86 +409,9 @@ query GetUnreadNotifications($userId: String!) {
     created_at
   }
 }
-
-# Mark notification as read
-mutation MarkAsRead($notificationId: Int!) {
-  update_notification_by_pk(pk_columns: { id: $notificationId }, _set: { read: true }) {
-    id
-    read
-  }
-}
 ```
 
 ---
-
-## Useful Aggregate Queries
-
-### Portfolio Summary
-
-```graphql
-query GetPortfolioSummary($orgId: uuid!) {
-  # Total wallet count and value
-  digital_wallet_aggregate(where: { organization_id: { _eq: $orgId } }) {
-    aggregate {
-      count
-      sum {
-        usd_value
-      }
-    }
-  }
-
-  # Wallets by type
-  digital_wallet(where: { organization_id: { _eq: $orgId } }) {
-    wallet_type
-  }
-
-  # Recent transactions
-  digital_wallet_transaction(where: { digital_wallet: { organization_id: { _eq: $orgId } } }, order_by: { created_at: desc }, limit: 10) {
-    type
-    amount
-    status
-    created_at
-  }
-}
-```
-
-### Fund Performance
-
-```graphql
-query GetFundPerformance($fundId: Int!) {
-  fund_by_pk(id: $fundId) {
-    name
-    nav
-    total_assets
-
-    # Subscription volume
-    fund_subscriptions_aggregate {
-      aggregate {
-        count
-        sum {
-          subscription_amount
-        }
-      }
-    }
-
-    # Redemption volume
-    fund_redemptions_aggregate {
-      aggregate {
-        count
-        sum {
-          redemption_amount
-        }
-      }
-    }
-
-    # NAV history
-    fund_nav_history(order_by: { nav_date: desc }, limit: 90) {
-      nav_date
-      nav
-    }
-  }
-}
-```
 
 ## Next Steps
 

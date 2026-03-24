@@ -6,11 +6,12 @@ footer: false
 
 The Hasura GraphQL API provides direct database access with real-time subscriptions and fine-grained permissions. This is powered by Hasura GraphQL Engine connected to a PostgreSQL database.
 
-## Endpoint
+## Endpoints
 
-```
-POST https://hasura.agiodigital.com/v1/graphql
-```
+| Environment | GraphQL | WebSocket |
+| --- | --- | --- |
+| Production | `https://hasura.agiodigital.com/v1/graphql` | `wss://hasura.agiodigital.com/v1/graphql` |
+| Development | `https://develop-agiodigital.hasura.app/v1/graphql` | `wss://develop-agiodigital.hasura.app/v1/graphql` |
 
 ## Authentication
 
@@ -22,7 +23,7 @@ curl -X POST https://hasura.agiodigital.com/v1/graphql \
   -H "X-Hasura-Admin-Secret: your-api-key" \
   -H "X-Hasura-Role: organization_admin" \
   -H "X-Hasura-Organization-Id: your-org-id" \
-  -d '{"query": "{ organization { name } }"}'
+  -d '{"query": "{ AgioAuth_organization { organization_name } }"}'
 ```
 
 See [Authentication](/api/authentication) for details on obtaining API keys.
@@ -44,10 +45,10 @@ Subscribe to data changes and receive updates instantly:
 
 ```graphql
 subscription WatchWalletBalance($walletId: Int!) {
-  digital_wallet_by_pk(id: $walletId) {
+  AgioCrypto_digital_wallet_by_pk(id: $walletId) {
     id
-    label
-    usd_value
+    nickname
+    wallet_address
     updated_at
   }
 }
@@ -61,20 +62,26 @@ Role-based access control ensures users only see authorized data:
 - **Column-level permissions** - Hide sensitive columns per role
 - **Aggregation controls** - Enable/disable aggregations per role
 
-## Database Domains
+## Database Schemas
 
-The database is organized into logical domains:
+The database is organized into logical schemas. All Hasura table names are prefixed with their schema (e.g., `AgioAuth_user`).
 
-| Domain             | Tables | Description                                        |
-| ------------------ | ------ | -------------------------------------------------- |
-| **AgioAuth**       | 48+    | Users, organizations, roles, permissions           |
-| **AgioCrypto**     | 140+   | Wallets, transactions, token prices, smart wallets |
-| **AgioFunds**      | 120+   | Fund management, NAV, subscriptions, redemptions   |
-| **AgioOnboarding** | 70+    | KYC cases, documents, compliance workflows         |
-| **AgioBilling**    | 40+    | Invoices, quotes, payments, billing                |
-| **AgioBanking**    | 25+    | Bank transactions, deposits, withdrawals           |
-| **AgioProduct**    | 25+    | Products, pricing, conditions                      |
-| **AgioMessaging**  | 15+    | Chat, notifications, email queues                  |
+| Schema | Description |
+| --- | --- |
+| **AgioAuth** | Users, organizations, roles, permissions, addresses |
+| **AgioCrypto** | Digital wallets, transactions, coins, networks, smart wallets |
+| **AgioFunds** | Fund management, NAV, subscriptions, redemptions |
+| **AgioCard** | Rain corporate cards, card transactions, applications |
+| **KycData** | KYC/KYB profiles, verification levels, Sumsub data |
+| **AgioOnboarding** | Onboarding flows, cases, form submissions |
+| **AgioBilling** | Invoices, quotes, payments, billing |
+| **AgioBanking** | Bank accounts, wire transfers, deposits |
+| **AgioMessaging** | Notifications, email queues |
+| **AgioAccounting** | Accounting records, journal entries |
+| **AgioActivity** | Activity logs, audit trails |
+| **AgioData** | Reference data, countries, currencies |
+| **AgioProduct** | Products, pricing, service conditions |
+| **AgioAI** | AI/ML data, embeddings |
 
 ## Query Examples
 
@@ -82,13 +89,15 @@ The database is organized into logical domains:
 
 ```graphql
 query GetOrganizations {
-  organization(limit: 10, order_by: { created_at: desc }) {
+  AgioAuth_organization(limit: 10, order_by: { created_at: desc }) {
     id
-    name
+    organization_name
     created_at
-    users {
-      id
-      email
+    user_organizations {
+      user {
+        email
+        given_name
+      }
     }
   }
 }
@@ -98,12 +107,21 @@ query GetOrganizations {
 
 ```graphql
 query GetActiveWallets($orgId: uuid!) {
-  digital_wallet(where: { organization_id: { _eq: $orgId }, status: { _eq: "active" }, usd_value: { _gt: 1000 } }, order_by: { usd_value: desc }) {
+  AgioCrypto_digital_wallet(
+    where: {
+      organization_id: { _eq: $orgId }
+      deleted: { _neq: true }
+    }
+    order_by: { updated_at: desc }
+  ) {
     id
-    label
-    coin
-    usd_value
-    created_at
+    nickname
+    wallet_address
+    wallet_type_id
+    network {
+      symbol
+      name
+    }
   }
 }
 ```
@@ -112,16 +130,16 @@ query GetActiveWallets($orgId: uuid!) {
 
 ```graphql
 query GetFundWithSubscriptions($fundId: Int!) {
-  fund_by_pk(id: $fundId) {
+  AgioFunds_fund_by_pk(id: $fundId) {
     id
     name
-    nav
-    nav_date
+    currency
+    organization {
+      organization_name
+    }
     fund_subscriptions(where: { status: { _eq: "pending" } }) {
       id
-      subscription_amount
       user {
-        id
         email
       }
     }
@@ -132,53 +150,13 @@ query GetFundWithSubscriptions($fundId: Int!) {
 ### Aggregation Query
 
 ```graphql
-query GetPortfolioStats($userId: String!) {
-  digital_wallet_aggregate(where: { user_id: { _eq: $userId } }) {
+query GetWalletCount($userId: String!) {
+  AgioCrypto_digital_wallet_aggregate(
+    where: { user_id: { _eq: $userId }, deleted: { _neq: true } }
+  ) {
     aggregate {
       count
-      sum {
-        usd_value
-      }
-      avg {
-        usd_value
-      }
     }
-  }
-}
-```
-
-## Mutations
-
-### Insert Data
-
-```graphql
-mutation CreateNote($input: note_insert_input!) {
-  insert_note_one(object: $input) {
-    id
-    content
-    created_at
-  }
-}
-```
-
-### Update Data
-
-```graphql
-mutation UpdateWalletLabel($walletId: Int!, $label: String!) {
-  update_digital_wallet_by_pk(pk_columns: { id: $walletId }, _set: { label: $label }) {
-    id
-    label
-    updated_at
-  }
-}
-```
-
-### Delete Data
-
-```graphql
-mutation DeleteNote($noteId: Int!) {
-  delete_note_by_pk(id: $noteId) {
-    id
   }
 }
 ```
@@ -188,8 +166,8 @@ mutation DeleteNote($noteId: Int!) {
 ### Watch Single Record
 
 ```graphql
-subscription WatchTransaction($txId: String!) {
-  digital_wallet_transaction_by_pk(transaction_id: $txId) {
+subscription WatchTransaction($txId: Int!) {
+  AgioCrypto_bitgo_transaction_by_pk(id: $txId) {
     status
     confirmations
     updated_at
@@ -200,11 +178,14 @@ subscription WatchTransaction($txId: String!) {
 ### Watch Collection
 
 ```graphql
-subscription WatchPendingApprovals($orgId: uuid!) {
-  pending_approval(where: { organization_id: { _eq: $orgId }, status: { _eq: "pending" } }, order_by: { created_at: desc }) {
+subscription WatchNotifications($userId: String!) {
+  AgioMessaging_user_notifications(
+    where: { user_id: { _eq: $userId }, read: { _eq: false } }
+    order_by: { created_at: desc }
+  ) {
     id
-    type
-    amount
+    title
+    message
     created_at
   }
 }
@@ -258,15 +239,15 @@ const client = new ApolloClient({
 
 ## Comparison: Platform API vs Hasura API
 
-| Feature           | Platform API          | Hasura API            |
-| ----------------- | --------------------- | --------------------- |
-| **Use Case**      | Business operations   | Data queries          |
-| **Operations**    | Application logic     | Direct database       |
-| **Mutations**     | With validation       | Raw database writes   |
-| **Subscriptions** | Limited               | Full support          |
-| **Aggregations**  | Limited               | Full SQL support      |
-| **Permissions**   | API-level             | Row/column level      |
-| **Best For**      | Transactions, trading | Reporting, dashboards |
+| Feature | Platform API | Hasura API |
+| --- | --- | --- |
+| **Use Case** | Business operations | Data queries |
+| **Operations** | Application logic | Direct database |
+| **Mutations** | With validation | Raw database writes |
+| **Subscriptions** | Limited | Full support |
+| **Aggregations** | Limited | Full SQL support |
+| **Permissions** | API-level | Row/column level |
+| **Best For** | Transactions, trading | Reporting, dashboards |
 
 ## Next Steps
 

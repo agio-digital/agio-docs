@@ -11,7 +11,7 @@ footer: false
 
   const config = {
     dev: {
-      api: 'https://dev.hasura.agiodigital.com/v1/graphql',
+      api: 'https://develop-agiodigital.hasura.app/v1/graphql',
       widget: 'https://develop.agiodigital.com/#/direct/kyc-iframe',
     },
     prod: {
@@ -168,7 +168,7 @@ Always call this mutation from a backend service. Never call this mutation from 
 ### Base URL:
 
 - **production:** `https://hasura.agiodigital.com/v1/graphql`
-- **development:** `https://dev.hasura.agiodigital.com/v1/graphql`
+- **development:** `https://develop-agiodigital.hasura.app/v1/graphql`
 
 ## GraphQL Mutation:
 
@@ -206,7 +206,7 @@ For **Development**:
 curl -X POST \
      -H "Content-Type: application/json" \
      --data '{"query":"mutation { generateKycSdkInitToken(input: { apiToken: \"a66bdfbe-ba27-4741-9365-3ee7b3b5c0e2\", externalUserId: \"john_doe_01\", amount: 100, ttl: 5400, externalUserFirstName: \"John\", externalUserLastName: \"Doe\", externalUserEmail: \"example@email.com\", currency: \"USD\", }) }"}' \
-     https://dev.hasura.agiodigital.com/v1/graphql
+     https://develop-agiodigital.hasura.app/v1/graphql
 ```
 
 ## Using Axios:
@@ -216,7 +216,7 @@ import axios from "axios";
 
 const BASE_URL = "https://hasura.agiodigital.com/v1/graphql";
 // For development use:
-// BASE_URL="https://dev.hasura.agiodigital.com/v1/graphql";
+// BASE_URL="https://develop-agiodigital.hasura.app/v1/graphql";
 
 axios
   .post(BASE_URL, {
