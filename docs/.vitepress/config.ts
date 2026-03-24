@@ -356,10 +356,6 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
     // },
 
     footer: {
-      license: {
-        text: "MIT License",
-        link: "https://opensource.org/licenses/MIT"
-      },
       copyright: `Copyright 2021-${new Date().getFullYear()} © Agio Digital Ltd.`
     }
   },
