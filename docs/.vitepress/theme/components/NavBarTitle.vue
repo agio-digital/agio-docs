@@ -14,7 +14,7 @@
         </defs>
       </svg>
 
-      <span class="text">Agio SDK</span>
+      <span class="text">Agio Developer</span>
     </slot>
   </a>
 </template>
