@@ -28,16 +28,16 @@ A database-driven GraphQL API powered by Hasura GraphQL Engine. This provides:
 - **Fine-grained Permissions** - Role-based access control at row and column level
 - **Aggregations** - Perform complex aggregations and analytics queries
 
-## API Access Tiers
+## API Categories
 
-API access is managed at the organization level with customizable permissions per client:
-
-| Tier       | Access Level                | Use Cases                                 |
-| ---------- | --------------------------- | ----------------------------------------- |
-| **Tier 1** | Portfolio & Read Operations | Dashboards, reporting, analytics          |
-| **Tier 2** | Trading Operations          | OTC desk integrations, market making      |
-| **Tier 3** | Fund Administration         | Fund management systems, investor portals |
-| **Tier 4** | Full Operations             | Complete platform integration             |
+| Category                   | Description                                                        |
+| -------------------------- | ------------------------------------------------------------------ |
+| **Wallets & Custody**      | Create wallets, manage addresses, query balances, whitelist entries |
+| **Trading & OTC**          | Request quotes, execute trades, access order books                 |
+| **Fund Administration**    | Fund subscriptions, redemptions, NAV queries, investor management  |
+| **KYC & Compliance**       | Verification status, KYC profiles, AML reports                     |
+| **Cards & Payments**       | Corporate card management, funding, transactions                   |
+| **Documents & Reporting**  | PDF generation, statements, invoices, agreements                   |
 
 ## Getting Started
 
