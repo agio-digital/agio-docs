@@ -12,25 +12,18 @@ const env = loadEnv("", path.resolve(__dirname, "../.."));
 
 const nav: ThemeConfig["nav"] = [
   {
-    text: "Docs",
-    activeMatch: `^/(guide|style-guide|cookbook|examples)/`,
-    items: [
-      { text: "Guide", link: "/guide/introduction" },
-      {
-        text: "Installation",
-        link: "/guide/quick-start"
-      },
-      {
-        text: "Configuration",
-        link: "/guide/configuration"
-      },
-      { text: "Examples", link: "/examples/typescript" }
-    ]
-  },
-  {
     text: "SDKs",
-    activeMatch: `^/(guide|sdk|sdks)/`,
+    activeMatch: `^/(guide|style-guide|cookbook|examples|sdk|sdks)/`,
     items: [
+      {
+        text: "Docs",
+        items: [
+          { text: "Guide", link: "/guide/introduction" },
+          { text: "Installation", link: "/guide/quick-start" },
+          { text: "Configuration", link: "/guide/configuration" },
+          { text: "Examples", link: "/examples/typescript" }
+        ]
+      },
       {
         text: "Agio SDK",
         items: [
@@ -109,17 +102,6 @@ const nav: ThemeConfig["nav"] = [
           { text: "Funding & Withdrawals", link: "/guides/cards/funding" }
         ]
       }
-    ]
-  },
-  {
-    text: "About",
-    activeMatch: `^/about/`,
-    items: [
-      { text: "Releases", link: "https://www.npmjs.com/package/agio-sdk?activeTab=versions" },
-      { text: "Agio Website", link: "https://www.agiodigital.com/" },
-      { text: "Agio App", link: "https://app.agiodigital.com" },
-      { text: "Team", link: "https://www.agiodigital.com/#team" },
-      { text: "Contact", link: "https://www.agiodigital.com/#contact" }
     ]
   }
 ];
