@@ -68,16 +68,16 @@ Returns `401 Unauthorized` if no valid session exists.
 
 ---
 
-## POST /auth/logout
+## DELETE /auth/session
 
-End the current session and clear the session cookie.
+Destroy the current session.
 
 - **Auth required:** Session cookie or Bearer token
 
 **Request:**
 
 ```bash
-curl -X POST https://api.agiodigital.com/auth/logout \
+curl -X DELETE https://api.agiodigital.com/auth/session \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -85,8 +85,30 @@ curl -X POST https://api.agiodigital.com/auth/logout \
 
 ```json
 {
+  "message": "Session destroyed",
   "success": true
 }
+```
+
+---
+
+## GET /auth/logout
+
+Log out and redirect to Auth0 logout URL.
+
+- **Auth required:** No
+
+**Query Parameters:**
+
+| Param | Type | Description |
+| --- | --- | --- |
+| `returnTo` | string | URL to redirect after logout |
+| `x-client-type` | string | `api` or `browser` |
+
+**Request:**
+
+```bash
+curl https://api.agiodigital.com/auth/logout?returnTo=https://app.agiodigital.com
 ```
 
 ---

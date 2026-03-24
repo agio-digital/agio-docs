@@ -175,3 +175,65 @@ curl https://api.agiodigital.com/static/file-uploads/doc_abc123.pdf \
 - `200 OK` with the file's original `Content-Type`
 - `403 Forbidden` if the authenticated user is neither the file owner nor an admin
 - `404 Not Found` if the file does not exist
+
+---
+
+## POST /documents/upload
+
+Upload one or more documents (multipart form data). Used for case documents, KYC files, and general file uploads.
+
+- **Auth required:** Admin API key or admin session
+
+**Limits:**
+
+| Constraint | Value |
+| --- | --- |
+| Max total size | 80 MB |
+| Max files per request | 50 |
+
+**Request:**
+
+```bash
+curl -X POST https://api.agiodigital.com/documents/upload \
+  -H "X-API-Key: <admin_key>" \
+  -F "files=@document1.pdf" \
+  -F "files=@document2.jpg"
+```
+
+---
+
+## GET /kyc/documents/:id/file
+
+Retrieve a KYC verification document file from Sumsub. Requires a signed token containing the inspection and document IDs.
+
+- **Auth required:** Signed JWT token (passed as query parameter)
+
+```bash
+curl "https://api.agiodigital.com/kyc/documents/abc123/file?token=<signed_jwt>"
+```
+
+---
+
+## GET /wallets/:walletId/sparkline
+
+Get a wallet performance sparkline as SVG or base64-encoded image. Cached for 8 minutes.
+
+- **Auth required:** Session cookie or Bearer token (must own the wallet)
+
+```bash
+curl https://api.agiodigital.com/wallets/42/sparkline \
+  -H "Authorization: Bearer <token>"
+```
+
+---
+
+## GET /funds/:fundId/user-agreement
+
+Retrieve the fund user agreement document.
+
+- **Auth required:** Session cookie or Bearer token
+
+```bash
+curl https://api.agiodigital.com/funds/5/user-agreement \
+  -H "Authorization: Bearer <token>"
+```
