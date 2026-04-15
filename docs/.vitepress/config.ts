@@ -99,7 +99,8 @@ const nav: ThemeConfig["nav"] = [
         items: [
           { text: "Overview", link: "/guides/cards/" },
           { text: "Applying for Cards", link: "/guides/cards/apply" },
-          { text: "Funding & Withdrawals", link: "/guides/cards/funding" }
+          { text: "Funding & Withdrawals", link: "/guides/cards/funding" },
+          { text: "Partner Card API", link: "/guides/cards/partner-api" }
         ]
       }
     ]

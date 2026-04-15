@@ -89,4 +89,8 @@ All monetary amounts in the Agio Card API are in **cents** (smallest currency un
     <p class="next-steps-link">Transactions & Analytics</p>
     <p class="next-steps-caption">Query card transactions and monitor spending in real time.</p>
   </a>
+  <a class="vt-box" href="/guides/cards/partner-api">
+    <p class="next-steps-link">Partner Card API</p>
+    <p class="next-steps-caption">HMAC-authenticated GraphQL endpoint for external card-issuing partners.</p>
+  </a>
 </div>
